@@ -1,0 +1,13 @@
+/autoconf.c/1.27/Thu May 29 10:11:41 2014//
+/bus_dma.c/1.28/Tue Oct  2 23:54:53 2012//
+/bus_space.c/1.12/Fri Jan 27 18:52:59 2012//
+/clock.c/1.10/Tue Feb  8 20:20:19 2011//
+/cpu.c/1.11/Sat Oct 27 17:18:03 2012//
+/disksubr.c/1.27/Mon Mar 16 23:11:12 2009//
+/interrupt.c/1.11/Sun Feb 20 07:56:16 2011//
+/locore_machdep.S/1.7/Mon Apr 28 20:23:28 2008//
+/machdep.c/1.78/Sun Jun  8 07:01:30 2014//
+/mainbus.c/1.10/Sun Feb 20 07:56:16 2011//
+/mips_3x30.c/1.16/Mon Mar 24 20:06:32 2014//
+/prom.c/1.6/Mon Apr 28 20:23:28 2008//
+D
