@@ -1,9 +1,9 @@
-/eb7500atx_machdep.c/1.26/Sun Aug 18 21:42:16 2013//
-/if_cs.c/1.9/Thu May 10 10:27:10 2012//
-/rsbus.c/1.10/Sat Oct 27 17:17:23 2012//
-/rsbus.h/1.4/Sat Oct 27 17:17:23 2012//
-/rsbus_io.c/1.4/Thu May 10 10:27:10 2012//
-/rsbus_io_asm.S/1.2/Sun Dec 11 12:16:05 2005//
-/rside.c/1.14/Tue Jul 31 15:50:31 2012//
-/rsidereg.h/1.2/Sun Dec 11 12:16:05 2005//
+/eb7500atx_machdep.c/1.26/Sun Aug 31 15:08:21 2014//
+/if_cs.c/1.9/Sun Aug 31 15:08:21 2014//
+/rsbus.c/1.10/Sun Aug 31 15:08:21 2014//
+/rsbus.h/1.4/Sun Aug 31 15:08:21 2014//
+/rsbus_io.c/1.4/Sun Aug 31 15:08:21 2014//
+/rsbus_io_asm.S/1.2/Sun Aug 31 15:08:21 2014//
+/rside.c/1.14/Sun Aug 31 15:08:21 2014//
+/rsidereg.h/1.2/Sun Aug 31 15:08:21 2014//
 D

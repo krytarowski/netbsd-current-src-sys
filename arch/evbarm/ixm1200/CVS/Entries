@@ -1,11 +1,11 @@
-/ixm1200_machdep.c/1.55/Sat Feb 22 19:03:57 2014//
-/ixm1200_pci.c/1.11/Sat Mar 29 19:28:27 2014//
-/ixm1200_start.S/1.5/Mon Dec  2 18:36:11 2013//
-/ixm1200reg.h/1.2/Wed Oct 21 14:15:51 2009//
-/ixm1200var.h/1.2/Wed Oct 21 14:15:51 2009//
-/ixp12x0_mainbus.c/1.10/Sat Oct 27 17:17:48 2012//
-/ixpcom_ixm.c/1.11/Sat Oct 27 17:17:48 2012//
-/ixpcom_ixmvar.h/1.2/Wed Oct 21 14:15:51 2009//
-/nappi_nppb.c/1.13/Sat Mar 29 19:28:27 2014//
-/nappi_nr.c/1.11/Sat Oct 27 17:17:48 2012//
+/ixm1200_machdep.c/1.55/Sun Aug 31 15:08:21 2014//
+/ixm1200_pci.c/1.11/Sun Aug 31 15:08:21 2014//
+/ixm1200_start.S/1.5/Sun Aug 31 15:08:21 2014//
+/ixm1200reg.h/1.2/Sun Aug 31 15:08:21 2014//
+/ixm1200var.h/1.2/Sun Aug 31 15:08:21 2014//
+/ixp12x0_mainbus.c/1.10/Sun Aug 31 15:08:21 2014//
+/ixpcom_ixm.c/1.11/Sun Aug 31 15:08:21 2014//
+/ixpcom_ixmvar.h/1.2/Sun Aug 31 15:08:21 2014//
+/nappi_nppb.c/1.13/Sun Aug 31 15:08:21 2014//
+/nappi_nr.c/1.11/Sun Aug 31 15:08:21 2014//
 D

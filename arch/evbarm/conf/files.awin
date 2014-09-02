@@ -1,9 +1,9 @@
-#	$NetBSD: files.cubie,v 1.1 2013/09/03 06:12:00 matt Exp $
+#	$NetBSD: files.awin,v 1.1 2014/08/31 19:13:01 matt Exp $
 #
-# CUBIEBOARD evaluation board configuration info
+# Allwinner AXX evaluation board configuration info
 #
 
-file	arch/evbarm/cubie/cubie_machdep.c
+file	arch/evbarm/awin/awin_machdep.c
 
 # Kernel boot arguments
 defparam opt_machdep.h				BOOT_ARGS

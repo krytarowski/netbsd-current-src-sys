@@ -1,7 +1,7 @@
-/ahc_isa.c/1.39/Fri Jul  1 18:11:24 2011//
-/cmos.c/1.11/Fri Jul 25 08:10:33 2014//
-/isapnp_machdep.c/1.17/Fri Jul  1 18:11:24 2011//
-/lms.c/1.56/Fri Jul  1 18:11:24 2011//
-/mms.c/1.53/Fri Jul  1 18:11:24 2011//
-/nvram.h/1.8/Sun Dec 11 12:17:43 2005//
+/ahc_isa.c/1.39/Sun Aug 31 15:08:22 2014//
+/cmos.c/1.11/Sun Aug 31 15:08:22 2014//
+/isapnp_machdep.c/1.17/Sun Aug 31 15:08:22 2014//
+/lms.c/1.56/Sun Aug 31 15:08:22 2014//
+/mms.c/1.53/Sun Aug 31 15:08:22 2014//
+/nvram.h/1.8/Sun Aug 31 15:08:22 2014//
 D

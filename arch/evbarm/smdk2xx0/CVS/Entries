@@ -1,10 +1,10 @@
-/if_cs_smdk24x0.c/1.6/Mon Nov 12 18:00:39 2012//
-/smdk2410_kbd.c/1.8/Sat Oct 27 17:17:49 2012//
-/smdk2410_lcd.c/1.10/Fri Jul 25 08:10:33 2014//
-/smdk2410_machdep.c/1.34/Thu Feb 27 22:57:22 2014//
-/smdk2410_start.S/1.6/Mon Jan 31 06:28:05 2011//
-/smdk2800_machdep.c/1.41/Sun Aug 18 15:58:21 2013//
-/smdk2800_pci.c/1.5/Fri Jul  1 20:44:21 2011//
-/smdk2800_start.S/1.8/Mon Jan 31 06:28:05 2011//
-/smdk2800var.h/1.2/Wed Mar 16 05:02:12 2005//
+/if_cs_smdk24x0.c/1.6/Sun Aug 31 15:08:21 2014//
+/smdk2410_kbd.c/1.8/Sun Aug 31 15:08:21 2014//
+/smdk2410_lcd.c/1.10/Sun Aug 31 15:08:21 2014//
+/smdk2410_machdep.c/1.34/Sun Aug 31 15:08:21 2014//
+/smdk2410_start.S/1.6/Sun Aug 31 15:08:21 2014//
+/smdk2800_machdep.c/1.41/Sun Aug 31 15:08:21 2014//
+/smdk2800_pci.c/1.5/Sun Aug 31 15:08:21 2014//
+/smdk2800_start.S/1.8/Sun Aug 31 15:08:21 2014//
+/smdk2800var.h/1.2/Sun Aug 31 15:08:21 2014//
 D

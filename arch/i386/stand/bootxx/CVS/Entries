@@ -1,9 +1,3 @@
-/Makefile/1.14/Wed Dec 29 17:44:03 2010//
-/Makefile.bootxx/1.48/Wed Jan 15 22:25:22 2014//
-/boot1.c/1.20/Thu Jan  6 01:08:48 2011//
-/bootxx.S/1.10/Thu Jan  6 01:08:48 2011//
-/label.S/1.3/Sun Dec 11 12:17:48 2005//
-/pbr.S/1.20/Wed Aug 17 00:07:38 2011//
 D/bootxx_ext2fs////
 D/bootxx_ffsv1////
 D/bootxx_ffsv2////
@@ -11,3 +5,9 @@ D/bootxx_lfsv1////
 D/bootxx_lfsv2////
 D/bootxx_msdos////
 D/bootxx_ustarfs////
+/Makefile/1.14/Sun Aug 31 15:08:22 2014//
+/Makefile.bootxx/1.48/Sun Aug 31 15:08:22 2014//
+/boot1.c/1.20/Sun Aug 31 15:08:22 2014//
+/bootxx.S/1.10/Sun Aug 31 15:08:22 2014//
+/label.S/1.3/Sun Aug 31 15:08:22 2014//
+/pbr.S/1.20/Sun Aug 31 15:08:22 2014//

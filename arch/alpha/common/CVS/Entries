@@ -1,8 +1,8 @@
-/bus_dma.c/1.69/Tue Oct  2 23:54:51 2012//
-/comlogout.c/1.5/Fri Jul  1 19:22:35 2011//
-/sgmap_common.c/1.26/Fri Jan 27 18:52:48 2012//
-/sgmap_typedep.c/1.37/Wed Dec 15 01:28:24 2010//
-/sgmap_typedep.h/1.6/Mon Apr 28 20:23:11 2008//
-/sgmapvar.h/1.16/Fri Jul  1 19:22:35 2011//
-/shared_intr.c/1.21/Mon Feb  6 02:14:12 2012//
+/bus_dma.c/1.69/Sun Aug 31 15:08:21 2014//
+/comlogout.c/1.5/Sun Aug 31 15:08:21 2014//
+/sgmap_common.c/1.26/Sun Aug 31 15:08:21 2014//
+/sgmap_typedep.c/1.37/Sun Aug 31 15:08:21 2014//
+/sgmap_typedep.h/1.6/Sun Aug 31 15:08:21 2014//
+/sgmapvar.h/1.16/Sun Aug 31 15:08:21 2014//
+/shared_intr.c/1.21/Sun Aug 31 15:08:21 2014//
 D
