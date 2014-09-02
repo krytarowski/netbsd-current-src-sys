@@ -1,4 +1,3 @@
-/Makefile/1.9/Thu Jul 26 06:21:57 2012//
 D/adi_brh////
 D/armadaxp////
 D/armadillo////
@@ -7,7 +6,6 @@ D/beagle////
 D/compile////
 D/conf////
 D/cp3100////
-D/cubie////
 D/dev////
 D/devkit8000////
 D/evbarm////
@@ -44,3 +42,5 @@ D/stand////
 D/tisdp24xx////
 D/tsarm////
 D/viper////
+/Makefile/1.9/Sun Aug 31 15:08:21 2014//
+D/awin////

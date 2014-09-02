@@ -1,14 +1,14 @@
-/Makefile/1.15/Tue Mar 20 13:01:32 2012//
-/Makefile.xxboot/1.3/Fri Aug  8 15:20:10 2014//
-/boot.S/1.3/Sat Nov 17 15:53:21 2012//
-/bootmain.c/1.4/Sat Nov 17 19:10:46 2012//
-/conf.c/1.1/Tue Mar 20 13:01:32 2012//
-/consio1.c/1.1/Tue Mar 20 13:01:32 2012//
-/version/1.2/Sat Nov 17 19:10:46 2012//
-/xx.c/1.2/Sat Nov 17 16:02:00 2012//
-/xxboot.ldscript/1.1/Tue Mar 20 13:01:32 2012//
 D/cdboot_cd9660////
 D/xxboot_ffsv1////
 D/xxboot_ffsv2////
 D/xxboot_lfsv1////
 D/xxboot_lfsv2////
+/Makefile/1.15/Sun Aug 31 15:08:22 2014//
+/Makefile.xxboot/1.3/Sun Aug 31 15:08:22 2014//
+/boot.S/1.3/Sun Aug 31 15:08:22 2014//
+/bootmain.c/1.4/Sun Aug 31 15:08:22 2014//
+/conf.c/1.1/Sun Aug 31 15:08:22 2014//
+/consio1.c/1.1/Sun Aug 31 15:08:22 2014//
+/version/1.2/Sun Aug 31 15:08:22 2014//
+/xx.c/1.2/Sun Aug 31 15:08:22 2014//
+/xxboot.ldscript/1.1/Sun Aug 31 15:08:22 2014//

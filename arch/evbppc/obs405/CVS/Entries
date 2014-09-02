@@ -1,12 +1,12 @@
-/obs200_autoconf.c/1.7/Mon Dec 12 11:23:57 2011//
-/obs200_locore.S/1.12/Tue Aug  5 16:28:39 2014//
-/obs200_machdep.c/1.19/Wed Jun 22 18:06:32 2011//
-/obs266_autoconf.c/1.7/Mon Dec 12 11:23:57 2011//
-/obs266_machdep.c/1.20/Wed Jun 22 18:06:32 2011//
-/obs405_autoconf.c/1.6/Sun Jul 29 18:05:42 2012//
-/obs405_machdep.c/1.6/Sat Jun 18 06:44:26 2011//
-/obs600_autoconf.c/1.7/Thu Nov 21 13:52:27 2013//
-/obs600_locore.S/1.6/Tue Aug  5 16:28:39 2014//
-/obs600_machdep.c/1.9/Thu Jul  5 02:56:40 2012//
-/rbus_machdep.c/1.9/Mon Apr  9 14:44:01 2012//
 D/dev////
+/obs200_autoconf.c/1.7/Sun Aug 31 15:08:21 2014//
+/obs200_locore.S/1.12/Sun Aug 31 15:08:21 2014//
+/obs200_machdep.c/1.19/Sun Aug 31 15:08:21 2014//
+/obs266_autoconf.c/1.7/Sun Aug 31 15:08:21 2014//
+/obs266_machdep.c/1.20/Sun Aug 31 15:08:21 2014//
+/obs405_autoconf.c/1.6/Sun Aug 31 15:08:21 2014//
+/obs405_machdep.c/1.6/Sun Aug 31 15:08:21 2014//
+/obs600_autoconf.c/1.7/Sun Aug 31 15:08:21 2014//
+/obs600_locore.S/1.6/Sun Aug 31 15:08:21 2014//
+/obs600_machdep.c/1.9/Sun Aug 31 15:08:21 2014//
+/rbus_machdep.c/1.9/Sun Aug 31 15:08:21 2014//

@@ -1,13 +1,13 @@
-/admgpio.c/1.4/Fri Jul  1 18:38:49 2011//
-/admpci.c/1.11/Sat Jun 28 10:25:16 2014//
-/admwdog.c/1.4/Sat Oct 27 17:18:01 2012//
-/ahci.c/1.12/Sun Sep 22 08:30:22 2013//
-/ahcireg.h/1.1/Tue Mar 20 08:52:01 2007//
-/ahcivar.h/1.5/Sun Sep 22 08:30:22 2013//
-/if_admsw.c/1.12/Mon Jun 16 16:48:16 2014//
-/if_admswreg.h/1.1/Tue Mar 20 08:52:02 2007//
-/if_admswvar.h/1.5/Sat Oct 27 17:18:01 2012//
-/uart.c/1.12/Fri Jul 25 08:10:34 2014//
-/uart.h/1.1/Tue Mar 20 08:52:02 2007//
-/wdc_extio.c/1.8/Tue Jul 31 15:50:33 2012//
+/admgpio.c/1.4/Sun Aug 31 15:08:22 2014//
+/admpci.c/1.11/Sun Aug 31 15:08:22 2014//
+/admwdog.c/1.4/Sun Aug 31 15:08:22 2014//
+/ahci.c/1.12/Sun Aug 31 15:08:22 2014//
+/ahcireg.h/1.1/Sun Aug 31 15:08:22 2014//
+/ahcivar.h/1.5/Sun Aug 31 15:08:22 2014//
+/if_admsw.c/1.12/Sun Aug 31 15:08:22 2014//
+/if_admswreg.h/1.1/Sun Aug 31 15:08:22 2014//
+/if_admswvar.h/1.5/Sun Aug 31 15:08:22 2014//
+/uart.c/1.12/Sun Aug 31 15:08:22 2014//
+/uart.h/1.1/Sun Aug 31 15:08:22 2014//
+/wdc_extio.c/1.8/Sun Aug 31 15:08:22 2014//
 D

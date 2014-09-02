@@ -1,14 +1,14 @@
-/arcemu.c/1.22/Wed Mar 26 16:16:06 2014//
-/arcemu.h/1.12/Sun Feb 20 07:59:51 2011//
-/autoconf.c/1.45/Mon Dec 16 15:45:29 2013//
-/bus.c/1.65/Tue Oct  2 23:54:54 2012//
-/clock.c/1.24/Sun Feb 20 07:59:51 2011//
-/clockvar.h/1.4/Tue Sep  5 01:38:59 2006//
-/console.c/1.43/Sat Oct 13 17:58:54 2012//
-/cpu.c/1.26/Sun Feb 20 07:59:51 2011//
-/disksubr.c/1.23/Wed Jan  2 11:48:28 2008//
-/ip22_cache.S/1.5/Sun Dec 11 12:18:58 2005//
-/locore_machdep.S/1.5/Fri Apr 28 01:12:51 2006//
-/machdep.c/1.140/Mon Mar 24 19:10:34 2014//
-/mainbus.c/1.20/Sun Feb 20 07:59:51 2011//
+/arcemu.c/1.22/Sun Aug 31 15:08:22 2014//
+/arcemu.h/1.12/Sun Aug 31 15:08:22 2014//
+/autoconf.c/1.45/Sun Aug 31 15:08:22 2014//
+/bus.c/1.65/Sun Aug 31 15:08:22 2014//
+/clock.c/1.24/Sun Aug 31 15:08:22 2014//
+/clockvar.h/1.4/Sun Aug 31 15:08:22 2014//
+/console.c/1.43/Sun Aug 31 15:08:22 2014//
+/cpu.c/1.26/Sun Aug 31 15:08:22 2014//
+/disksubr.c/1.23/Sun Aug 31 15:08:22 2014//
+/ip22_cache.S/1.5/Sun Aug 31 15:08:22 2014//
+/locore_machdep.S/1.5/Sun Aug 31 15:08:22 2014//
+/machdep.c/1.140/Sun Aug 31 15:08:22 2014//
+/mainbus.c/1.20/Sun Aug 31 15:08:22 2014//
 D

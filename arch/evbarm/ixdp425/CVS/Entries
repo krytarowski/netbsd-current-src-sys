@@ -1,8 +1,8 @@
-/ixdp425_led.c/1.6/Sun Oct 14 14:20:58 2012//
-/ixdp425_machdep.c/1.34/Sun Aug 18 15:58:20 2013//
-/ixdp425_mainbus.c/1.9/Sun Oct 14 14:20:58 2012//
-/ixdp425_pci.c/1.11/Sat Mar 29 19:28:27 2014//
-/ixdp425_start.S/1.7/Mon Jan 31 06:28:04 2011//
-/ixdp425reg.h/1.7/Wed Oct 21 14:15:51 2009//
-/ixdp425var.h/1.4/Wed Oct 21 14:15:51 2009//
+/ixdp425_led.c/1.6/Sun Aug 31 15:08:21 2014//
+/ixdp425_machdep.c/1.34/Sun Aug 31 15:08:21 2014//
+/ixdp425_mainbus.c/1.9/Sun Aug 31 15:08:21 2014//
+/ixdp425_pci.c/1.11/Sun Aug 31 15:08:21 2014//
+/ixdp425_start.S/1.7/Sun Aug 31 15:08:21 2014//
+/ixdp425reg.h/1.7/Sun Aug 31 15:08:21 2014//
+/ixdp425var.h/1.4/Sun Aug 31 15:08:21 2014//
 D

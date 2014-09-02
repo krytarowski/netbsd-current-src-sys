@@ -1,9 +1,9 @@
-/autoconf.c/1.10/Sun Jul 29 18:05:40 2012//
-/clock_machdep.c/1.8/Mon Apr 28 20:23:16 2008//
-/conf.c/1.12/Sun Dec 11 12:17:06 2005//
-/kloader_machdep.c/1.5/Mon Apr 28 20:23:16 2008//
-/locore.S/1.9/Mon Apr 28 20:23:16 2008//
-/machdep.c/1.45/Mon Mar 24 20:06:31 2014//
-/mainbus.c/1.11/Sun Nov 21 18:53:56 2010//
-/sysasic.c/1.14/Mon Apr 28 20:23:16 2008//
+/autoconf.c/1.10/Sun Aug 31 15:08:21 2014//
+/clock_machdep.c/1.8/Sun Aug 31 15:08:21 2014//
+/conf.c/1.12/Sun Aug 31 15:08:21 2014//
+/kloader_machdep.c/1.5/Sun Aug 31 15:08:21 2014//
+/locore.S/1.9/Sun Aug 31 15:08:21 2014//
+/machdep.c/1.45/Sun Aug 31 15:08:21 2014//
+/mainbus.c/1.11/Sun Aug 31 15:08:21 2014//
+/sysasic.c/1.14/Sun Aug 31 15:08:21 2014//
 D

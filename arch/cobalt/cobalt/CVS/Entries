@@ -1,11 +1,11 @@
-/autoconf.c/1.31/Sat Oct 27 17:17:43 2012//
-/bus.c/1.45/Tue Jul 29 21:21:43 2014//
-/console.c/1.12/Fri Jul  1 20:36:42 2011//
-/console.h/1.1/Thu Mar 27 15:21:46 2008//
-/cpu.c/1.11/Sun Feb 20 07:54:10 2011//
-/disksubr.c/1.25/Thu May 16 19:06:44 2013//
-/interrupt.c/1.7/Fri Jul  1 20:36:42 2011//
-/locore_machdep.S/1.6/Sun Dec 11 12:17:05 2005//
-/machdep.c/1.116/Thu Apr  3 19:15:43 2014//
-/mainbus.c/1.19/Tue Jul 29 21:21:43 2014//
+/autoconf.c/1.31/Sun Aug 31 15:08:21 2014//
+/bus.c/1.45/Sun Aug 31 15:08:21 2014//
+/console.c/1.12/Sun Aug 31 15:08:21 2014//
+/console.h/1.1/Sun Aug 31 15:08:21 2014//
+/cpu.c/1.11/Sun Aug 31 15:08:21 2014//
+/disksubr.c/1.25/Sun Aug 31 15:08:21 2014//
+/interrupt.c/1.7/Sun Aug 31 15:08:21 2014//
+/locore_machdep.S/1.6/Sun Aug 31 15:08:21 2014//
+/machdep.c/1.116/Sun Aug 31 15:08:21 2014//
+/mainbus.c/1.19/Sun Aug 31 15:08:21 2014//
 D

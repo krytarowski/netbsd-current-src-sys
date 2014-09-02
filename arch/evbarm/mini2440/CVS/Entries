@@ -1,7 +1,7 @@
-/audio_mini2440.c/1.1/Mon Jan 30 03:28:33 2012//
-/if_dm_mini2440.c/1.3/Mon Nov 12 18:00:39 2012//
-/mini2440_bootinfo.h/1.1/Mon Jan 30 03:28:33 2012//
-/mini2440_lcd.c/1.4/Fri Jul 25 08:10:33 2014//
-/mini2440_machdep.c/1.8/Fri Mar 14 21:39:48 2014//
-/mini2440_start.S/1.1/Mon Jan 30 03:28:34 2012//
+/audio_mini2440.c/1.1/Sun Aug 31 15:08:21 2014//
+/if_dm_mini2440.c/1.3/Sun Aug 31 15:08:21 2014//
+/mini2440_bootinfo.h/1.1/Sun Aug 31 15:08:21 2014//
+/mini2440_lcd.c/1.4/Sun Aug 31 15:08:21 2014//
+/mini2440_machdep.c/1.8/Sun Aug 31 15:08:21 2014//
+/mini2440_start.S/1.1/Sun Aug 31 15:08:21 2014//
 D

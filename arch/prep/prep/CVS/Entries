@@ -1,10 +1,10 @@
-/autoconf.c/1.27/Thu Mar 27 18:22:56 2014//
-/consinit.c/1.8/Sat Oct 13 17:58:53 2012//
-/cpu.c/1.18/Fri Jul  1 20:52:02 2011//
-/ibm_machdep.c/1.16/Wed Mar 26 16:01:43 2014//
-/locore.S/1.19/Thu Aug  7 09:06:53 2014//
-/machdep.c/1.75/Thu Apr  3 23:49:47 2014//
-/mainbus.c/1.33/Fri Jan 27 18:53:00 2012//
-/platform.c/1.28/Thu Apr  3 23:49:47 2014//
-/residual.c/1.18/Thu Mar 27 18:22:56 2014//
+/autoconf.c/1.27/Sun Aug 31 15:08:22 2014//
+/consinit.c/1.8/Sun Aug 31 15:08:22 2014//
+/cpu.c/1.18/Sun Aug 31 15:08:22 2014//
+/ibm_machdep.c/1.16/Sun Aug 31 15:08:22 2014//
+/locore.S/1.19/Sun Aug 31 15:08:22 2014//
+/machdep.c/1.75/Sun Aug 31 15:08:22 2014//
+/mainbus.c/1.33/Sun Aug 31 15:08:22 2014//
+/platform.c/1.28/Sun Aug 31 15:08:22 2014//
+/residual.c/1.18/Sun Aug 31 15:08:22 2014//
 D

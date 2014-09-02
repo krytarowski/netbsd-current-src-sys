@@ -1,8 +1,8 @@
-/Makefile.satest/1.2/Fri Feb 19 19:53:01 1999//
-/biosdisk_user.c/1.7/Sun Dec 14 18:46:33 2008//
-/biosdisk_user.h/1.4/Sun Dec 11 12:17:49 2005//
-/ether_bpf.c/1.10/Sun Dec 14 18:46:33 2008//
-/pci_user.c/1.4/Sun Dec 14 18:46:33 2008//
-/sanamespace.h/1.2/Wed Mar 26 17:58:57 2014//
-/stand_user.c/1.6/Sun Dec 14 18:46:33 2008//
+/Makefile.satest/1.2/Sun Aug 31 15:08:22 2014//
+/biosdisk_user.c/1.7/Sun Aug 31 15:08:22 2014//
+/biosdisk_user.h/1.4/Sun Aug 31 15:08:22 2014//
+/ether_bpf.c/1.10/Sun Aug 31 15:08:22 2014//
+/pci_user.c/1.4/Sun Aug 31 15:08:22 2014//
+/sanamespace.h/1.2/Sun Aug 31 15:08:22 2014//
+/stand_user.c/1.6/Sun Aug 31 15:08:22 2014//
 D

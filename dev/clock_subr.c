@@ -1,4 +1,4 @@
-/*	$NetBSD: clock_subr.c,v 1.16 2011/02/08 20:20:26 rmind Exp $	*/
+/*	$NetBSD: clock_subr.c,v 1.20 2014/09/01 12:25:52 apb Exp $	*/
 
 /*
  * Copyright (c) 1988 University of Utah.
@@ -44,11 +44,20 @@
  * Derived from arch/hp300/hp300/clock.c
  */
 
+#if HAVE_NBTOOL_CONFIG_H
+#include "nbtool_config.h"
+#endif /* HAVE_NBTOOL_CONFIG_H */
+
+#ifdef _KERNEL
 #include <sys/cdefs.h>
-__KERNEL_RCSID(0, "$NetBSD: clock_subr.c,v 1.16 2011/02/08 20:20:26 rmind Exp $");
+__KERNEL_RCSID(0, "$NetBSD: clock_subr.c,v 1.20 2014/09/01 12:25:52 apb Exp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
+#else /* ! _KERNEL */
+#include <string.h>
+#include <time.h>
+#endif /* ! _KERNEL */
 
 #include <dev/clock_subr.h>
 
@@ -116,7 +125,7 @@ clock_ymdhms_to_secs(struct clock_ymdhms *dt)
 	    * 60 + dt->dt_min)
 	    * 60 + dt->dt_sec;
 
-	if ((time_t)secs != secs)
+	if ((time_t)secs < 0 || secs > __type_max(time_t))
 		return -1;
 	return secs;
 }

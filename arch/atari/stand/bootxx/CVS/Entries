@@ -1,7 +1,7 @@
-/Makefile/1.15/Fri May 23 21:56:34 2003//
-/Makefile.bootxx/1.11/Sun Jan 12 15:26:28 2014//
-/bootxx.c/1.15/Mon Aug 24 13:04:37 2009//
-/filesystem.c/1.8/Mon Aug 24 13:03:43 2009//
-/start.S/1.1/Tue Jan  6 13:35:30 2009//
 D/milan////
 D/std////
+/Makefile/1.15/Sun Aug 31 15:08:21 2014//
+/Makefile.bootxx/1.11/Sun Aug 31 15:08:21 2014//
+/bootxx.c/1.15/Sun Aug 31 15:08:21 2014//
+/filesystem.c/1.8/Sun Aug 31 15:08:21 2014//
+/start.S/1.1/Sun Aug 31 15:08:21 2014//
