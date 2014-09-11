@@ -1,4 +1,4 @@
-/*	$NetBSD: puffs_vnops.c,v 1.184 2014/08/28 08:29:50 hannken Exp $	*/
+/*	$NetBSD: puffs_vnops.c,v 1.186 2014/09/11 07:59:14 manu Exp $	*/
 
 /*
  * Copyright (c) 2005, 2006, 2007  Antti Kantee.  All Rights Reserved.
@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__KERNEL_RCSID(0, "$NetBSD: puffs_vnops.c,v 1.184 2014/08/28 08:29:50 hannken Exp $");
+__KERNEL_RCSID(0, "$NetBSD: puffs_vnops.c,v 1.186 2014/09/11 07:59:14 manu Exp $");
 
 #include <sys/param.h>
 #include <sys/buf.h>
@@ -1805,6 +1805,8 @@ puffs_vnop_remove(void *v)
 
 	PUFFS_MSG_RELEASE(remove);
 
+	puffs_updatenode(VPTOPP(dvp), PUFFS_UPDATECTIME|PUFFS_UPDATEMTIME, 0);
+
 	RELEPN_AND_VP(dvp, dpn);
 	RELEPN_AND_VP(vp, pn);
 
@@ -1922,6 +1924,8 @@ puffs_vnop_rmdir(void *v)
 
 	PUFFS_MSG_RELEASE(rmdir);
 
+	puffs_updatenode(VPTOPP(dvp), PUFFS_UPDATECTIME|PUFFS_UPDATEMTIME, 0);
+
 	/* XXX: some call cache_purge() *for both vnodes* here, investigate */
 	RELEPN_AND_VP(dvp, dpn);
 	RELEPN_AND_VP(vp, pn);
@@ -1967,8 +1971,11 @@ puffs_vnop_link(void *v)
 	 * XXX: stay in touch with the cache.  I don't like this, but
 	 * don't have a better solution either.  See also puffs_rename().
 	 */
-	if (error == 0)
+	if (error == 0) {
 		puffs_updatenode(pn, PUFFS_UPDATECTIME, 0);
+		puffs_updatenode(VPTOPP(dvp),
+				 PUFFS_UPDATECTIME|PUFFS_UPDATEMTIME, 0);
+	}
 
 	RELEPN_AND_VP(dvp, dpn);
 	puffs_releasenode(pn);
@@ -2133,6 +2140,12 @@ puffs_vnop_rename(void *v)
 	 */
 	if (error == 0) {
 		puffs_updatenode(fpn, PUFFS_UPDATECTIME, 0);
+		puffs_updatenode(VPTOPP(fdvp),
+				 PUFFS_UPDATECTIME|PUFFS_UPDATEMTIME, 0);
+		if (fdvp != tdvp)
+			puffs_updatenode(VPTOPP(tdvp),
+					 PUFFS_UPDATECTIME|PUFFS_UPDATEMTIME,
+					 0);
 
 		if (PUFFS_USE_DOTDOTCACHE(pmp) &&
 		    (VPTOPP(fvp)->pn_parent != tdvp))
@@ -2190,7 +2203,7 @@ puffs_vnop_read(void *v)
 	if (uio->uio_resid == 0)
 		return 0;
 	if (uio->uio_offset < 0)
-		return EINVAL;
+		return EFBIG;
 
 	if (vp->v_type == VREG &&
 	    PUFFS_USE_PAGECACHE(pmp) &&
@@ -2297,6 +2310,12 @@ puffs_vnop_write(void *v)
 	error = uflags = 0;
 	write_msg = NULL;
 
+	/* std sanity */
+	if (uio->uio_resid == 0)
+		return 0;
+	if (uio->uio_offset < 0)
+		return EFBIG;
+
 	mutex_enter(&pn->pn_sizemtx);
 
 	if (vp->v_type == VREG && 
@@ -2313,10 +2332,6 @@ puffs_vnop_write(void *v)
 
 		origoff = uio->uio_offset;
 		while (uio->uio_resid > 0) {
-			if (vp->v_mount->mnt_flag & MNT_RELATIME)
-				uflags |= PUFFS_UPDATEATIME;
-			uflags |= PUFFS_UPDATECTIME;
-			uflags |= PUFFS_UPDATEMTIME;
 			oldoff = uio->uio_offset;
 			bytelen = uio->uio_resid;
 
@@ -2377,8 +2392,6 @@ puffs_vnop_write(void *v)
 			error = VOP_PUTPAGES(vp, trunc_page(origoff),
 			    round_page(uio->uio_offset), PGO_CLEANIT);
 		}
-
-		puffs_updatenode(VPTOPP(vp), uflags, vp->v_size);
 	} else {
 		/* tomove is non-increasing */
 		tomove = PUFFS_TOMOVE(uio->uio_resid, pmp);
@@ -2412,8 +2425,10 @@ puffs_vnop_write(void *v)
 			}
 
 			/* adjust file size */
-			if (vp->v_size < uio->uio_offset)
+			if (vp->v_size < uio->uio_offset) {
+				uflags |= PUFFS_UPDATESIZE;
 				uvm_vnp_setsize(vp, uio->uio_offset);
+			}
 
 			/* didn't move everything?  bad userspace.  bail */
 			if (write_msg->pvnr_resid != 0) {
@@ -2423,6 +2438,12 @@ puffs_vnop_write(void *v)
 		}
 		puffs_msgmem_release(park_write);
 	}
+
+	if (vp->v_mount->mnt_flag & MNT_RELATIME)
+		uflags |= PUFFS_UPDATEATIME;
+	uflags |= PUFFS_UPDATECTIME;
+	uflags |= PUFFS_UPDATEMTIME;
+	puffs_updatenode(VPTOPP(vp), uflags, vp->v_size);
 
 	mutex_exit(&pn->pn_sizemtx);
 	return error;

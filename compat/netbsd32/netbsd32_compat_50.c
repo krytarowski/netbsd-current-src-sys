@@ -1,4 +1,4 @@
-/*	$NetBSD: netbsd32_compat_50.c,v 1.25 2014/08/21 06:40:35 maxv Exp $	*/
+/*	$NetBSD: netbsd32_compat_50.c,v 1.27 2014/09/05 09:21:54 matt Exp $	*/
 
 /*-
  * Copyright (c) 2008 The NetBSD Foundation, Inc.
@@ -36,7 +36,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__KERNEL_RCSID(0, "$NetBSD: netbsd32_compat_50.c,v 1.25 2014/08/21 06:40:35 maxv Exp $");
+__KERNEL_RCSID(0, "$NetBSD: netbsd32_compat_50.c,v 1.27 2014/09/05 09:21:54 matt Exp $");
 
 #if defined(_KERNEL_OPT)
 #include "opt_sysv.h"
@@ -296,7 +296,7 @@ compat_50_netbsd32_futimes(struct lwp *l,
 	if ((error = fd_getvnode(SCARG(uap, fd), &fp)) != 0)
 		return error;
 
-	error = do_sys_utimes(l, fp->f_data, NULL, 0, tvp, UIO_SYSSPACE);
+	error = do_sys_utimes(l, fp->f_vnode, NULL, 0, tvp, UIO_SYSSPACE);
 
 	fd_putfile(SCARG(uap, fd));
 	return error;
@@ -580,12 +580,12 @@ netbsd32_kevent_fetch_timeout(const void *src, void *dest, size_t length)
 }
 
 static int
-netbsd32_kevent_fetch_changes(void *private, const struct kevent *changelist,
+netbsd32_kevent_fetch_changes(void *ctx, const struct kevent *changelist,
     struct kevent *changes, size_t index, int n)
 {
 	const struct netbsd32_kevent *src =
 	    (const struct netbsd32_kevent *)changelist;
-	struct netbsd32_kevent *kev32, *changes32 = private;
+	struct netbsd32_kevent *kev32, *changes32 = ctx;
 	int error, i;
 
 	error = copyin(src + index, changes32, n * sizeof(*changes32));
@@ -597,10 +597,10 @@ netbsd32_kevent_fetch_changes(void *private, const struct kevent *changelist,
 }
 
 static int
-netbsd32_kevent_put_events(void *private, struct kevent *events,
+netbsd32_kevent_put_events(void *ctx, struct kevent *events,
     struct kevent *eventlist, size_t index, int n)
 {
-	struct netbsd32_kevent *kev32, *events32 = private;
+	struct netbsd32_kevent *kev32, *events32 = ctx;
 	int i;
 
 	for (i = 0, kev32 = events32; i < n; i++, kev32++, events++)

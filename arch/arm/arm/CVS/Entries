@@ -3,7 +3,6 @@
 /bcopyinout.S/1.20/Sun Aug 31 15:08:21 2014//
 /bcopyinout_xscale.S/1.11/Sun Aug 31 15:08:21 2014//
 /blockio.S/1.8/Sun Aug 31 15:08:21 2014//
-/bootconfig.c/1.6/Sun Aug 31 15:08:21 2014//
 /bus_space_a2x.S/1.4/Sun Aug 31 15:08:21 2014//
 /bus_space_a4x.S/1.4/Sun Aug 31 15:08:21 2014//
 /bus_space_asm_generic.S/1.11/Sun Aug 31 15:08:21 2014//
@@ -62,4 +61,5 @@
 /syscall.c/1.60/Sun Aug 31 15:08:21 2014//
 /undefined.c/1.54/Sun Aug 31 15:08:21 2014//
 /vectors.S/1.10/Sun Aug 31 15:08:21 2014//
+/bootconfig.c/1.7/Thu Sep 11 20:24:33 2014//
 D

@@ -1,5 +1,4 @@
 /Makefile/1.6/Sun Aug 31 15:08:22 2014//
-/ata.c/1.131/Sun Aug 31 15:08:22 2014//
 /ata_raid.c/1.35/Sun Aug 31 15:08:22 2014//
 /ata_raid_adaptec.c/1.9/Sun Aug 31 15:08:22 2014//
 /ata_raid_intel.c/1.7/Sun Aug 31 15:08:22 2014//
@@ -8,12 +7,9 @@
 /ata_raid_promise.c/1.11/Sun Aug 31 15:08:22 2014//
 /ata_raid_subr.c/1.2/Sun Aug 31 15:08:22 2014//
 /ata_raid_via.c/1.7/Sun Aug 31 15:08:22 2014//
-/ata_raidreg.h/1.8/Sun Aug 31 15:08:22 2014//
 /ata_raidvar.h/1.12/Sun Aug 31 15:08:22 2014//
-/ata_wdc.c/1.103/Sun Aug 31 15:08:22 2014//
 /ataconf.h/1.3/Sun Aug 31 15:08:22 2014//
 /atareg.h/1.43/Sun Aug 31 15:08:22 2014//
-/atavar.h/1.91/Sun Aug 31 15:08:22 2014//
 /files.ata/1.24/Sun Aug 31 15:08:22 2014//
 /ld_ataraid.c/1.39/Sun Aug 31 15:08:22 2014//
 /sata_subr.c/1.21/Sun Aug 31 15:08:22 2014//
@@ -25,6 +21,10 @@
 /satapmpvar.h/1.3/Sun Aug 31 15:08:22 2014//
 /satareg.h/1.5/Sun Aug 31 15:08:22 2014//
 /satavar.h/1.9/Sun Aug 31 15:08:22 2014//
-/wd.c/1.412/Sun Aug 31 15:08:22 2014//
-/wdvar.h/1.40/Sun Aug 31 15:08:22 2014//
+/ata.c/1.132/Thu Sep 11 20:24:44 2014//
+/ata_raidreg.h/1.9/Thu Sep 11 20:24:44 2014//
+/ata_wdc.c/1.104/Thu Sep 11 20:24:44 2014//
+/atavar.h/1.92/Thu Sep 11 20:24:44 2014//
+/wd.c/1.413/Thu Sep 11 20:24:44 2014//
+/wdvar.h/1.41/Thu Sep 11 20:24:44 2014//
 D

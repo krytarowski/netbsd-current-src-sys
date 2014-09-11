@@ -40,7 +40,6 @@
 /makphy.c/1.40/Sun Aug 31 15:08:22 2014//
 /makphyreg.h/1.6/Sun Aug 31 15:08:22 2014//
 /mdio.h/1.3/Sun Aug 31 15:08:22 2014//
-/micphy.c/1.1/Sun Aug 31 15:08:22 2014//
 /mii.c/1.50/Sun Aug 31 15:08:22 2014//
 /mii.h/1.18/Sun Aug 31 15:08:22 2014//
 /mii_bitbang.c/1.12/Sun Aug 31 15:08:22 2014//
@@ -78,4 +77,5 @@
 /ukphy_subr.c/1.13/Sun Aug 31 15:08:22 2014//
 /urlphy.c/1.30/Sun Aug 31 15:08:22 2014//
 /urlphyreg.h/1.3/Sun Aug 31 15:08:22 2014//
+/micphy.c/1.2/Thu Sep 11 20:24:46 2014//
 D

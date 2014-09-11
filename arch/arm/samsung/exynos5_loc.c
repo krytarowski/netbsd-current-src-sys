@@ -1,3 +1,5 @@
+/*	$NetBSD: exynos5_loc.c,v 1.12 2014/09/05 08:01:05 skrll Exp $	*/
+
 /*-
  * Copyright (c) 2014 The NetBSD Foundation, Inc.
  * All rights reserved.
@@ -214,11 +216,13 @@
 
 static const struct exyo_locators exynos5_locators[] = {
 	{ "exyogpio", 0, 0, NOPORT, NOINTR, 0 },
+	{ "exyoiic", 0, 0, NOPORT, NOINTR, 0 },
 	{ "exyowdt", OFFANDSIZE(,WDT), NOPORT, IRQ_WDT, 0 },
 	{ "sscom", OFFANDSIZE(,UART0), 0, IRQ_UART0, 0 },
 	{ "sscom", OFFANDSIZE(,UART1), 1, IRQ_UART1, 0 },
 	{ "sscom", OFFANDSIZE(,UART2), 2, IRQ_UART2, 0 },
 	{ "sscom", OFFANDSIZE(,UART3), 3, IRQ_UART3, 0 },
+	{ "exyousb", OFFANDSIZE(,USB2HOST), NOPORT, IRQ_USB_HOST20, 0 },
 };
 
 const struct exyo_locinfo exynos5_locinfo = {
