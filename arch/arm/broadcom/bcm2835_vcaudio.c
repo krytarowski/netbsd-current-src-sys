@@ -1,4 +1,4 @@
-/* $NetBSD: bcm2835_vcaudio.c,v 1.3 2014/05/05 08:13:31 skrll Exp $ */
+/* $NetBSD: bcm2835_vcaudio.c,v 1.6 2014/09/02 21:46:35 jmcneill Exp $ */
 
 /*-
  * Copyright (c) 2013 Jared D. McNeill <jmcneill@invisible.ca>
@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__KERNEL_RCSID(0, "$NetBSD: bcm2835_vcaudio.c,v 1.3 2014/05/05 08:13:31 skrll Exp $");
+__KERNEL_RCSID(0, "$NetBSD: bcm2835_vcaudio.c,v 1.6 2014/09/02 21:46:35 jmcneill Exp $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -101,6 +101,8 @@ struct vcaudio_softc {
 	VCHI_INSTANCE_T			sc_instance;
 	VCHI_CONNECTION_T		sc_connection;
 	VCHI_SERVICE_HANDLE_T		sc_service;
+
+	short				sc_peer_version;
 
 	struct workqueue		*sc_wq;
 	struct vcaudio_work		sc_work;
@@ -197,11 +199,6 @@ vcaudio_attach(device_t parent, device_t self, void *aux)
 	aprint_naive("\n");
 	aprint_normal(": AUDS\n");
 
-	if (vcaudio_init(sc) != 0) {
-		aprint_error_dev(self, "not configured\n");
-		return;
-	}
-
 	vcaudio_rescan(self, NULL, NULL);
 }
 
@@ -209,8 +206,13 @@ static int
 vcaudio_rescan(device_t self, const char *ifattr, const int *locs)
 {
 	struct vcaudio_softc *sc = device_private(self);
+	int error;
 
 	if (ifattr_match(ifattr, "audiobus") && sc->sc_audiodev == NULL) {
+		error = vcaudio_init(sc);
+		if (error)
+			return error;
+
 		sc->sc_audiodev = audio_attach_mi(&vcaudio_hw_if,
 		    sc, sc->sc_dev);
 	}
@@ -242,7 +244,7 @@ vcaudio_init(struct vcaudio_softc *sc)
 	sc->sc_format.channels = 2;
 	sc->sc_format.channel_mask = AUFMT_STEREO;
 	sc->sc_format.frequency_type = 0;
-	sc->sc_format.frequency[0] = 8000;
+	sc->sc_format.frequency[0] = 48000;
 	sc->sc_format.frequency[1] = 48000;
 
 	error = auconv_create_encodings(&sc->sc_format, 1, &sc->sc_encodings);
@@ -285,15 +287,33 @@ vcaudio_init(struct vcaudio_softc *sc)
 		    error);
 		return EIO;
 	}
-	vchi_service_release(sc->sc_service);
 
-	vchi_service_use(sc->sc_service);
+	vchi_get_peer_version(sc->sc_service, &sc->sc_peer_version);
+
+	if (sc->sc_peer_version < 2) {
+		aprint_error_dev(sc->sc_dev,
+		    "peer version (%d) is less than the required version (2)\n",
+		    sc->sc_peer_version);
+		return EINVAL;
+	}
+
 	memset(&msg, 0, sizeof(msg));
 	msg.type = VC_AUDIO_MSG_TYPE_OPEN;
 	error = vchi_msg_queue(sc->sc_service, &msg, sizeof(msg),
 	    VCHI_FLAGS_BLOCK_UNTIL_QUEUED, NULL);
 	if (error) {
 		device_printf(sc->sc_dev, "couldn't send OPEN message (%d)\n",
+		    error);
+	}
+
+	memset(&msg, 0, sizeof(msg));
+	msg.type = VC_AUDIO_MSG_TYPE_CONFIG;
+	msg.u.config.channels = 2;
+	msg.u.config.samplerate = 48000;
+	msg.u.config.bps = 16;
+	error = vcaudio_msg_sync(sc, &msg, sizeof(msg));
+	if (error) {
+		device_printf(sc->sc_dev, "couldn't send CONFIG message (%d)\n",
 		    error);
 	}
 
@@ -345,16 +365,25 @@ vcaudio_service_callback(void *priv, const VCHI_CALLBACK_REASON_T reason,
 		intr = msg.u.complete.callback;
 		intrarg = msg.u.complete.cookie;
 		if (intr && intrarg) {
+			int count = msg.u.complete.count & 0xffff;
+			int perr = (msg.u.complete.count & 0x40000000) != 0;
+			bool sched = false;
 			mutex_enter(&sc->sc_intr_lock);
-			if (msg.u.complete.count > 0 && msg.u.complete.count <= sc->sc_pblksize) {
-				sc->sc_pbytes += msg.u.complete.count;
-			} else {
-				if (sc->sc_started) {
-					device_printf(sc->sc_dev, "WARNING: count = %d\n", msg.u.complete.count);
-				}
+			if (count > 0) {
+				sc->sc_pbytes += count;
+			}
+			if (perr && sc->sc_started) {
+#ifdef VCAUDIO_DEBUG
+				device_printf(sc->sc_dev, "underrun\n");
+#endif
+				sched = true;
 			}
 			if (sc->sc_pbytes >= sc->sc_pblksize) {
 				sc->sc_pbytes -= sc->sc_pblksize;
+				sched = true;
+			}
+
+			if (sched) {
 				intr(intrarg);
 				workqueue_enqueue(sc->sc_wq, (struct work *)&sc->sc_work, NULL);
 			}
@@ -393,17 +422,6 @@ vcaudio_worker(struct work *wk, void *priv)
 #endif
 
 		memset(&msg, 0, sizeof(msg));
-		msg.type = VC_AUDIO_MSG_TYPE_CONFIG;
-		msg.u.config.channels = sc->sc_pparam.channels;
-		msg.u.config.samplerate = sc->sc_pparam.sample_rate;
-		msg.u.config.bps = sc->sc_pparam.precision;
-		error = vcaudio_msg_sync(sc, &msg, sizeof(msg));
-		if (error) {
-			printf("%s: failed to config (%d)\n", __func__, error);
-			goto done;
-		}
-
-		memset(&msg, 0, sizeof(msg));
 		msg.type = VC_AUDIO_MSG_TYPE_START;
 		error = vchi_msg_queue(sc->sc_service, &msg, sizeof(msg),
 		    VCHI_FLAGS_BLOCK_UNTIL_QUEUED, NULL);
@@ -415,23 +433,8 @@ vcaudio_worker(struct work *wk, void *priv)
 		sc->sc_started = true;
 		sc->sc_pbytes = 0;
 		sc->sc_ppos = 0;
-		sc->sc_pblksize = sc->sc_pblksize;
-		count = (uintptr_t)sc->sc_pend - (uintptr_t)sc->sc_pstart;
 
-		/* initial silence */
-		memset(&msg, 0, sizeof(msg));
-		msg.type = VC_AUDIO_MSG_TYPE_WRITE;
-		msg.u.write.count = PAGE_SIZE * 3;
-		msg.u.write.callback = NULL;
-		msg.u.write.cookie = NULL;
-		msg.u.write.silence = 1;
-		msg.u.write.max_packet = 0;
-		error = vchi_msg_queue(sc->sc_service, &msg, sizeof(msg),
-		    VCHI_FLAGS_BLOCK_UNTIL_QUEUED, NULL);
-		if (error) {
-			printf("%s: failed to write (%d)\n", __func__, error);
-			goto done;
-		}
+		count = sc->sc_pblksize * 2;
 	} else {
 		count = sc->sc_pblksize;
 	}
@@ -662,9 +665,13 @@ vcaudio_query_devinfo(void *priv, mixer_devinfo_t *di)
 static int
 vcaudio_getdev(void *priv, struct audio_device *audiodev)
 {
+	struct vcaudio_softc *sc = priv;
+
 	snprintf(audiodev->name, sizeof(audiodev->name), "VCHIQ AUDS");
-	snprintf(audiodev->version, sizeof(audiodev->version), "");
+	snprintf(audiodev->version, sizeof(audiodev->version),
+	    "%d", sc->sc_peer_version);
 	snprintf(audiodev->config, sizeof(audiodev->config), "vcaudio");
+
 	return 0;
 }
 

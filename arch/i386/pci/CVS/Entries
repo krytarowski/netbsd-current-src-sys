@@ -20,7 +20,6 @@
 /opti82c700reg.h/1.2/Sun Aug 31 15:08:22 2014//
 /p64h2apic.c/1.15/Sun Aug 31 15:08:22 2014//
 /pceb.c/1.24/Sun Aug 31 15:08:22 2014//
-/pci_intr_fixup.c/1.49/Sun Aug 31 15:08:22 2014//
 /pci_intr_fixup.h/1.9/Sun Aug 31 15:08:22 2014//
 /pcibios.c/1.39/Sun Aug 31 15:08:22 2014//
 /pcibios.h/1.12/Sun Aug 31 15:08:22 2014//
@@ -38,4 +37,5 @@
 /via82c586reg.h/1.3/Sun Aug 31 15:08:22 2014//
 /viapcib.c/1.14/Sun Aug 31 15:08:22 2014//
 /viapcibreg.h/1.2/Sun Aug 31 15:08:22 2014//
+/pci_intr_fixup.c/1.50/Thu Sep 11 20:24:36 2014//
 D

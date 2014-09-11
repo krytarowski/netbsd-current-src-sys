@@ -1,6 +1,5 @@
 /adc.c/1.13/Sun Aug 31 15:08:22 2014//
 /adcvar.h/1.2/Sun Aug 31 15:08:22 2014//
-/rtc.c/1.8/Sun Aug 31 15:08:22 2014//
 /sci.c/1.60/Sun Aug 31 15:08:22 2014//
 /scif.c/1.64/Sun Aug 31 15:08:22 2014//
 /scifvar.h/1.2/Sun Aug 31 15:08:22 2014//
@@ -9,4 +8,5 @@
 /shpcic.c/1.17/Sun Aug 31 15:08:22 2014//
 /shpcicvar.h/1.9/Sun Aug 31 15:08:22 2014//
 /wdog.c/1.18/Sun Aug 31 15:08:22 2014//
+/rtc.c/1.9/Thu Sep 11 20:24:41 2014//
 D

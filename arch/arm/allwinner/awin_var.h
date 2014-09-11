@@ -1,4 +1,4 @@
-/* $NetBSD: awin_var.h,v 1.10 2014/06/05 03:48:32 matt Exp $ */
+/* $NetBSD: awin_var.h,v 1.16 2014/09/11 02:16:15 jmcneill Exp $ */
 /*-
  * Copyright (c) 2013 The NetBSD Foundation, Inc.
  * All rights reserved.
@@ -47,6 +47,7 @@ struct awin_locators {
 	int loc_flags;
 #define	AWINIO_REQUIRED		__BIT(8)
 #define	AWINIO_ONLY		__BITS(7,0)
+#define	AWINIO_ONLY_A31		__BIT(2)
 #define	AWINIO_ONLY_A20		__BIT(1)
 #define	AWINIO_ONLY_A10		__BIT(0)
 };
@@ -72,6 +73,13 @@ struct awin_gpio_pindata {
 	int pd_pin;
 };
 
+enum awin_dma_type {
+	AWIN_DMA_TYPE_NDMA,
+	AWIN_DMA_TYPE_DDMA,
+};
+
+struct awin_dma_channel;
+
 extern struct bus_space awin_bs_tag;
 extern struct bus_space awin_a4x_bs_tag;
 extern bus_space_handle_t awin_core_bsh;
@@ -81,14 +89,32 @@ extern struct arm32_bus_dma_tag awin_coherent_dma_tag;
 psize_t awin_memprobe(void);
 void	awin_bootstrap(vaddr_t, vaddr_t); 
 void	awin_dma_bootstrap(psize_t);
+void	awin_pll2_enable(void);
 void	awin_pll6_enable(void);
+void	awin_pll7_enable(void);
 void	awin_cpu_hatch(struct cpu_info *);
+
+#define AWIN_CHIP_ID_A10	0x1623
+#define AWIN_CHIP_ID_A13	0x1625
+#define AWIN_CHIP_ID_A31	0x1633
+#define AWIN_CHIP_ID_A23	0x1650
+#define AWIN_CHIP_ID_A20	0x1651
+uint16_t awin_chip_id(void);
+const char *awin_chip_name(void);
 
 void	awin_gpio_init(void);
 bool	awin_gpio_pinset_available(const struct awin_gpio_pinset *);
 void	awin_gpio_pinset_acquire(const struct awin_gpio_pinset *);
 void	awin_gpio_pinset_release(const struct awin_gpio_pinset *);
 bool	awin_gpio_pin_reserve(const char *, struct awin_gpio_pindata *);
+
+struct awin_dma_channel *awin_dma_alloc(enum awin_dma_type,
+					      void (*)(void *), void *);
+void	awin_dma_free(struct awin_dma_channel *);
+uint32_t awin_dma_get_config(struct awin_dma_channel *);
+void	awin_dma_set_config(struct awin_dma_channel *, uint32_t);
+int	awin_dma_transfer(struct awin_dma_channel *, paddr_t, paddr_t, size_t);
+void	awin_dma_halt(struct awin_dma_channel *);
 
 void	awin_wdog_reset(void);
 void	awin_tmr_cpu_init(struct cpu_info *);

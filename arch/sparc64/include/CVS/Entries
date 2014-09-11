@@ -10,7 +10,6 @@
 /bus_funcs.h/1.3/Sun Aug 31 15:08:22 2014//
 /cdefs.h/1.4/Sun Aug 31 15:08:22 2014//
 /cgtworeg.h/1.2/Sun Aug 31 15:08:22 2014//
-/cpu.h/1.111/Sun Aug 31 15:08:22 2014//
 /cpu_counter.h/1.8/Sun Aug 31 15:08:22 2014//
 /cpuset.h/1.8/Sun Aug 31 15:08:22 2014//
 /ctlreg.h/1.61/Sun Aug 31 15:08:22 2014//
@@ -53,7 +52,6 @@
 /param.h/1.54/Sun Aug 31 15:08:22 2014//
 /pcb.h/1.16/Sun Aug 31 15:08:22 2014//
 /pci_machdep.h/1.27/Sun Aug 31 15:08:22 2014//
-/pmap.h/1.58/Sun Aug 31 15:08:22 2014//
 /pmc.h/1.1/Sun Aug 31 15:08:22 2014//
 /proc.h/1.13/Sun Aug 31 15:08:22 2014//
 /profile.h/1.6/Sun Aug 31 15:08:22 2014//
@@ -69,7 +67,6 @@
 /setjmp.h/1.3/Sun Aug 31 15:08:22 2014//
 /signal.h/1.11/Sun Aug 31 15:08:22 2014//
 /sljit_machdep.h/1.1/Sun Aug 31 15:08:22 2014//
-/sparc64.h/1.12/Sun Aug 31 15:08:22 2014//
 /sunos_machdep.h/1.2/Sun Aug 31 15:08:22 2014//
 /svr4_32_machdep.h/1.9/Sun Aug 31 15:08:22 2014//
 /svr4_machdep.h/1.12/Sun Aug 31 15:08:22 2014//
@@ -80,4 +77,7 @@
 /vuid_event.h/1.3/Sun Aug 31 15:08:22 2014//
 /wchar_limits.h/1.2/Sun Aug 31 15:08:22 2014//
 /z8530var.h/1.13/Sun Aug 31 15:08:22 2014//
+/cpu.h/1.112/Thu Sep 11 20:24:41 2014//
+/pmap.h/1.59/Thu Sep 11 20:24:41 2014//
+/sparc64.h/1.13/Thu Sep 11 20:24:41 2014//
 D

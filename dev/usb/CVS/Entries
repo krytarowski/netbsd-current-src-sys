@@ -110,7 +110,6 @@
 /uep.c/1.19/Sun Aug 31 15:08:23 2014//
 /uftdi.c/1.59/Sun Aug 31 15:08:23 2014//
 /uftdireg.h/1.8/Sun Aug 31 15:08:23 2014//
-/ugen.c/1.124/Sun Aug 31 15:08:23 2014//
 /ugensa.c/1.31/Sun Aug 31 15:08:23 2014//
 /ugraphire_rdesc.h/1.9/Sun Aug 31 15:08:23 2014//
 /uhci.c/1.264/Sun Aug 31 15:08:23 2014//
@@ -175,7 +174,6 @@
 /usbdi.h/1.90/Sun Aug 31 15:08:23 2014//
 /usbdi_util.c/1.62/Sun Aug 31 15:08:23 2014//
 /usbdi_util.h/1.45/Sun Aug 31 15:08:23 2014//
-/usbdivar.h/1.108/Sun Aug 31 15:08:23 2014//
 /usbhid.h/1.14/Sun Aug 31 15:08:23 2014//
 /usbroothub_subr.c/1.1/Sun Aug 31 15:08:23 2014//
 /usbroothub_subr.h/1.1/Sun Aug 31 15:08:23 2014//
@@ -200,4 +198,6 @@
 /xhcireg.h/1.1/Sun Aug 31 15:08:23 2014//
 /xhcivar.h/1.4/Sun Aug 31 15:08:23 2014//
 /xinput_rdesc.h/1.1/Sun Aug 31 15:08:23 2014//
+/ugen.c/1.125/Thu Sep 11 20:24:46 2014//
+/usbdivar.h/1.109/Thu Sep 11 20:24:46 2014//
 D
