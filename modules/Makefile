@@ -56,6 +56,7 @@ SUBDIR+=	miiverbose
 SUBDIR+=	miniroot
 SUBDIR+=	mqueue
 SUBDIR+=	msdos
+SUBDIR+=	msfs
 SUBDIR+=	nand
 SUBDIR+=	nandemulator
 SUBDIR+=	nfs
