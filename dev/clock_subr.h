@@ -32,6 +32,8 @@
 #ifndef _DEV_CLOCK_SUBR_H_
 #define _DEV_CLOCK_SUBR_H_
 
+#include <sys/clock.h>
+
 /*
  * "POSIX time" to/from "YY/MM/DD/hh/mm/ss"
  */
@@ -53,13 +55,6 @@ int	clock_secs_to_ymdhms(time_t, struct clock_ymdhms *);
  */
 #define	FROMBCD(x)	bcdtobin((x))
 #define	TOBCD(x)	bintobcd((x))
-
-/* Some handy constants. */
-#define SECDAY		(24 * 60 * 60)
-#define SECYR		(SECDAY * 365)
-
-/* Traditional POSIX base year */
-#define	POSIX_BASE_YEAR	1970
 
 /*
  * Interface to time-of-day clock devices.
