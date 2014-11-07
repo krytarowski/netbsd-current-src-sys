@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-#	$NetBSD: listsrcdirs,v 1.18 2014/08/11 22:13:56 justin Exp $
+#	$NetBSD: listsrcdirs,v 1.22 2014/10/29 21:16:06 justin Exp $
 #
 
 #
@@ -10,9 +10,14 @@
 #
 # ./listsrcdirs | xargs cvs -d anoncvs@anoncvs.netbsd.org:/cvsroot -z3 co -P
 #
-# Note: after making changes, test that "sh listsrcdirs all | sort | uniq -d"
-# returns an empty set.
-#
+
+# Check that the intersection between all branches is the null set
+if [ "${LISTSRCDIRS_INSANITY}" != 'y' ]; then
+	if [ ! -z "$(LISTSRCDIRS_INSANITY=y sh $0 all | sort | uniq -d)" ]; then
+		echo $0: INTERNAL ERROR
+		exit 1
+	fi
+fi
 
 # default echomode (for compat)
 em='sys posix'
@@ -101,7 +106,7 @@ lsrc usr /sbin/			rndctl route setkey sysctl umount
 lsrc usr /usr.bin/		kdump ktrace
 lsrc usr /usr.sbin/		arp dumpfs ndp npf pcictl vnconfig
 lsrc usr /usr.sbin/		wlanctl
-lsrc usr /external/bsd/		libpcap tcpdump wpa
+lsrc usr /external/bsd/		libelf libpcap tcpdump wpa
 lsrc usr /crypto/		Makefile.openssl
 lsrc usr /crypto/dist/		ipsec-tools
 lsrc usr /crypto/external/bsd/	openssl

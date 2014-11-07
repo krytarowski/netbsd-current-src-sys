@@ -1,4 +1,4 @@
-#	$NetBSD: SHEEVAPLUG,v 1.43 2014/08/23 20:26:57 dholland Exp $
+#	$NetBSD: SHEEVAPLUG,v 1.46 2014/10/17 18:45:14 martin Exp $
 #
 #  This configuration supports for generically Marvell SheevaPlug
 #
@@ -17,9 +17,8 @@ options 	EVBARM_BOARDTYPE=sheevaplug
 
 # CPU options
 options 	CPU_SHEEVA
-#options 	MV_L2_CACHE_ENABLE
-#options 	MV_L2_CACHE_WRITE_THROUGH
-options 	MV_CACHE_RANGE_OPS
+#options 	SHEEVA_L2_CACHE
+#options 	SHEEVA_L2_CACHE_WT
 makeoptions	CPUFLAGS="-march=armv5te"
 
 # Marvell SoC options
@@ -157,6 +156,7 @@ options 	USBVERBOSE	# verbose USB device autoconfig messages
 #options 	PERFCTRS	# performance counters
 options 	DIAGNOSTIC	# internal consistency checks
 options 	DEBUG
+#options 	KDTRACE_HOOKS	# kernel DTrace hooks
 #options 	LOCKDEBUG
 #options 	PMAP_DEBUG	# Enable pmap_debug_level code
 #options 	VERBOSE_INIT_ARM # verbose bootstraping messages
@@ -302,7 +302,7 @@ cd*	at scsibus? target ? lun ?	# SCSI CD-ROM drives
 uaudio* at uhub? port ? configuration ?
 
 # USB MIDI
-umidi* at uhub? port ? configuration ?
+#umidi* at uhub? port ? configuration ?
 
 # USB IrDA
 # USB-IrDA bridge spec

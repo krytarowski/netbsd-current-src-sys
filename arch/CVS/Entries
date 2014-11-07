@@ -71,6 +71,7 @@ D/x68k////
 D/x86////
 D/xen////
 D/zaurus////
-/README/1.62/Sun Aug 31 15:08:21 2014//
-/Makefile/1.45/Thu Sep 11 20:24:28 2014//
 D/or1k////
+/Makefile/1.45/Sat Sep 27 16:53:16 2014//
+/README/1.62/Sat Sep 27 16:53:16 2014//
+D/riscv////

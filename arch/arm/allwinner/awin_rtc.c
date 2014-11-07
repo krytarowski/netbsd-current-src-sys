@@ -1,4 +1,4 @@
-/* $NetBSD: awin_rtc.c,v 1.1 2014/09/07 17:49:39 jmcneill Exp $ */
+/* $NetBSD: awin_rtc.c,v 1.7 2014/11/07 18:10:16 jakllsch Exp $ */
 
 /*-
  * Copyright (c) 2014 Jared D. McNeill <jmcneill@invisible.ca>
@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__KERNEL_RCSID(0, "$NetBSD: awin_rtc.c,v 1.1 2014/09/07 17:49:39 jmcneill Exp $");
+__KERNEL_RCSID(0, "$NetBSD: awin_rtc.c,v 1.7 2014/11/07 18:10:16 jakllsch Exp $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -46,7 +46,17 @@ struct awin_rtc_softc {
 	bus_space_tag_t sc_bst;
 	bus_space_handle_t sc_bsh;
 	struct todr_chip_handle sc_todr;
+	uint32_t sc_loscctrl_reg;
+	uint32_t sc_yymmdd_reg;
+	uint32_t sc_hhmmss_reg;
+	uint32_t sc_year_base;
+	uint32_t sc_year_mask;
 };
+
+#define RTC_READ(sc, reg) \
+    bus_space_read_4((sc)->sc_bst, (sc)->sc_bsh, (reg))
+#define RTC_WRITE(sc, reg, val) \
+    bus_space_write_4((sc)->sc_bst, (sc)->sc_bsh, (reg), (val))
 
 static int	awin_rtc_match(device_t, cfdata_t, void *);
 static void	awin_rtc_attach(device_t, device_t, void *);
@@ -81,6 +91,27 @@ awin_rtc_attach(device_t parent, device_t self, void *aux)
 	bus_space_subregion(sc->sc_bst, aio->aio_core_bsh,
 	    loc->loc_offset, loc->loc_size, &sc->sc_bsh);
 
+	if (awin_chip_id() == AWIN_CHIP_ID_A31) {
+		sc->sc_loscctrl_reg = AWIN_A31_LOSC_CTRL_REG;
+		sc->sc_yymmdd_reg = AWIN_A31_RTC_YY_MM_DD_REG;
+		sc->sc_hhmmss_reg = AWIN_A31_RTC_HH_MM_SS_REG;
+	} else {
+		sc->sc_loscctrl_reg = AWIN_LOSC_CTRL_REG;
+		sc->sc_yymmdd_reg = AWIN_RTC_YY_MM_DD_REG;
+		sc->sc_hhmmss_reg = AWIN_RTC_HH_MM_SS_REG;
+	}
+
+	if (awin_chip_id() == AWIN_CHIP_ID_A20) {
+		sc->sc_year_base = 1900;
+		sc->sc_year_mask = AWIN_A20_RTC_YY_MM_DD_YEAR;
+	} else {
+		sc->sc_year_base = POSIX_BASE_YEAR;
+		sc->sc_year_mask = AWIN_RTC_YY_MM_DD_YEAR;
+	}
+#ifdef AWIN_RTC_BASE_YEAR
+	sc->sc_year_base = AWIN_RTC_BASE_YEAR;
+#endif
+
 	aprint_naive("\n");
 	aprint_normal(": RTC\n");
 
@@ -96,13 +127,10 @@ awin_rtc_gettime(todr_chip_handle_t tch, struct clock_ymdhms *dt)
 	struct awin_rtc_softc *sc = tch->cookie;
 	uint32_t yymmdd, hhmmss;
 
-	yymmdd = bus_space_read_4(sc->sc_bst, sc->sc_bsh,
-	    AWIN_RTC_YY_MM_DD_REG);
-	hhmmss = bus_space_read_4(sc->sc_bst, sc->sc_bsh,
-	    AWIN_RTC_HH_MM_SS_REG);
+	yymmdd = RTC_READ(sc, sc->sc_yymmdd_reg);
+	hhmmss = RTC_READ(sc, sc->sc_hhmmss_reg);
 
-	dt->dt_year = __SHIFTOUT(yymmdd, AWIN_RTC_YY_MM_DD_YEAR) +
-	    POSIX_BASE_YEAR;
+	dt->dt_year = __SHIFTOUT(yymmdd, sc->sc_year_mask) + sc->sc_year_base;
 	dt->dt_mon = __SHIFTOUT(yymmdd, AWIN_RTC_YY_MM_DD_MONTH);
 	dt->dt_day = __SHIFTOUT(yymmdd, AWIN_RTC_YY_MM_DD_DAY);
 	dt->dt_wday = __SHIFTOUT(hhmmss, AWIN_RTC_HH_MM_SS_WK_NO);
@@ -117,27 +145,44 @@ static int
 awin_rtc_settime(todr_chip_handle_t tch, struct clock_ymdhms *dt)
 {
 	struct awin_rtc_softc *sc = tch->cookie;
-	uint32_t yymmdd, hhmmss, losc;
+	uint32_t yymmdd, hhmmss, losc, maxyear;
 
-	losc = bus_space_read_4(sc->sc_bst, sc->sc_bsh, AWIN_LOSC_CTRL_REG);
+	losc = RTC_READ(sc, sc->sc_loscctrl_reg);
 	if (losc & AWIN_LOSC_CTRL_BUSY)
 		return EBUSY;
 
-	yymmdd = 0;
-	yymmdd |= __SHIFTIN(dt->dt_year - POSIX_BASE_YEAR,
-	    AWIN_RTC_YY_MM_DD_YEAR);
+	/*
+	 * Sanity check the date before writing it back
+	 */
+	if (dt->dt_year < POSIX_BASE_YEAR) {
+		aprint_normal_dev(sc->sc_dev, "year pre the epoch: %llu, "
+		    "not writing back time\n", dt->dt_year);
+		return EIO;
+	}
+	maxyear = __SHIFTOUT(0xffffffff, sc->sc_year_mask) + sc->sc_year_base;
+	if (dt->dt_year > maxyear) {
+		aprint_normal_dev(sc->sc_dev, "year exceeds available field:"
+		    " %llu, not writing back time\n", dt->dt_year);
+		return EIO;
+	}
+
+	yymmdd = __SHIFTIN(dt->dt_year - sc->sc_year_base,
+	    sc->sc_year_mask);
+
+	KASSERT(__SHIFTOUT(yymmdd, sc->sc_year_mask) +
+	    sc->sc_year_base == dt->dt_year);
+
 	yymmdd |= __SHIFTIN(dt->dt_mon, AWIN_RTC_YY_MM_DD_MONTH);
 	yymmdd |= __SHIFTIN(dt->dt_day, AWIN_RTC_YY_MM_DD_DAY);
+
 	hhmmss = 0;
 	hhmmss |= __SHIFTIN(dt->dt_wday, AWIN_RTC_HH_MM_SS_WK_NO);
 	hhmmss |= __SHIFTIN(dt->dt_hour, AWIN_RTC_HH_MM_SS_HOUR);
 	hhmmss |= __SHIFTIN(dt->dt_min, AWIN_RTC_HH_MM_SS_MINUTE);
 	hhmmss |= __SHIFTIN(dt->dt_sec, AWIN_RTC_HH_MM_SS_SECOND);
 
-	bus_space_write_4(sc->sc_bst, sc->sc_bsh, AWIN_RTC_YY_MM_DD_REG,
-	    yymmdd);
-	bus_space_write_4(sc->sc_bst, sc->sc_bsh, AWIN_RTC_HH_MM_SS_REG,
-	    hhmmss);
+	RTC_WRITE(sc, sc->sc_yymmdd_reg, yymmdd);
+	RTC_WRITE(sc, sc->sc_hhmmss_reg, hhmmss);
 
 	return 0;
 }

@@ -1,7 +1,7 @@
-/autoconf.c/1.12/Sun Aug 31 15:08:22 2014//
-/consinit.c/1.6/Sun Aug 31 15:08:22 2014//
-/cpu.c/1.7/Sun Aug 31 15:08:22 2014//
-/locore.S/1.11/Sun Aug 31 15:08:22 2014//
-/machdep.c/1.17/Sun Aug 31 15:08:22 2014//
-/mainbus.c/1.11/Sun Aug 31 15:08:22 2014//
+/autoconf.c/1.12/Wed Oct  1 21:58:41 2014//
+/consinit.c/1.6/Wed Oct  1 21:58:41 2014//
+/cpu.c/1.7/Wed Oct  1 21:58:41 2014//
+/locore.S/1.11/Sat Sep 27 16:53:16 2014//
+/machdep.c/1.17/Wed Oct  1 21:58:41 2014//
+/mainbus.c/1.11/Wed Oct  1 21:58:41 2014//
 D

@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 
-__KERNEL_RCSID(1, "$NetBSD: awin_gige.c,v 1.7 2014/09/11 06:56:05 martin Exp $");
+__KERNEL_RCSID(1, "$NetBSD: awin_gige.c,v 1.18 2014/11/07 11:42:28 jmcneill Exp $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -49,6 +49,7 @@ __KERNEL_RCSID(1, "$NetBSD: awin_gige.c,v 1.7 2014/09/11 06:56:05 martin Exp $")
 #include <dev/mii/miivar.h>
 
 #include <dev/ic/dwc_gmac_var.h>
+#include <dev/ic/dwc_gmac_reg.h>
 
 static int awin_gige_match(device_t, cfdata_t, void *);
 static void awin_gige_attach(device_t, device_t, void *);
@@ -57,11 +58,17 @@ static int awin_gige_intr(void*);
 struct awin_gige_softc {
 	struct dwc_gmac_softc sc_core;
 	void *sc_ih;
+	struct awin_gpio_pindata sc_power_pin;
 };
 
 static const struct awin_gpio_pinset awin_gige_gpio_pinset = {
 	'A', AWIN_PIO_PA_GMAC_FUNC, AWIN_PIO_PA_GMAC_PINS,
 };
+
+static const struct awin_gpio_pinset awin_gige_gpio_pinset_a31 = {
+	'A', AWIN_A31_PIO_PA_GMAC_FUNC, AWIN_A31_PIO_PA_GMAC_PINS,
+};
+
 
 CFATTACH_DECL_NEW(awin_gige, sizeof(struct awin_gige_softc),
 	awin_gige_match, awin_gige_attach, NULL, NULL);
@@ -70,6 +77,9 @@ static int
 awin_gige_match(device_t parent, cfdata_t cf, void *aux)
 {
 	struct awinio_attach_args * const aio = aux;
+	const struct awin_gpio_pinset *pinset =
+	    awin_chip_id() == AWIN_CHIP_ID_A31 ?
+	    &awin_gige_gpio_pinset_a31 : &awin_gige_gpio_pinset;
 #ifdef DIAGNOSTIC
 	const struct awin_locators * const loc = &aio->aio_loc;
 #endif
@@ -80,7 +90,7 @@ awin_gige_match(device_t parent, cfdata_t cf, void *aux)
 	KASSERT(cf->cf_loc[AWINIOCF_PORT] == AWINIOCF_PORT_DEFAULT
 	    || cf->cf_loc[AWINIOCF_PORT] == loc->loc_port);
 
-	if (!awin_gpio_pinset_available(&awin_gige_gpio_pinset))
+	if (!awin_gpio_pinset_available(pinset))
 		return 0;
 
 	return 1;
@@ -92,10 +102,17 @@ awin_gige_attach(device_t parent, device_t self, void *aux)
 	struct awin_gige_softc * const sc = device_private(self);
 	struct awinio_attach_args * const aio = aux;
 	const struct awin_locators * const loc = &aio->aio_loc;
+	struct awin_gpio_pinset pinset =
+	    awin_chip_id() == AWIN_CHIP_ID_A31 ?
+	    awin_gige_gpio_pinset_a31 : awin_gige_gpio_pinset;
+	prop_dictionary_t cfg = device_properties(self);
+	uint32_t clkreg;
+	const char *phy_type, *pin_name;
 
 	sc->sc_core.sc_dev = self;
 
-	awin_gpio_pinset_acquire(&awin_gige_gpio_pinset);
+	prop_dictionary_get_uint8(cfg, "pinset-func", &pinset.pinset_func);
+	awin_gpio_pinset_acquire(&pinset);
 
 	sc->sc_core.sc_bst = aio->aio_core_bst;
 	sc->sc_core.sc_dmat = aio->aio_dmat;
@@ -108,7 +125,7 @@ awin_gige_attach(device_t parent, device_t self, void *aux)
 	/*
 	 * Interrupt handler
 	 */
-	sc->sc_ih = intr_establish(loc->loc_intr, IPL_VM, IST_LEVEL|IST_MPSAFE,
+	sc->sc_ih = intr_establish(loc->loc_intr, IPL_NET, IST_LEVEL,
 	    awin_gige_intr, sc);
 	if (sc->sc_ih == NULL) {
 		aprint_error_dev(self, "failed to establish interrupt %d\n",
@@ -118,20 +135,66 @@ awin_gige_attach(device_t parent, device_t self, void *aux)
 	aprint_normal_dev(self, "interrupting on irq %d\n",
 	     loc->loc_intr);
 
+	if (prop_dictionary_get_cstring_nocopy(cfg, "phy-power", &pin_name)) {
+		if (awin_gpio_pin_reserve(pin_name, &sc->sc_power_pin)) {
+			awin_gpio_pindata_write(&sc->sc_power_pin, 1);
+		} else {
+			aprint_error_dev(self,
+			    "failed to reserve GPIO \"%s\"\n", pin_name);
+		}
+	}
+
 	/*
 	 * Enable GMAC clock
 	 */
-	awin_reg_set_clear(aio->aio_core_bst, aio->aio_ccm_bsh,
-	    AWIN_AHB_GATING1_REG, AWIN_AHB_GATING1_GMAC, 0);
-	/*
-	 * We use RGMII phy mode, set up clock accordingly
-	 */
-	awin_reg_set_clear(aio->aio_core_bst, aio->aio_ccm_bsh,
-	    AWIN_GMAC_CLK_REG, 4, 3);
-	awin_reg_set_clear(aio->aio_core_bst, aio->aio_ccm_bsh,
-	    AWIN_GMAC_CLK_REG, 2, 0);
+	if (awin_chip_id() == AWIN_CHIP_ID_A31) {
+		awin_reg_set_clear(aio->aio_core_bst, aio->aio_ccm_bsh,
+		    AWIN_AHB_GATING0_REG, AWIN_A31_AHB_GATING0_GMAC, 0);
+	} else {
+		awin_reg_set_clear(aio->aio_core_bst, aio->aio_ccm_bsh,
+		    AWIN_AHB_GATING1_REG, AWIN_AHB_GATING1_GMAC, 0);
+	}
 
-	dwc_gmac_attach(&sc->sc_core, 2);
+	/*
+	 * Soft reset
+	 */
+	if (awin_chip_id() == AWIN_CHIP_ID_A31) {
+		awin_reg_set_clear(aio->aio_core_bst, aio->aio_ccm_bsh,
+		    AWIN_A31_AHB_RESET0_REG, AWIN_A31_AHB_RESET0_GMAC_RST, 0);
+	}
+
+	/*
+	 * PHY clock setup
+	 */
+	if (!prop_dictionary_get_cstring_nocopy(cfg, "phy-type", &phy_type))
+		phy_type = "rgmii";
+	if (strcmp(phy_type, "rgmii") == 0) {
+		clkreg = AWIN_GMAC_CLK_PIT | AWIN_GMAC_CLK_TCS_INT_RGMII;
+	} else if (strcmp(phy_type, "rgmii-bpi") == 0) {
+		clkreg = AWIN_GMAC_CLK_PIT | AWIN_GMAC_CLK_TCS_INT_RGMII;
+		/*
+		 * These magic bits seem to be necessary for RGMII at gigabit
+		 * speeds on Banana Pi.
+		 */
+		clkreg |= __BITS(11,10);
+	} else if (strcmp(phy_type, "gmii") == 0) {
+		clkreg = AWIN_GMAC_CLK_TCS_INT_RGMII;
+	} else if (strcmp(phy_type, "mii") == 0) {
+		clkreg = AWIN_GMAC_CLK_TCS_MII;
+	} else {
+		panic("unknown phy type '%s'", phy_type);
+	}
+	if (awin_chip_id() == AWIN_CHIP_ID_A31) {
+		awin_reg_set_clear(aio->aio_core_bst, aio->aio_ccm_bsh,
+		    AWIN_A31_GMAC_CLK_REG, clkreg,
+		    AWIN_GMAC_CLK_PIT|AWIN_GMAC_CLK_TCS);
+	} else {
+		awin_reg_set_clear(aio->aio_core_bst, aio->aio_ccm_bsh,
+		    AWIN_GMAC_CLK_REG, clkreg,
+		    AWIN_GMAC_CLK_PIT|AWIN_GMAC_CLK_TCS);
+	}
+
+	dwc_gmac_attach(&sc->sc_core, GMAC_MII_CLK_150_250M_DIV102);
 }
 
 static int

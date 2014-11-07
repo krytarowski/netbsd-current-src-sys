@@ -1,4 +1,4 @@
-/*	$NetBSD: esc.c,v 1.27 2014/02/22 19:03:06 matt Exp $	*/
+/*	$NetBSD: esc.c,v 1.29 2014/10/25 10:58:12 skrll Exp $	*/
 
 /*
  * Copyright (c) 1990 The Regents of the University of California.
@@ -86,7 +86,7 @@
  */
 
 #include <sys/cdefs.h>
-__KERNEL_RCSID(0, "$NetBSD: esc.c,v 1.27 2014/02/22 19:03:06 matt Exp $");
+__KERNEL_RCSID(0, "$NetBSD: esc.c,v 1.29 2014/10/25 10:58:12 skrll Exp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -103,7 +103,6 @@ __KERNEL_RCSID(0, "$NetBSD: esc.c,v 1.27 2014/02/22 19:03:06 matt Exp $");
 #include <machine/cpu.h>
 #include <machine/io.h>
 #include <machine/intr.h>
-#include <arm/arm32/katelib.h>
 #include <acorn32/podulebus/podulebus.h>
 #include <acorn32/podulebus/escreg.h>
 #include <acorn32/podulebus/escvar.h>
@@ -254,7 +253,7 @@ escinitialize(struct esc_softc *dev)
 	l2pte_set(ptep, npte, opte);
 	PTE_SYNC(ptep);
 	cpu_tlb_flushD();
-	cpu_dcache_wbinv_range((vm_offset_t)dev->sc_bump_va, PAGE_SIZE);
+	cpu_dcache_wbinv_range((vaddr_t)dev->sc_bump_va, PAGE_SIZE);
 
 	printf(" dmabuf V0x%08x P0x%08x", (u_int)dev->sc_bump_va, (u_int)dev->sc_bump_pa);
 }
@@ -892,7 +891,7 @@ esc_setup_nexus(struct esc_softc *dev, struct nexus *nexus, struct esc_pending *
 /* Flush the caches. */
 
 	if (len && !(mode & ESC_SELECT_I))
-		cpu_dcache_wbinv_range((vm_offset_t)buf, len);
+		cpu_dcache_wbinv_range((vaddr_t)buf, len);
 }
 
 int

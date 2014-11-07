@@ -1,12 +1,15 @@
-/acgetline.c/1.1.1.1/Sun Aug 31 15:08:23 2014//
-/adfile.c/1.1.1.3/Sun Aug 31 15:08:23 2014//
-/adisasm.c/1.1.1.3/Sun Aug 31 15:08:23 2014//
-/adwalk.c/1.1.1.3/Sun Aug 31 15:08:23 2014//
-/ahpredef.c/1.1.1.1/Sun Aug 31 15:08:23 2014//
-/dmextern.c/1.1.1.3/Sun Aug 31 15:08:23 2014//
-/dmrestag.c/1.1.1.3/Sun Aug 31 15:08:23 2014//
-/dmtable.c/1.1.1.4/Sun Aug 31 15:08:23 2014//
-/dmtbdump.c/1.1.1.4/Sun Aug 31 15:08:23 2014//
-/dmtbinfo.c/1.5/Sun Aug 31 15:08:23 2014//
-/getopt.c/1.1.1.3/Sun Aug 31 15:08:23 2014//
+/acgetline.c/1.1.1.2/Fri Nov  7 18:25:45 2014//
+/adfile.c/1.1.1.4/Fri Nov  7 18:25:45 2014//
+/adisasm.c/1.1.1.4/Fri Nov  7 18:25:45 2014//
+/adwalk.c/1.1.1.4/Fri Nov  7 18:25:45 2014//
+/ahpredef.c/1.1.1.2/Fri Nov  7 18:25:45 2014//
+/dmextern.c/1.1.1.4/Fri Nov  7 18:25:45 2014//
+/dmrestag.c/1.1.1.4/Fri Nov  7 18:25:45 2014//
+/dmtable.c/1.1.1.5/Fri Nov  7 18:25:45 2014//
+/dmtbdump.c/1.1.1.5/Fri Nov  7 18:25:45 2014//
+/dmtbinfo.c/1.6/Fri Nov  7 18:25:45 2014//
+/getopt.c/1.1.1.4/Fri Nov  7 18:25:45 2014//
+/ahids.c/1.1.1.1/Fri Nov  7 18:56:36 2014//
+/ahuuids.c/1.1.1.1/Fri Nov  7 18:56:36 2014//
+/cmfsize.c/1.1.1.1/Fri Nov  7 18:56:36 2014//
 D

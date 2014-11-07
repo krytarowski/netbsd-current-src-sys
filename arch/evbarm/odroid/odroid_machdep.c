@@ -1,4 +1,4 @@
-/*	$NetBSD: odroid_machdep.c,v 1.33 2014/09/09 21:21:22 reinoud Exp $ */
+/*	$NetBSD: odroid_machdep.c,v 1.39 2014/09/30 14:24:26 reinoud Exp $ */
 
 /*
  * Copyright (c) 2014 The NetBSD Foundation, Inc.
@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__KERNEL_RCSID(0, "$NetBSD: odroid_machdep.c,v 1.33 2014/09/09 21:21:22 reinoud Exp $");
+__KERNEL_RCSID(0, "$NetBSD: odroid_machdep.c,v 1.39 2014/09/30 14:24:26 reinoud Exp $");
 
 #include "opt_evbarm_boardtype.h"
 #include "opt_exynos.h"
@@ -94,6 +94,15 @@ __KERNEL_RCSID(0, "$NetBSD: odroid_machdep.c,v 1.33 2014/09/09 21:21:22 reinoud 
 #include <dev/usb/ukbdvar.h>
 #include <net/if_ether.h>
 
+
+/* sanity checks */
+#ifndef EXYNOS4
+#ifndef EXYNOS5
+#error Please define _either_ an EXYNOS4 or an EXYNOS5 cpu, not mixed
+#endif
+#endif
+
+
 /* serial console stuff */
 #include "sscom.h"
 #include "opt_sscom.h"
@@ -108,44 +117,8 @@ __KERNEL_RCSID(0, "$NetBSD: odroid_machdep.c,v 1.33 2014/09/09 21:21:22 reinoud 
 #include <arm/samsung/sscom_var.h>
 #include <arm/samsung/sscom_reg.h>
 
-static const struct sscom_uart_info exynos_uarts[] = {
-#ifdef EXYNOS5
-	{
-		.unit    = 0,
-		.iobase = EXYNOS5_UART0_OFFSET
-	},
-	{
-		.unit    = 1,
-		.iobase = EXYNOS5_UART1_OFFSET
-	},
-	{
-		.unit    = 2,
-		.iobase = EXYNOS5_UART2_OFFSET
-	},
-	{
-		.unit    = 3,
-		.iobase = EXYNOS5_UART3_OFFSET
-	},
-#endif
-#ifdef EXYNOS4
-	{
-		.unit    = 0,
-		.iobase = EXYNOS4_UART0_OFFSET
-	},
-	{
-		.unit    = 1,
-		.iobase = EXYNOS4_UART1_OFFSET
-	},
-	{
-		.unit    = 2,
-		.iobase = EXYNOS4_UART2_OFFSET
-	},
-	{
-		.unit    = 3,
-		.iobase = EXYNOS4_UART3_OFFSET
-	},
-#endif
-};
+extern const int num_exynos_uarts_entries;
+extern const struct sscom_uart_info exynos_uarts[];
 
 /* sanity checks for serial console */
 #ifndef CONSPEED
@@ -161,7 +134,7 @@ static const struct sscom_uart_info exynos_uarts[] = {
 //static const bus_addr_t conaddr = CONADDR;
 static const int conspeed = CONSPEED;
 static const int conmode = CONMODE;
-#endif /*defined(KGDB) || defined(SSCOM0CONSOLE) || defined(SSCOM1CONSOLE) */
+#endif /*defined(KGDB) || defined(SSCOM*CONSOLE) */
 
 /*
  * uboot passes 4 arguments to us.
@@ -345,7 +318,7 @@ initarm(void *arg)
 			EXYNOS_IOPHYSTOVIRT(armreg_cbar_read());
 
 #ifdef ARM_TRUSTZONE_FIRMWARE
-		exynos_l2cc_init();
+		exynos4_l2cc_init();
 #endif
 		arml2cc_init(&exynos_bs_tag, pl310_bh, 0x2000);
 	}
@@ -374,16 +347,14 @@ initarm(void *arg)
 	ram_size = (psize_t) 0xC0000000 - 0x40000000;
 
 #if defined(EXYNOS4)
-	if (IS_EXYNOS4_P()) {
-		switch (exynos_pop_id) {
-		case EXYNOS_PACKAGE_ID_2_GIG:
-			KASSERT(ram_size <= 2UL*1024*1024*1024);
-			break;
-		default:
-			printf("Unknown PoP package id 0x%08x, assuming 1Gb\n",
-				exynos_pop_id);
-			ram_size = (psize_t) 0x10000000;
-		}
+	switch (exynos_pop_id) {
+	case EXYNOS_PACKAGE_ID_2_GIG:
+		KASSERT(ram_size <= 2UL*1024*1024*1024);
+		break;
+	default:
+		printf("Unknown PoP package id 0x%08x, assuming 1Gb\n",
+			exynos_pop_id);
+		ram_size = (psize_t) 0x10000000;
 	}
 #endif
 
@@ -458,12 +429,13 @@ consinit(void)
 	freq = (freq + conspeed / 2) / 1000;
 	freq *= 1000;
 
-	for (i = 0; i < __arraycount(exynos_uarts); i++) {
+	/* go trough all entries */
+	for (i = 0; i < num_exynos_uarts_entries; i++) {
 		/* attach console */
 		if (exynos_uarts[i].iobase + EXYNOS_CORE_PBASE == iobase)
 			break;
 	}
-	KASSERT(i < __arraycount(exynos_uarts));
+	KASSERT(i < num_exynos_uarts_entries);
 	printf("%s: attaching console @ %#"PRIxPTR" (%u HZ, %u bps)\n",
 	    __func__, iobase, freq, conspeed);
 	if (sscom_cnattach(bst, exynos_core_bsh, &exynos_uarts[i],
@@ -643,6 +615,19 @@ odroid_exynos5_gpio_ncs(device_t self, prop_dictionary_t dict) {
 	prop_dictionary_set_uint32(dict, "nc-GPG2", 0x03 - 0b00000000);
 	prop_dictionary_set_uint32(dict, "nc-GPH0", 0x0f - 0b00000000);
 	prop_dictionary_set_uint32(dict, "nc-GPH1", 0xff - 0b00000000);
+
+	prop_dictionary_set_uint32(dict, "nc-GPJ0", 0xff - 0b00000000);
+	prop_dictionary_set_uint32(dict, "nc-GPJ1", 0xff - 0b00000000);
+	prop_dictionary_set_uint32(dict, "nc-GPJ2", 0xff - 0b00000000);
+	prop_dictionary_set_uint32(dict, "nc-GPJ3", 0xff - 0b00000000);
+	prop_dictionary_set_uint32(dict, "nc-GPJ4", 0xff - 0b00000000);
+	prop_dictionary_set_uint32(dict, "nc-GPK0", 0xff - 0b00000000);
+	prop_dictionary_set_uint32(dict, "nc-GPK1", 0xff - 0b00000000);
+	/* usb3 overcur1{2,3} at bits 4,5, vbus1 at pin 7 */
+	prop_dictionary_set_uint32(dict, "nc-GPK2", 0xff - 0b10110000);
+	/* usb3 overcur0{2,3} at bits 0,1, vbus0 at pin 3 */
+	prop_dictionary_set_uint32(dict, "nc-GPK3", 0xff - 0b00001011);
+
 	prop_dictionary_set_uint32(dict, "nc-GPV0", 0xff - 0b00000000);
 	prop_dictionary_set_uint32(dict, "nc-GPV1", 0xff - 0b00000000);
 	prop_dictionary_set_uint32(dict, "nc-ETC5", 0x03 - 0b00000000);
@@ -688,7 +673,7 @@ odroid_device_register(device_t self, void *aux)
 	}
 
 #ifdef EXYNOS4
-	if (device_is_a(self, "exyogpio") && (IS_EXYNOS4_P())) {
+	if (device_is_a(self, "exyogpio")) {
 		/* unused bits */
 		odroid_exynos4_gpio_ncs(self, dict);
 
@@ -701,7 +686,7 @@ odroid_device_register(device_t self, void *aux)
 
 		prop_dictionary_set_cstring(dict, "p3v3_en", ">GPA1[3]");
 	}
-	if (device_is_a(self, "exyoiic") && (IS_EXYNOS4_P())) {
+	if (device_is_a(self, "exyoiic")) {
 		prop_dictionary_set_bool(dict, "iic0_enable", true);
 		prop_dictionary_set_bool(dict, "iic1_enable", true);
 		prop_dictionary_set_bool(dict, "iic2_enable", true);
@@ -714,7 +699,7 @@ odroid_device_register(device_t self, void *aux)
 	}
 #endif
 #ifdef EXYNOS5
-	if (device_is_a(self, "exyogpio") && (IS_EXYNOS5_P())) {
+	if (device_is_a(self, "exyogpio")) {
 		/* unused bits */
 		odroid_exynos5_gpio_ncs(self, dict);
 
@@ -726,7 +711,7 @@ odroid_device_register(device_t self, void *aux)
 		/* internal hub IIRC, unknown if this line exists */
 		//prop_dictionary_set_cstring(dict, "p3v3_en", ">GPA1[3]");
 	}
-	if (device_is_a(self, "exyoiic") && (IS_EXYNOS5_P())) {
+	if (device_is_a(self, "exyoiic")) {
 		/* IIC0 not used (NC) */
 		prop_dictionary_set_bool(dict, "iic1_enable", true);
 		prop_dictionary_set_bool(dict, "iic2_enable", true);
@@ -752,52 +737,49 @@ exynos_usb_init_usb3503_hub(device_t self)
 	prop_dictionary_get_cstring_nocopy(dict, "nreset", &pin_nreset);
 	prop_dictionary_get_cstring_nocopy(dict, "hubconnect", &pin_hubconnect);
 	prop_dictionary_get_cstring_nocopy(dict, "nint", &pin_nint);
-	if (pin_nreset && pin_hubconnect && pin_nint) {
-		ok1 = exynos_gpio_pin_reserve(pin_nreset, &nreset_pin);
-		ok2 = exynos_gpio_pin_reserve(pin_hubconnect, &hubconnect_pin);
-		ok3 = exynos_gpio_pin_reserve(pin_nint, &nint_pin);
-		if (!ok1)
-			aprint_error_dev(self,
-			    "can't reserve GPIO pin %s\n", pin_nreset);
-		if (!ok2)
-			aprint_error_dev(self,
-			    "can't reserve GPIO pin %s\n", pin_hubconnect);
-		if (!ok3)
-			aprint_error_dev(self,
-			    "can't reserve GPIO pin %s\n", pin_nint);
-		if (!(ok1 && ok2 && ok3))
-			return;
-
-		/* reset pin to zero */
-		exynos_gpio_pindata_write(&nreset_pin, 0);
-		DELAY(10000);
-
-		/* pull intn low */
-		exynos_gpio_pindata_ctl(&nint_pin, GPIO_PIN_PULLDOWN);
-		DELAY(10000);
-
-		/* set hubconnect low */
-		exynos_gpio_pindata_write(&hubconnect_pin, 0);
-		DELAY(10000);
-
-		/* reset pin up again, hub enters RefClk stage */
-		exynos_gpio_pindata_write(&nreset_pin, 1);
-		DELAY(10000);
-
-		/* set hubconnect high */
-		exynos_gpio_pindata_write(&hubconnect_pin, 1);
-		DELAY(10000);
-
-		/* release intn */
-		exynos_gpio_pindata_ctl(&nint_pin, GPIO_PIN_TRISTATE);
-		DELAY(10000);
-
-		/* DONE! */
-	} else {
+	if (!(pin_nreset && pin_hubconnect && pin_nint)) {
 		aprint_error_dev(self,
 			"failed to lookup GPIO pins for usb3503 hub init");
+		return;
 	}
-	/* XXX leaving pins claimed! */
+
+	ok1 = exynos_gpio_pin_reserve(pin_nreset, &nreset_pin);
+	ok2 = exynos_gpio_pin_reserve(pin_hubconnect, &hubconnect_pin);
+	ok3 = exynos_gpio_pin_reserve(pin_nint, &nint_pin);
+	if (!ok1)
+		aprint_error_dev(self,
+		    "can't reserve GPIO pin %s\n", pin_nreset);
+	if (!ok2)
+		aprint_error_dev(self,
+		    "can't reserve GPIO pin %s\n", pin_hubconnect);
+	if (!ok3)
+		aprint_error_dev(self,
+		    "can't reserve GPIO pin %s\n", pin_nint);
+	if (!(ok1 && ok2 && ok3))
+		return;
+
+	/* reset pin to zero */
+	exynos_gpio_pindata_write(&nreset_pin, 0);
+	DELAY(10000);
+
+	/* pull intn low */
+	exynos_gpio_pindata_ctl(&nint_pin, GPIO_PIN_PULLDOWN);
+
+	/* set hubconnect low */
+	exynos_gpio_pindata_write(&hubconnect_pin, 0);
+
+	/* reset pin up again, hub enters RefClk stage */
+	exynos_gpio_pindata_write(&nreset_pin, 1);
+	DELAY(10000);
+
+	/* release intn */
+	exynos_gpio_pindata_ctl(&nint_pin, GPIO_PIN_TRISTATE);
+
+	/* set hubconnect high */
+	exynos_gpio_pindata_write(&hubconnect_pin, 1);
+	DELAY(40000);
+
+	/* DONE! */
 }
 
 
@@ -903,5 +885,28 @@ odroid_device_register_post_config(device_t self, void *aux)
 		exynos_usb_powercycle_lan9730(self);
 		exynos_usb_init_usb3503_hub(self);
 	}
+}
+
+
+/*
+ * Odroid specific tweaks
+ */
+/*
+ * The external USB devices are clocked trough the DEBUG clkout
+ * XXX is this Odroid specific? XXX
+ */
+void
+exynos_init_clkout_for_usb(void)
+{
+#ifdef EXYNOS4
+	/* Select XUSBXTI as source for CLKOUT */
+	bus_space_write_4(&exynos_bs_tag, exynos_pmu_bsh,
+		EXYNOS_PMU_DEBUG_CLKOUT, 0x900);
+#endif
+#ifdef EXYNOS5
+	/* Select XUSBXTI as source for CLKOUT */
+	bus_space_write_4(&exynos_bs_tag, exynos_pmu_bsh,
+		EXYNOS_PMU_DEBUG_CLKOUT, 0x1000);
+#endif
 }
 

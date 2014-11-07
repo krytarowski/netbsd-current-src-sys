@@ -1,4 +1,4 @@
-/*	$NetBSD: pci_machdep.c,v 1.67 2014/05/06 18:54:34 christos Exp $	*/
+/*	$NetBSD: pci_machdep.c,v 1.69 2014/11/07 12:48:21 christos Exp $	*/
 
 /*-
  * Copyright (c) 1997, 1998 The NetBSD Foundation, Inc.
@@ -73,7 +73,7 @@
  */
 
 #include <sys/cdefs.h>
-__KERNEL_RCSID(0, "$NetBSD: pci_machdep.c,v 1.67 2014/05/06 18:54:34 christos Exp $");
+__KERNEL_RCSID(0, "$NetBSD: pci_machdep.c,v 1.69 2014/11/07 12:48:21 christos Exp $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -333,7 +333,7 @@ pci_conf_selector(pcitag_t tag, int reg)
 	case 2:
 		return tag.mode1 & mode2_mask.mode1;
 	default:
-		panic("%s: mode not configured", __func__);
+		panic("%s: mode %d not configured", __func__, pci_mode);
 	}
 }
 
@@ -346,7 +346,7 @@ pci_conf_port(pcitag_t tag, int reg)
 	case 2:
 		return tag.mode2.port | reg;
 	default:
-		panic("%s: mode not configured", __func__);
+		panic("%s: mode %d not configured", __func__, pci_mode);
 	}
 }
 
@@ -366,7 +366,7 @@ pci_conf_select(uint32_t sel)
 			outb(PCI_MODE2_FORWARD_REG, tag.mode2.forward);
 		return;
 	default:
-		panic("%s: mode not configured", __func__);
+		panic("%s: mode %d not configured", __func__, pci_mode);
 	}
 }
 
@@ -415,21 +415,23 @@ pci_make_tag(pci_chipset_tag_t pc, int bus, int device, int function)
 	switch (pci_mode) {
 	case 1:
 		if (bus >= 256 || device >= 32 || function >= 8)
-			panic("%s: bad request", __func__);
+			panic("%s: bad request(%d, %d, %d)", __func__,
+			    bus, device, function);
 
 		tag.mode1 = PCI_MODE1_ENABLE |
 			    (bus << 16) | (device << 11) | (function << 8);
 		return tag;
 	case 2:
 		if (bus >= 256 || device >= 16 || function >= 8)
-			panic("%s: bad request", __func__);
+			panic("%s: bad request(%d, %d, %d)", __func__,
+			    bus, device, function);
 
 		tag.mode2.port = 0xc000 | (device << 8);
 		tag.mode2.enable = 0xf0 | (function << 1);
 		tag.mode2.forward = bus;
 		return tag;
 	default:
-		panic("%s: mode not configured", __func__);
+		panic("%s: mode %d not configured", __func__, pci_mode);
 	}
 }
 
@@ -465,7 +467,7 @@ pci_decompose_tag(pci_chipset_tag_t pc, pcitag_t tag,
 			*fp = (tag.mode2.enable >> 1) & 0x7;
 		return;
 	default:
-		panic("%s: mode not configured", __func__);
+		panic("%s: mode %d not configured", __func__, pci_mode);
 	}
 }
 
@@ -789,24 +791,28 @@ static bool
 x86_genfb_setmode(struct genfb_softc *sc, int newmode)
 {
 #if NGENFB > 0
+# if NACPICA > 0 && defined(VGA_POST)
 	static int curmode = WSDISPLAYIO_MODE_EMUL;
+# endif
 
 	switch (newmode) {
 	case WSDISPLAYIO_MODE_EMUL:
 		x86_genfb_mtrr_init(sc->sc_fboffset,
 		    sc->sc_height * sc->sc_stride);
-#if NACPICA > 0 && defined(VGA_POST)
+# if NACPICA > 0 && defined(VGA_POST)
 		if (curmode != newmode) {
 			if (vga_posth != NULL && acpi_md_vesa_modenum != 0) {
 				vga_post_set_vbe(vga_posth,
 				    acpi_md_vesa_modenum);
 			}
 		}
-#endif
+# endif
 		break;
 	}
 
+# if NACPICA > 0 && defined(VGA_POST)
 	curmode = newmode;
+# endif
 #endif
 	return true;
 }

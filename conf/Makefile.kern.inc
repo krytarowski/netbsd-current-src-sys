@@ -1,4 +1,4 @@
-#	$NetBSD: Makefile.kern.inc,v 1.173 2014/09/05 06:52:12 matt Exp $
+#	$NetBSD: Makefile.kern.inc,v 1.179 2014/11/07 12:34:14 nakayama Exp $
 #
 # This file contains common `MI' targets and definitions and it is included
 # at the bottom of each `MD' ${MACHINE}/conf/Makefile.${MACHINE}.
@@ -156,6 +156,12 @@ NORMAL_S?=	@${_MKSHMSG} "compile  ${.CURDIR:T}/${.TARGET}" && \
 		${_MKSHECHO}\
 		${CC} ${AFLAGS} ${AFLAGS.${<:T}} ${CPPFLAGS} -c $< && \
 		${CC} ${AFLAGS} ${AFLAGS.${<:T}} ${CPPFLAGS} -c $<
+ 
+# link rules: 
+LINK_O?=	@${_MKSHMSG} "   link  ${.CURDIR:T}/${.TARGET}" && \
+		${_MKSHECHO}\
+		${LD} -r -Map=${.TARGET}.map -o ${.TARGET} ${.ALLSRC} && \
+		${LD} -r -Map=${.TARGET}.map -o ${.TARGET} ${.ALLSRC}
 
 ##
 ## (3) libkern and compat
@@ -243,7 +249,7 @@ LINKFLAGS?=	${LINKFORMAT} ${LINKTEXT} ${LINKDATA} ${LINKENTRY} \
 
 LINKFLAGS_DEBUG?=	-X
 
-SYSTEM_LD_TAIL?=@${TOOL_SED} '/const char sccs/!d;s/.*@(.)//;s/\\.*//' vers.c; \
+SYSTEM_LD_TAIL?=@${TOOL_SED} '/const char sccs/!d;s/.*@(.)//;s/" "//;s/\\.*//' vers.c; \
 		${SIZE} $@; chmod 755 $@; \
 		${SYSTEM_CTFMERGE}
 SYSTEM_LD_TAIL_DEBUG?=; \
@@ -259,6 +265,7 @@ SYSTEM_LD_TAIL+=${SYSTEM_LD_TAIL_DEBUG}
 LINKFLAGS+=	${LINKFLAGS_DEBUG}
 EXTRA_KERNELS+= ${KERNELS:@.KERNEL.@${.KERNEL.}.gdb@}
 CTFFLAGS+=	-g
+TARGETSFX=	.gdb
 .elifndef PROF
 LINKFLAGS+=	${LINKFLAGS_NORMAL}
 .endif
@@ -268,6 +275,9 @@ SYSTEM_LD_TAIL_STAGE1=	${SYSTEM_LD_TAIL}
 SYSTEM_LD_TAIL_STAGE2=	${SYSTEM_LD_TAIL}
 .if defined(COPY_SYMTAB)
 SYSTEM_LD_TAIL_STAGE2+=	; echo ${DBSYM} $@; ${DBSYM} $@
+.if !empty(DEBUG:M-g)
+SYSTEM_LD_TAIL_STAGE2+=	; echo ${DBSYM} $@.gdb; ${DBSYM} $@.gdb
+.endif
 .endif
 SYSTEM_LD_TAIL_STAGE2+=	${SYSTEM_LD_TAIL_EXTRA}
 
@@ -336,7 +346,7 @@ assym.h machdep.o: Makefile
 .if !target(__CLEANKERNEL)
 __CLEANKERNEL: .USE
 	${_MKMSG} "${.TARGET}ing the kernel objects"
-	rm -f ${KERNELS} eddep tags *.[io] *.ln [a-z]*.s vers.c \
+	rm -f ${KERNELS} *.map eddep tags *.[io] *.ko *.ln [a-z]*.s vers.c \
 	    [Ee]rrs linterrs makelinks assym.h.tmp assym.h \
 	    ${EXTRA_KERNELS} ${EXTRA_CLEAN}
 .endif
@@ -553,7 +563,7 @@ build_kernel: .USE
 	${SYSTEM_LD} swap${.TARGET}.o kern_ksyms_buf.o
 	${SYSTEM_LD_TAIL_STAGE1}
 	${CC} ${CFLAGS} ${CPPFLAGS} -DCOPY_SYMTAB \
-	    -DSYMTAB_SPACE=$$(${DBSYM} -P ${.TARGET}) \
+	    -DSYMTAB_SPACE=$$(${DBSYM} -P ${.TARGET}${TARGETSFX}) \
 	    -c $S/kern/kern_ksyms_buf.c -o kern_ksyms_buf_real.o
 	${SYSTEM_LD_HEAD}
 	${SYSTEM_LD} swap${.TARGET}.o kern_ksyms_buf_real.o

@@ -1,4 +1,4 @@
-/*	$NetBSD: rpc_machdep.c,v 1.88 2014/02/22 19:03:06 matt Exp $	*/
+/*	$NetBSD: rpc_machdep.c,v 1.90 2014/10/25 10:58:12 skrll Exp $	*/
 
 /*
  * Copyright (c) 2000-2002 Reinoud Zandijk.
@@ -55,7 +55,7 @@
 
 #include <sys/param.h>
 
-__KERNEL_RCSID(0, "$NetBSD: rpc_machdep.c,v 1.88 2014/02/22 19:03:06 matt Exp $");
+__KERNEL_RCSID(0, "$NetBSD: rpc_machdep.c,v 1.90 2014/10/25 10:58:12 skrll Exp $");
 
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -85,7 +85,6 @@ __KERNEL_RCSID(0, "$NetBSD: rpc_machdep.c,v 1.88 2014/02/22 19:03:06 matt Exp $"
 
 #include <arm/locore.h>
 #include <arm/undefined.h>
-#include <arm/arm32/katelib.h>
 #include <arm/arm32/machdep.h>
 #include <arm/arm32/pmap.h>
 
@@ -767,7 +766,7 @@ initarm(void *cookie)
 	/* Map the core memory needed before autoconfig */
 	loop = 0;
 	while (l1_sec_table[loop].size) {
-		vm_size_t sz;
+		vsize_t sz;
 
 #ifdef VERBOSE_INIT_ARM
 		printf("%08lx -> %08lx @ %08lx\n", l1_sec_table[loop].pa,

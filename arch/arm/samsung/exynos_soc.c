@@ -1,4 +1,4 @@
-/*	$NetBSD: exynos_soc.c,v 1.20 2014/09/05 08:01:05 skrll Exp $	*/
+/*	$NetBSD: exynos_soc.c,v 1.25 2014/10/02 11:27:09 reinoud Exp $	*/
 
 /*-
  * Copyright (c) 2014 The NetBSD Foundation, Inc.
@@ -34,7 +34,7 @@
 #define	_ARM32_BUS_DMA_PRIVATE
 
 #include <sys/cdefs.h>
-__KERNEL_RCSID(1, "$NetBSD: exynos_soc.c,v 1.20 2014/09/05 08:01:05 skrll Exp $");
+__KERNEL_RCSID(1, "$NetBSD: exynos_soc.c,v 1.25 2014/10/02 11:27:09 reinoud Exp $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -62,13 +62,10 @@ __KERNEL_RCSID(1, "$NetBSD: exynos_soc.c,v 1.20 2014/09/05 08:01:05 skrll Exp $"
 /* XXXNH */
 #include <evbarm/odroid/platform.h>
 
-bus_space_handle_t exynos_core_bsh;
-bus_space_handle_t exynos_audiocore_bsh;
 
 /* these variables are retrieved in start.S and stored in .data */
 uint32_t  exynos_soc_id = 0;
 uint32_t  exynos_pop_id = 0;
-
 
 /* cpu frequencies */
 struct cpu_freq {
@@ -95,11 +92,16 @@ const struct cpu_freq cpu_freq_settings_exynos4[] = {
 	{1300, 6, 325, 0},
 	{1400, 3, 175, 0},
 	{1600, 3, 200, 0},
+//	{1704, 3, 213, 0},
+//	{1800, 4, 300, 0},
+//	{1920, 3, 240, 0},
+//	{2000, 3, 250, 0},
 };
 #endif
 
 
 #ifdef EXYNOS5
+#define EXYNOS5_DEFAULT_ENTRY 7
 const struct cpu_freq cpu_freq_settings_exynos5[] = {
 	{ 200,  3, 100, 2},
 	{ 333,  4, 222, 2},
@@ -108,6 +110,7 @@ const struct cpu_freq cpu_freq_settings_exynos5[] = {
 	{ 600,  4, 200, 1},
 	{ 667,  7, 389, 1},
 	{ 800,  3, 100, 0},
+	{ 900,  4, 150, 0},
 	{1000,  3, 125, 0},
 	{1066, 12, 533, 0},
 	{1200,  3, 150, 0},
@@ -120,12 +123,21 @@ static struct cpu_freq const *cpu_freq_settings = NULL;
 static int ncpu_freq_settings = 0;
 
 static int cpu_freq_target = 0;
-#define NFRQS 15
+#define NFRQS 18
 static char sysctl_cpu_freqs_txt[NFRQS*5];
+
+bus_space_handle_t exynos_core_bsh;
+bus_space_handle_t exynos_audiocore_bsh;
+
+bus_space_handle_t exynos_wdt_bsh;
+bus_space_handle_t exynos_pmu_bsh;
+bus_space_handle_t exynos_cmu_bsh;
+bus_space_handle_t exynos_cmu_apll_bsh;
+bus_space_handle_t exynos_sysreg_bsh;
+
 
 static int sysctl_cpufreq_target(SYSCTLFN_ARGS);
 static int sysctl_cpufreq_current(SYSCTLFN_ARGS);
-
 
 /*
  * the early serial console
@@ -195,6 +207,7 @@ exynos_cpu_boot(int cpu)
 }
 
 
+#ifdef EXYNOS4
 /*
  * The latency values used below are `magic' and probably chosen empirically.
  * For the 4210 variant the data latency is lower, a 0x110. This is currently
@@ -205,7 +218,7 @@ exynos_cpu_boot(int cpu)
  */
 
 int
-exynos_l2cc_init(void)
+exynos4_l2cc_init(void)
 {
 	const uint32_t tag_latency  = 0x110;
 	const uint32_t data_latency = IS_EXYNOS4410_P() ? 0x110 : 0x120;
@@ -262,6 +275,7 @@ exynos_l2cc_init(void)
 
 	return 0;
 }
+#endif
 #endif /* ARM_TRUSTZONE_FIRMWARE */
 
 
@@ -326,21 +340,11 @@ exynos_sysctl_cpufreq_init(void)
 uint64_t
 exynos_get_cpufreq(void)
 {
-	uint32_t reg = 0;
 	uint32_t regval;
 	uint32_t freq;
 
-#ifdef EXYNOS4
-	if (IS_EXYNOS4_P())
-		reg = EXYNOS4_CMU_APLL + PLL_CON0_OFFSET;
-#endif
-#ifdef EXYNOS5
-	if (IS_EXYNOS5_P()) 
-		reg = EXYNOS5_CMU_APLL + PLL_CON0_OFFSET;
-#endif
-	KASSERT(reg);
-
-	regval = bus_space_read_4(&exynos_bs_tag, exynos_core_bsh, reg);
+	regval = bus_space_read_4(&exynos_bs_tag, exynos_cmu_apll_bsh,
+			PLL_CON0_OFFSET);
 	freq   = PLL_FREQ(EXYNOS_F_IN_FREQ, regval);
 
 	return freq;
@@ -351,7 +355,6 @@ static void
 exynos_set_cpufreq(const struct cpu_freq *freqreq)
 {
 	struct cpu_info *ci;
-	uint32_t reg = 0;
 	uint32_t regval;
 	int M, P, S;
 	int cii;
@@ -364,19 +367,10 @@ exynos_set_cpufreq(const struct cpu_freq *freqreq)
 		 __SHIFTIN(P, PLL_CON0_P) |
 		 __SHIFTIN(S, PLL_CON0_S);
 
-#ifdef EXYNOS4
-	if (IS_EXYNOS4_P())
-		reg = EXYNOS4_CMU_APLL + PLL_CON0_OFFSET;
-#endif
-#ifdef EXYNOS5
-	if (IS_EXYNOS5_P())
-		reg = EXYNOS5_CMU_APLL + PLL_CON0_OFFSET;
-#endif
-	KASSERT(reg);
-
 	/* enable PPL and write config */
 	regval |= PLL_CON0_ENABLE;
-	bus_space_write_4(&exynos_bs_tag, exynos_core_bsh, reg, regval);
+	bus_space_write_4(&exynos_bs_tag, exynos_cmu_apll_bsh, PLL_CON0_OFFSET,
+		regval);
 
 	/* update our cycle counter i.e. our CPU frequency for all CPUs */
 	for (CPU_INFO_FOREACH(cii, ci)) {
@@ -449,7 +443,7 @@ sysctl_cpufreq_current(SYSCTLFN_ARGS)
 #ifdef VERBOSE_INIT_ARM
 #define DUMP_PLL(v, var) \
 	reg = EXYNOS##v##_CMU_##var + PLL_CON0_OFFSET;\
-	regval = bus_space_read_4(&exynos_bs_tag, exynos_core_bsh, reg); \
+	regval = bus_space_read_4(&exynos_bs_tag, exynos_cmu_bsh, reg); \
 	freq   = PLL_FREQ(EXYNOS_F_IN_FREQ, regval); \
 	printf("%8s at %d Mhz\n", #var, freq/(1000*1000));
 
@@ -463,53 +457,51 @@ exynos_dump_clocks(void)
 
 	printf("Initial PLL settings\n");
 #ifdef EXYNOS4
-	if (IS_EXYNOS4_P()) {
-		DUMP_PLL(4, APLL);
-		DUMP_PLL(4, MPLL);
-		DUMP_PLL(4, EPLL);
-		DUMP_PLL(4, VPLL);
-	}
+	DUMP_PLL(4, APLL);
+	DUMP_PLL(4, MPLL);
+	DUMP_PLL(4, EPLL);
+	DUMP_PLL(4, VPLL);
 #endif
 #ifdef EXYNOS5
-	if (IS_EXYNOS5_P()) {
-		DUMP_PLL(5, APLL);
-		DUMP_PLL(5, MPLL);
-		DUMP_PLL(5, EPLL);
-		DUMP_PLL(5, VPLL);
-		DUMP_PLL(5, CPLL);
-		DUMP_PLL(5, GPLL);
-		DUMP_PLL(5, BPLL);
-	}
+	DUMP_PLL(5, APLL);
+	DUMP_PLL(5, MPLL);
+	DUMP_PLL(5, KPLL);
+	DUMP_PLL(5, DPLL);
+	DUMP_PLL(5, VPLL);
+	DUMP_PLL(5, CPLL);
+	DUMP_PLL(5, GPLL);
+	DUMP_PLL(5, BPLL);
 #endif
 }
 #undef DUMP_PLL
 #endif
 
 
+/* XXX clock stuff needs major work XXX */
+
 void
 exynos_clocks_bootstrap(void)
 {
-#ifdef EXYNOS4
-	if (IS_EXYNOS4_P()) {
-		cpu_freq_settings = cpu_freq_settings_exynos4;
-		ncpu_freq_settings = __arraycount(cpu_freq_settings_exynos4);
-	}
-#endif
-#ifdef EXYNOS5
-	if (IS_EXYNOS5_P()) {
-		cpu_freq_settings = cpu_freq_settings_exynos5;
-		ncpu_freq_settings = __arraycount(cpu_freq_settings_exynos5);
-	}
-#endif
 	KASSERT(ncpu_freq_settings != 0);
 	KASSERT(ncpu_freq_settings < NFRQS);
+	int fsel;
 
 #ifdef VERBOSE_INIT_ARM
 	exynos_dump_clocks();
 #endif
 
-	/* set max cpufreq */
-	exynos_set_cpufreq(&cpu_freq_settings[ncpu_freq_settings-1]);
+	/* set (max) cpufreq */
+	fsel = ncpu_freq_settings-1;
+
+#ifdef EXYNOS5
+	/* XXX BUGFIX selecting freq on E5 goes wrong for now XXX */
+	fsel = EXYNOS5_DEFAULT_ENTRY;
+#endif
+
+	exynos_set_cpufreq(&cpu_freq_settings[fsel]);
+
+	/* set external USB frequency to XCLKOUT */
+	exynos_init_clkout_for_usb();
 }
 
 
@@ -518,25 +510,12 @@ exynos_bootstrap(vaddr_t iobase, vaddr_t uartbase)
 {
 	int error;
 	size_t core_size, audiocore_size;
-	size_t audiocore_pbase, audiocore_vbase __diagused;
-
-#ifdef EXYNOS4
-	if (IS_EXYNOS4_P()) {
-		core_size = EXYNOS4_CORE_SIZE;
-		audiocore_size = EXYNOS4_AUDIOCORE_SIZE;
-		audiocore_pbase = EXYNOS4_AUDIOCORE_PBASE;
-		audiocore_vbase = EXYNOS4_AUDIOCORE_VBASE;
-	}
-#endif
-
-#ifdef EXYNOS5
-	if (IS_EXYNOS5_P()) {
-		core_size = EXYNOS5_CORE_SIZE;
-		audiocore_size = EXYNOS5_AUDIOCORE_SIZE;
-		audiocore_pbase = EXYNOS5_AUDIOCORE_PBASE;
-		audiocore_vbase = EXYNOS5_AUDIOCORE_VBASE;
-	}
-#endif
+	bus_addr_t audiocore_pbase;
+	bus_addr_t audiocore_vbase __diagused;
+	bus_addr_t exynos_wdt_offset;
+	bus_addr_t exynos_pmu_offset;
+	bus_addr_t exynos_sysreg_offset;
+	bus_addr_t exynos_cmu_apll_offset;
 
 	/* set up early console so we can use printf() and friends */
 #ifdef EXYNOS_CONSOLE_EARLY
@@ -544,6 +523,35 @@ exynos_bootstrap(vaddr_t iobase, vaddr_t uartbase)
 	cn_tab = &exynos_earlycons;
 	printf("Exynos early console operational\n\n");
 #endif
+
+#ifdef EXYNOS4
+	core_size = EXYNOS4_CORE_SIZE;
+	audiocore_size = EXYNOS4_AUDIOCORE_SIZE;
+	audiocore_pbase = EXYNOS4_AUDIOCORE_PBASE;
+	audiocore_vbase = EXYNOS4_AUDIOCORE_VBASE;
+	exynos_wdt_offset = EXYNOS4_WDT_OFFSET;
+	exynos_pmu_offset = EXYNOS4_PMU_OFFSET;
+	exynos_sysreg_offset = EXYNOS4_SYSREG_OFFSET;
+	exynos_cmu_apll_offset = EXYNOS4_CMU_APLL;
+
+	cpu_freq_settings = cpu_freq_settings_exynos4;
+	ncpu_freq_settings = __arraycount(cpu_freq_settings_exynos4);
+#endif
+
+#ifdef EXYNOS5
+	core_size = EXYNOS5_CORE_SIZE;
+	audiocore_size = EXYNOS5_AUDIOCORE_SIZE;
+	audiocore_pbase = EXYNOS5_AUDIOCORE_PBASE;
+	audiocore_vbase = EXYNOS5_AUDIOCORE_VBASE;
+	exynos_wdt_offset = EXYNOS5_WDT_OFFSET;
+	exynos_pmu_offset = EXYNOS5_PMU_OFFSET;
+	exynos_sysreg_offset = EXYNOS5_SYSREG_OFFSET;
+	exynos_cmu_apll_offset = EXYNOS5_CMU_APLL;
+
+	cpu_freq_settings = cpu_freq_settings_exynos5;
+	ncpu_freq_settings = __arraycount(cpu_freq_settings_exynos5);
+#endif
+
 	/* map in the exynos io registers */
 	error = bus_space_map(&exynos_bs_tag, EXYNOS_CORE_PBASE,
 		core_size, 0, &exynos_core_bsh);
@@ -558,6 +566,33 @@ exynos_bootstrap(vaddr_t iobase, vaddr_t uartbase)
 		panic("%s: failed to map in Exynos audio SFR registers: %d",
 			__func__, error);
 	KASSERT(exynos_audiocore_bsh == audiocore_vbase);
+
+	/* map in commonly used subregions and common used register banks */
+	error = bus_space_subregion(&exynos_bs_tag, exynos_core_bsh,
+		exynos_wdt_offset, EXYNOS_BLOCK_SIZE, &exynos_wdt_bsh);
+	if (error)
+		panic("%s: failed to subregion wdt registers: %d",
+			__func__, error);
+
+	error = bus_space_subregion(&exynos_bs_tag, exynos_core_bsh,
+		exynos_pmu_offset, EXYNOS_BLOCK_SIZE, &exynos_pmu_bsh);
+	if (error)
+		panic("%s: failed to subregion pmu registers: %d",
+			__func__, error);
+
+	exynos_cmu_bsh = exynos_core_bsh;
+	bus_space_subregion(&exynos_bs_tag, exynos_core_bsh,
+		exynos_sysreg_offset, EXYNOS_BLOCK_SIZE,
+		&exynos_sysreg_bsh);
+	if (error)
+		panic("%s: failed to subregion sysreg registers: %d",
+			__func__, error);
+
+	error = bus_space_subregion(&exynos_bs_tag, exynos_cmu_bsh,
+		exynos_cmu_apll_offset, 0xfff, &exynos_cmu_apll_bsh);
+	if (error)
+		panic("%s: failed to subregion cmu apll registers: %d",
+			__func__, error);
 
 	/* init bus dma tags */
 	exynos_dma_bootstrap(physmem * PAGE_SIZE);
@@ -575,7 +610,7 @@ exynos_device_register(device_t self, void *aux)
 		 * XXX KLUDGE ALERT XXX
 		 * The iot mainbus supplies is completely wrong since it scales
 		 * addresses by 2.  The simplest remedy is to replace with our
-		 * bus space used for the armcore regisers (which armperiph uses).
+		 * bus space used for the armcore registers (which armperiph uses).
 		 */
 		struct mainbus_attach_args * const mb = aux;
 		mb->mb_iot = &exynos_bs_tag;
@@ -590,7 +625,7 @@ exynos_device_register(device_t self, void *aux)
 		extern uint32_t exynos_soc_id;
 
 		switch (EXYNOS_PRODUCT_ID(exynos_soc_id)) {
-#if defined(EXYNOS5)
+#ifdef EXYNOS5
 		case 0xe5410:
 			/* offsets not changed on matt's request */
 #if 0
@@ -600,7 +635,7 @@ exynos_device_register(device_t self, void *aux)
 #endif
 			break;
 #endif
-#if defined(EXYNOS4)
+#ifdef EXYNOS4
 		case 0xe4410:
 		case 0xe4412: {
 			struct mpcore_attach_args * const mpcaa = aux;
@@ -646,4 +681,340 @@ exynos_device_register_post_config(device_t self, void *aux)
 {
 	exyo_device_register_post_config(self, aux);
 }
+
+
+/*
+ * USB power SoC dependent handling
+ */
+
+#ifdef EXYNOS4
+static struct exynos_gpio_pinset e4_uhost_pwr_pinset = {
+	.pinset_group = "ETC6",
+	.pinset_func  = 0,
+	.pinset_mask  = __BIT(6) | __BIT(7),
+};
+#endif
+
+
+#ifdef EXYNOS5
+static struct exynos_gpio_pinset e5_uhost_pwr_pinset = {
+	.pinset_group = "ETC6",
+	.pinset_func  = 0,
+	.pinset_mask  = __BIT(5) | __BIT(6),
+};
+static struct exynos_gpio_pinset e5_usb3_bus0_pinset = {
+	.pinset_group = "GPK3",
+	.pinset_func  = 2,
+	.pinset_mask  = __BIT(0) | __BIT(1) | __BIT(3),
+};
+static struct exynos_gpio_pinset e5_usb3_bus1_pinset = {
+	.pinset_group = "GPK2",
+	.pinset_func  = 2,
+	.pinset_mask  = __BIT(4) | __BIT(5) | __BIT(7),
+};
+#endif
+
+
+void
+exynos_usb_soc_powerup(void)
+{
+	struct exynos_gpio_pindata XuhostOVERCUR;
+	struct exynos_gpio_pindata XuhostPWREN;
+
+#ifdef EXYNOS4
+		exynos_gpio_pinset_acquire(&e4_uhost_pwr_pinset);
+		exynos_gpio_pinset_to_pindata(&e4_uhost_pwr_pinset, 6, &XuhostPWREN);
+		exynos_gpio_pinset_to_pindata(&e4_uhost_pwr_pinset, 7, &XuhostOVERCUR);
+
+		/* enable power and set Xuhost OVERCUR to inactive by pulling it up */
+		exynos_gpio_pindata_ctl(&XuhostPWREN, GPIO_PIN_PULLUP);
+		exynos_gpio_pindata_ctl(&XuhostOVERCUR, GPIO_PIN_PULLUP);
+		DELAY(80000);
+#endif
+#ifdef EXYNOS5
+	if (IS_EXYNOS5410_P()) {
+		struct exynos_gpio_pindata Xovercur2, Xovercur3;
+		struct exynos_gpio_pindata Xvbus;
+
+		/* BUS 0 */
+		exynos_gpio_pinset_acquire(&e5_usb3_bus0_pinset);
+		exynos_gpio_pinset_to_pindata(&e5_usb3_bus0_pinset, 0, &Xovercur2);
+		exynos_gpio_pinset_to_pindata(&e5_usb3_bus0_pinset, 1, &Xovercur3);
+		exynos_gpio_pinset_to_pindata(&e5_usb3_bus0_pinset, 3, &Xvbus);
+
+		/* enable power and set overcur inactive by pulling them up */
+		exynos_gpio_pindata_ctl(&Xvbus, GPIO_PIN_PULLUP);
+		exynos_gpio_pindata_ctl(&Xovercur2, GPIO_PIN_PULLUP);
+		exynos_gpio_pindata_ctl(&Xovercur3, GPIO_PIN_PULLUP);
+
+		/* BUS 1 */
+		exynos_gpio_pinset_acquire(&e5_usb3_bus1_pinset);
+		exynos_gpio_pinset_to_pindata(&e5_usb3_bus1_pinset, 4, &Xovercur2);
+		exynos_gpio_pinset_to_pindata(&e5_usb3_bus1_pinset, 5, &Xovercur3);
+		exynos_gpio_pinset_to_pindata(&e5_usb3_bus1_pinset, 7, &Xvbus);
+
+		/* enable power and set overcur inactive by pulling them up */
+		exynos_gpio_pindata_ctl(&Xvbus, GPIO_PIN_PULLUP);
+		exynos_gpio_pindata_ctl(&Xovercur2, GPIO_PIN_PULLUP);
+		exynos_gpio_pindata_ctl(&Xovercur3, GPIO_PIN_PULLUP);
+
+		/* enable power to the hub */
+		exynos_gpio_pinset_acquire(&e5_uhost_pwr_pinset);
+		exynos_gpio_pinset_to_pindata(&e5_uhost_pwr_pinset, 5, &XuhostPWREN);
+		exynos_gpio_pinset_to_pindata(&e5_uhost_pwr_pinset, 6, &XuhostOVERCUR);
+
+		/* enable power and set Xuhost OVERCUR to inactive by pulling it up */
+		exynos_gpio_pindata_ctl(&XuhostPWREN, GPIO_PIN_PULLUP);
+		exynos_gpio_pindata_ctl(&XuhostOVERCUR, GPIO_PIN_PULLUP);
+		DELAY(80000);
+	}
+	/* XXX 5422 XXX */
+#endif
+}
+
+
+/*
+ * USB Phy SoC dependent handling
+ */
+
+/* XXX 5422 not handled since its unknown how it handles this XXX*/
+static void
+exynos_usb2_set_isolation(bool on)
+{
+	uint32_t en_mask, regval;
+	bus_addr_t reg;
+
+	/* enable PHY */
+	reg = EXYNOS_PMU_USB_PHY_CTRL;
+
+	if (IS_EXYNOS5_P() || IS_EXYNOS4410_P()) {
+		/* set usbhost mode */
+		regval = on ? 0 : USB20_PHY_HOST_LINK_EN;
+		bus_space_write_4(&exynos_bs_tag, exynos_sysreg_bsh,
+			EXYNOS5_SYSREG_USB20_PHY_TYPE, regval);
+		reg = EXYNOS_PMU_USBHOST_PHY_CTRL;
+	}
+
+	/* do enable PHY */
+	en_mask = PMU_PHY_ENABLE;
+	regval = bus_space_read_4(&exynos_bs_tag, exynos_pmu_bsh, reg);
+	regval = on ? regval & ~en_mask : regval | en_mask;
+
+	bus_space_write_4(&exynos_bs_tag, exynos_pmu_bsh,
+		reg, regval);
+
+	if (IS_EXYNOS4X12_P()) {
+		bus_space_write_4(&exynos_bs_tag, exynos_pmu_bsh,
+			EXYNOS_PMU_USB_HSIC_1_PHY_CTRL, regval);
+		bus_space_write_4(&exynos_bs_tag, exynos_pmu_bsh,
+			EXYNOS_PMU_USB_HSIC_2_PHY_CTRL, regval);
+	}
+}
+
+
+#ifdef EXYNOS4
+static void
+exynos4_usb2phy_enable(bus_space_handle_t usb2phy_bsh)
+{
+	uint32_t phypwr, rstcon, clkreg;
+
+	/* write clock value */
+	clkreg = FSEL_CLKSEL_24M;
+	bus_space_write_4(&exynos_bs_tag, usb2phy_bsh,
+		USB_PHYCLK, clkreg);
+
+	/* set device and host to normal */
+	phypwr = bus_space_read_4(&exynos_bs_tag, usb2phy_bsh,
+		USB_PHYPWR);
+
+	/* enable analog, enable otg, unsleep phy0 (host) */
+	phypwr &= ~PHYPWR_NORMAL_MASK_PHY0;
+	bus_space_write_4(&exynos_bs_tag, usb2phy_bsh,
+		USB_PHYPWR, phypwr);
+
+	if (IS_EXYNOS4X12_P()) {
+		/* enable hsic0 (host), enable hsic1 and phy1 (otg) */
+		phypwr = bus_space_read_4(&exynos_bs_tag, usb2phy_bsh,
+			USB_PHYPWR);
+		phypwr &= ~(PHYPWR_NORMAL_MASK_HSIC0 |
+			    PHYPWR_NORMAL_MASK_HSIC1 |
+			    PHYPWR_NORMAL_MASK_PHY1);
+		bus_space_write_4(&exynos_bs_tag, usb2phy_bsh,
+			USB_PHYPWR, phypwr);
+	}
+
+	/* reset both phy and link of device */
+	rstcon = bus_space_read_4(&exynos_bs_tag, usb2phy_bsh,
+		USB_RSTCON);
+	rstcon |= RSTCON_DEVPHY_SWRST;
+	bus_space_write_4(&exynos_bs_tag, usb2phy_bsh,
+		USB_RSTCON, rstcon);
+	DELAY(10000);
+	rstcon &= ~RSTCON_DEVPHY_SWRST;
+	bus_space_write_4(&exynos_bs_tag, usb2phy_bsh,
+		USB_RSTCON, rstcon);
+
+	if (IS_EXYNOS4X12_P()) {
+		/* reset both phy and link of host */
+		rstcon = bus_space_read_4(&exynos_bs_tag, usb2phy_bsh,
+			USB_RSTCON);
+		rstcon |= RSTCON_HOSTPHY_SWRST | RSTCON_HOSTPHYLINK_SWRST;
+		bus_space_write_4(&exynos_bs_tag, usb2phy_bsh,
+			USB_RSTCON, rstcon);
+		DELAY(10000);
+		rstcon &= ~(RSTCON_HOSTPHY_SWRST | RSTCON_HOSTPHYLINK_SWRST);
+		bus_space_write_4(&exynos_bs_tag, usb2phy_bsh,
+			USB_RSTCON, rstcon);
+	}
+
+	/* wait for everything to be initialized */
+	DELAY(80000);
+}
+#endif
+
+
+#ifdef EXYNOS5
+static void
+exynos5410_usb2phy_enable(bus_space_handle_t usb2phy_bsh)
+{
+	uint32_t phyhost; //, phyotg;
+	uint32_t phyhsic1, phyhsic2, hsic_ctrl;
+	uint32_t ehcictrl; //, ohcictrl;
+
+	/* host configuration: */
+	phyhost = bus_space_read_4(&exynos_bs_tag, usb2phy_bsh,
+		USB_PHY_HOST_CTRL0);
+
+	/* host phy reference clock; assumption its 24 MHz now */
+	phyhost &= ~HOST_CTRL0_FSEL_MASK;
+	phyhost |= __SHIFTIN(HOST_CTRL0_FSEL_MASK, FSEL_CLKSEL_24M);
+
+	/* enable normal mode of operation */
+	phyhost &= ~(HOST_CTRL0_FORCESUSPEND | HOST_CTRL0_FORCESLEEP);
+
+	/* host phy reset */
+	phyhost &= ~(HOST_CTRL0_PHY_SWRST | HOST_CTRL0_PHY_SWRST_ALL |
+		HOST_CTRL0_SIDDQ | HOST_CTRL0_COMMONON_N);
+			
+	/* host link reset */
+	phyhost |= HOST_CTRL0_LINK_SWRST | HOST_CTRL0_UTMI_SWRST;
+
+	/* do the reset */
+	bus_space_write_4(&exynos_bs_tag, usb2phy_bsh,
+		USB_PHY_HOST_CTRL0, phyhost);
+	DELAY(10000);
+	phyhost &= ~(HOST_CTRL0_LINK_SWRST | HOST_CTRL0_UTMI_SWRST);
+	bus_space_write_4(&exynos_bs_tag, usb2phy_bsh,
+		USB_PHY_HOST_CTRL0, phyhost);
+
+#if 0
+	/* otg configuration: */
+	phyotg = bus_space_read_4(&exynos_bs_tag, usb2phy_bsh,
+		USB_PHY_OTG_SYS);
+
+	/* otg phy refrence clock: assumption its 24 Mhz now */
+	phyotg &= ~OTG_SYS_FSEL_MASK;
+	phyotg |= __SHIFTIN(OTG_SYS_FSEL_MASK, FSEL_CLKSEL_24M);
+
+	/* enable normal mode of operation */
+	phyotg &= ~(OTG_SYS_FORCESUSPEND | OTG_SYS_FORCESLEEP |
+		OTG_SYS_SIDDQ_UOTG | OTG_SYS_REFCLKSEL_MASK |
+		OTG_SYS_COMMON_ON);
+
+	/* OTG phy and link reset */
+	phyotg |= OTG_SYS_PHY0_SWRST | OTG_SYS_PHYLINK_SWRST |
+		OTG_SYS_OTGDISABLE | OTG_SYS_REFCLKSEL_MASK;
+
+	/* do the reset */
+	bus_space_write_4(&exynos_bs_tag, usb2phy_bsh,
+		USB_PHY_OTG_SYS, phyotg);
+	DELAY(10000);
+	phyotg &= ~(OTG_SYS_PHY0_SWRST | OTG_SYS_LINK_SWRST_UOTG |
+		OTG_SYS_PHYLINK_SWRST);
+	bus_space_write_4(&exynos_bs_tag, usb2phy_bsh,
+		USB_PHY_OTG_SYS, phyotg);
+#endif
+
+	/* HSIC phy configuration: */
+	hsic_ctrl = HSIC_CTRL_FORCESUSPEND | HSIC_CTRL_FORCESLEEP |
+		HSIC_CTRL_SIDDQ;
+
+	phyhsic1 = bus_space_read_4(&exynos_bs_tag, usb2phy_bsh,
+		USB_PHY_HSIC_CTRL1);
+	phyhsic2 = bus_space_read_4(&exynos_bs_tag, usb2phy_bsh,
+		USB_PHY_HSIC_CTRL1);
+
+	phyhsic1 &= ~hsic_ctrl;
+	phyhsic2 &= ~hsic_ctrl;
+
+	bus_space_write_4(&exynos_bs_tag, usb2phy_bsh,
+		USB_PHY_HSIC_CTRL1, phyhsic1);
+	bus_space_write_4(&exynos_bs_tag, usb2phy_bsh,
+		USB_PHY_HSIC_CTRL2, phyhsic2);
+	DELAY(10000);
+
+	hsic_ctrl = REFCLKDIV_12 | REFCLKSEL_HSIC_DEFAULT |
+		HSIC_CTRL_UTMI_SWRST;
+
+	phyhsic1 |= hsic_ctrl;
+	phyhsic2 |= hsic_ctrl;
+
+	bus_space_write_4(&exynos_bs_tag, usb2phy_bsh,
+		USB_PHY_HSIC_CTRL1, phyhsic1);
+	bus_space_write_4(&exynos_bs_tag, usb2phy_bsh,
+		USB_PHY_HSIC_CTRL2, phyhsic2);
+
+	DELAY(10000);
+
+	hsic_ctrl = HSIC_CTRL_PHY_SWRST | HSIC_CTRL_UTMI_SWRST;
+
+	phyhsic1 &= ~hsic_ctrl;
+	phyhsic2 &= ~hsic_ctrl;
+
+	bus_space_write_4(&exynos_bs_tag, usb2phy_bsh,
+		USB_PHY_HSIC_CTRL1, phyhsic1);
+	bus_space_write_4(&exynos_bs_tag, usb2phy_bsh,
+		USB_PHY_HSIC_CTRL2, phyhsic2);
+	DELAY(20000);
+
+	/* enable EHCI DMA burst: */
+	ehcictrl = bus_space_read_4(&exynos_bs_tag, usb2phy_bsh,
+		USB_PHY_HOST_EHCICTRL);
+	ehcictrl |= HOST_EHCICTRL_ENA_INCRXALIGN |
+		HOST_EHCICTRL_ENA_INCR4 | HOST_EHCICTRL_ENA_INCR8 |
+		HOST_EHCICTRL_ENA_INCR16;
+	bus_space_write_4(&exynos_bs_tag, usb2phy_bsh,
+		USB_PHY_HOST_EHCICTRL, ehcictrl);
+	DELAY(10000);
+}
+
+
+static void
+exynos5422_usb2phy_enable(bus_space_handle_t usb2phy_bsh)
+{
+	aprint_error("%s not implemented\n", __func__);
+}
+#endif
+
+
+void
+exynos_usb_phy_init(bus_space_handle_t usb2phy_bsh)
+{
+	/* disable phy isolation */
+	exynos_usb2_set_isolation(false);
+
+#ifdef EXYNOS4
+	exynos4_usb2phy_enable(usb2phy_bsh);
+#endif
+#ifdef EXYNOS5
+	if (IS_EXYNOS5410_P()) {
+		exynos5410_usb2phy_enable(usb2phy_bsh);
+		/* TBD: USB3 phy init */
+	} else if (IS_EXYNOS5422_P()) {
+		exynos5422_usb2phy_enable(usb2phy_bsh);
+		/* TBD: USB3 phy init */
+	}
+#endif
+}
+
 

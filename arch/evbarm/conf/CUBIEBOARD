@@ -1,5 +1,5 @@
 #
-#	$NetBSD: CUBIEBOARD,v 1.25 2014/09/09 22:49:20 jmcneill Exp $
+#	$NetBSD: CUBIEBOARD,v 1.31 2014/11/05 20:32:53 martin Exp $
 #
 #	CUBIEBOARD -- Allwinner A10/A20 Eval Board Kernel
 #
@@ -172,7 +172,8 @@ config		netbsd		root on ? type ?
 # The main bus device
 mainbus0	at root
 
-# The boot cpu
+# CPU(s)
+options 	MULTIPROCESSOR
 cpu*		at mainbus?
 
 # Specify the memory size in megabytes (optional).
@@ -214,6 +215,9 @@ awinicu0	at awinio0
 # DMA Controller
 awindma0	at awinio0
 
+# 64-bit counter
+awincnt0	at awinio0
+
 # GPIO Controller
 awingpio0	at awinio0
 
@@ -226,7 +230,7 @@ gpio*		at awingpio?
 awiniic0	at awinio? port 0
 #awiniic*	at awinio? port ?
 iic*		at awiniic?
-axp20x0 	at iic0 addr 0x34	# AXP209 Power Management Unit
+#axp20x0 	at iic0 addr 0x34	# AXP209 Power Management Unit
 
 # On-board 16550 UARTs
 com0		at awinio? port 0			# UART0 (console)
@@ -240,6 +244,9 @@ awinwdt*	at awinio?
 
 # RTC
 awinrtc*	at awinio?
+
+# 64-bit counter
+awincnt0	at awinio0
 
 # onboard audio codec
 awinac0		at awinio0
@@ -278,6 +285,10 @@ ehci*		at awinusb?
 usb*		at ohci?
 usb*		at ehci?
 
+# USB OTG
+motg0		at awinio0
+usb*		at motg?
+
 # SATA
 ahcisata*	at awinio0
 atabus*		at ata?
@@ -289,6 +300,8 @@ awe0		at awinio0 port ?
 awge0		at awinio0 port ?
 
 include "dev/usb/usbdevices.config"
+
+midi*		at midibus?
 
 rlphy*		at mii? phy ?
 rgephy* 	at mii? phy ?

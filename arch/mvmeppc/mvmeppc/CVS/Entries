@@ -1,8 +1,8 @@
-/autoconf.c/1.13/Sun Aug 31 15:08:22 2014//
-/cpu.c/1.10/Sun Aug 31 15:08:22 2014//
-/locore.S/1.16/Sun Aug 31 15:08:22 2014//
-/machdep.c/1.31/Sun Aug 31 15:08:22 2014//
-/mainbus.c/1.15/Sun Aug 31 15:08:22 2014//
-/platform.c/1.5/Sun Aug 31 15:08:22 2014//
-/platform_160x.c/1.9/Sun Aug 31 15:08:22 2014//
+/autoconf.c/1.13/Wed Oct  1 21:58:42 2014//
+/cpu.c/1.10/Wed Oct  1 21:58:42 2014//
+/locore.S/1.16/Sat Sep 27 16:53:17 2014//
+/machdep.c/1.31/Wed Oct  1 21:58:42 2014//
+/mainbus.c/1.15/Wed Oct  1 21:58:42 2014//
+/platform.c/1.5/Wed Oct  1 21:58:42 2014//
+/platform_160x.c/1.9/Wed Oct  1 21:58:42 2014//
 D

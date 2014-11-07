@@ -1,4 +1,4 @@
-#	$NetBSD: XEN3_DOM0,v 1.88 2014/08/23 20:26:58 dholland Exp $
+#	$NetBSD: XEN3_DOM0,v 1.91 2014/10/18 16:56:51 uebayasi Exp $
 #
 #	XEN3_0: Xen 3.0 domain0 kernel
 
@@ -104,8 +104,8 @@ options 	COMPAT_BSDPTY	# /dev/[pt]ty?? ptys.
 # Wedge support
 options 	DKWEDGE_AUTODISCOVER	# Automatically add dk(4) instances
 options 	DKWEDGE_METHOD_GPT	# Supports GPT partitions as wedges
-options 	DKWEDGE_METHOD_BSDLABEL	# Support disklabel entries as wedges
-options 	DKWEDGE_METHOD_MBR	# Support MBR partitions as wedges
+#options 	DKWEDGE_METHOD_BSDLABEL	# Support disklabel entries as wedges
+#options 	DKWEDGE_METHOD_MBR	# Support MBR partitions as wedges
 options		DKWEDGE_METHOD_APPLE    # Support Apple partitions as wedges
 
 # File systems
@@ -178,6 +178,7 @@ options 	IPFILTER_LOOKUP	# ippool(8) support
 #options 	PCI_CONFIG_DUMP	# verbosely dump PCI config space
 options 	SCSIVERBOSE	# human readable SCSI error messages
 #options 	USBVERBOSE	# verbose USB device autoconfig messages
+#options 	HDAUDIOVERBOSE	# verbose HDAUDIO driver messages
 
 options 	NFS_BOOT_DHCP,NFS_BOOT_BOOTPARAM
 #options 	NFS_BOOT_BOOTSTATIC
@@ -231,6 +232,7 @@ ichlpcib* at pci? dev ? function ?	# Intel ICH PCI-ISA w/ timecounter,
 					# watchdog and SpeedStep support
 pcib*	at pci? dev ? function ?	# PCI-ISA bridges
 pchb*	at pci? dev ? function ?	# PCI-Host bridges
+options 	AGP_X86
 ppb*	at pci? dev ? function ?	# PCI-PCI bridges
 # XXX 'puc's aren't really bridges, but there's no better place for them here
 puc*	at pci? dev ? function ?	# PCI "universal" comm. cards

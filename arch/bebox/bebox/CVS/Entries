@@ -1,8 +1,8 @@
-/autoconf.c/1.26/Sun Aug 31 15:08:21 2014//
-/cpu.c/1.12/Sun Aug 31 15:08:21 2014//
-/ipi_bebox.c/1.1/Sun Aug 31 15:08:21 2014//
-/locore.S/1.28/Sun Aug 31 15:08:21 2014//
-/machdep.c/1.107/Sun Aug 31 15:08:21 2014//
-/mainbus.c/1.29/Sun Aug 31 15:08:21 2014//
-/pic_bebox.c/1.10/Sun Aug 31 15:08:21 2014//
+/autoconf.c/1.26/Wed Oct  1 21:58:39 2014//
+/cpu.c/1.12/Wed Oct  1 21:58:39 2014//
+/ipi_bebox.c/1.1/Wed Oct  1 21:58:39 2014//
+/locore.S/1.28/Sat Sep 27 16:53:16 2014//
+/machdep.c/1.107/Wed Oct  1 21:58:39 2014//
+/mainbus.c/1.29/Wed Oct  1 21:58:39 2014//
+/pic_bebox.c/1.10/Wed Oct  1 21:58:39 2014//
 D

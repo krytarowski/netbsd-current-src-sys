@@ -1,4 +1,4 @@
-/*	$NetBSD: puffs_vnops.c,v 1.186 2014/09/11 07:59:14 manu Exp $	*/
+/*	$NetBSD: puffs_vnops.c,v 1.198 2014/11/04 09:14:42 manu Exp $	*/
 
 /*
  * Copyright (c) 2005, 2006, 2007  Antti Kantee.  All Rights Reserved.
@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__KERNEL_RCSID(0, "$NetBSD: puffs_vnops.c,v 1.186 2014/09/11 07:59:14 manu Exp $");
+__KERNEL_RCSID(0, "$NetBSD: puffs_vnops.c,v 1.198 2014/11/04 09:14:42 manu Exp $");
 
 #include <sys/param.h>
 #include <sys/buf.h>
@@ -73,6 +73,8 @@ int	puffs_vnop_symlink(void *);
 int	puffs_vnop_rename(void *);
 int	puffs_vnop_read(void *);
 int	puffs_vnop_write(void *);
+int	puffs_vnop_fallocate(void *);
+int	puffs_vnop_fdiscard(void *);
 int	puffs_vnop_fcntl(void *);
 int	puffs_vnop_ioctl(void *);
 int	puffs_vnop_inactive(void *);
@@ -113,8 +115,8 @@ const struct vnodeopv_entry_desc puffs_vnodeop_entries[] = {
         { &vop_setattr_desc, puffs_vnop_checkop },	/* setattr */
         { &vop_read_desc, puffs_vnop_checkop },		/* read */
         { &vop_write_desc, puffs_vnop_checkop },	/* write */
-	{ &vop_fallocate_desc, genfs_eopnotsupp },	/* fallocate */
-	{ &vop_fdiscard_desc, genfs_eopnotsupp },	/* fdiscard */
+	{ &vop_fallocate_desc, puffs_vnop_fallocate },	/* fallocate */
+	{ &vop_fdiscard_desc, puffs_vnop_fdiscard },	/* fdiscard */
         { &vop_fsync_desc, puffs_vnop_fsync },		/* REAL fsync */
         { &vop_seek_desc, puffs_vnop_checkop },		/* seek */
         { &vop_remove_desc, puffs_vnop_checkop },	/* remove */
@@ -906,6 +908,12 @@ puffs_vnop_open(void *v)
 	error = checkerr(pmp, error, __func__);
 
 	if (open_msg->pvnr_oflags & PUFFS_OPEN_IO_DIRECT) {
+		/*
+		 * Flush cache:
+		 * - we do not want to discard cached write by direct write
+		 * - read cache is now useless and should be freed
+		 */
+		flushvncache(vp, 0, 0, true);
 		if (mode & FREAD)
 			pn->pn_stat |= PNODE_RDIRECT;
 		if (mode & FWRITE)
@@ -1130,12 +1138,50 @@ puffs_vnop_getattr(void *v)
 	return error;
 }
 
+static void
+zerofill_lastpage(struct vnode *vp, voff_t off)
+{
+	char zbuf[PAGE_SIZE];
+	struct iovec iov;
+	struct uio uio;
+	vsize_t len;
+	int error;
+
+	if (trunc_page(off) == off)
+		return;
+ 
+	if (vp->v_writecount == 0)
+		return;
+
+	len = round_page(off) - off;
+	memset(zbuf, 0, len);
+
+	iov.iov_base = zbuf;
+	iov.iov_len = len;
+	UIO_SETUP_SYSSPACE(&uio);
+	uio.uio_iov = &iov;
+	uio.uio_iovcnt = 1;
+	uio.uio_offset = off;
+	uio.uio_resid = len;
+	uio.uio_rw = UIO_WRITE;
+
+	error = ubc_uiomove(&vp->v_uobj, &uio, len,
+			    UVM_ADV_SEQUENTIAL, UBC_WRITE|UBC_UNMAP_FLAG(vp));
+	if (error) {
+		DPRINTF(("zero-fill 0x%" PRIxVSIZE "@0x%" PRIx64 
+			 " failed: error = %d\n", len, off, error));
+	}
+
+	return;
+}
+
 static int
 dosetattr(struct vnode *vp, struct vattr *vap, kauth_cred_t cred, int flags)
 {
 	PUFFS_MSG_VARS(vn, setattr);
 	struct puffs_mount *pmp = MPTOPUFFSMP(vp->v_mount);
 	struct puffs_node *pn = vp->v_data;
+	vsize_t oldsize = vp->v_size;
 	int error = 0;
 
 	KASSERT(!(flags & SETATTR_CHSIZE) || mutex_owned(&pn->pn_sizemtx));
@@ -1208,6 +1254,17 @@ dosetattr(struct vnode *vp, struct vattr *vap, kauth_cred_t cred, int flags)
 	}
 
 	if (vap->va_size != VNOVAL) {
+		/*
+		 * If we truncated the file, make sure the data beyond 
+		 * EOF in last page does not remain in cache, otherwise 
+		 * if the file is later truncated to a larger size (creating
+		 * a hole), that area will not return zeroes as it
+		 * should. 
+		 */
+		if ((flags & SETATTR_CHSIZE) && PUFFS_USE_PAGECACHE(pmp) && 
+		    (vap->va_size < oldsize))
+			zerofill_lastpage(vp, vap->va_size);
+
 		pn->pn_serversize = vap->va_size;
 		if (flags & SETATTR_CHSIZE)
 			uvm_vnp_setsize(vp, vap->va_size);
@@ -1278,6 +1335,18 @@ puffs_vnop_inactive(void *v)
 	struct puffs_mount *pmp = MPTOPUFFSMP(vp->v_mount);
 	struct puffs_node *pnode;
 	bool recycle = false;
+
+	/*
+	 * When puffs_cookie2vnode() misses an entry, vcache_get()
+	 * creates a new node (puffs_vfsop_loadvnode being called to
+	 * initialize the PUFFS part), then it discovers it is VNON,
+	 * and tries to vrele() it. This leads us there, while the 
+	 * cookie was stall and the node likely already reclaimed. 
+	 */
+	if (vp->v_type == VNON) {
+		VOP_UNLOCK(vp);
+		return 0;
+	}
 
 	pnode = vp->v_data;
 	mutex_enter(&pnode->pn_sizemtx);
@@ -1352,6 +1421,11 @@ puffs_vnop_inactive(void *v)
 			mutex_exit(&pmp->pmp_sopmtx);
 		}
 	}
+
+	/*
+	 * Wipe direct I/O flags
+	 */
+	pnode->pn_stat &= ~(PNODE_RDIRECT|PNODE_WDIRECT);
 
 	*ap->a_recycle = recycle;
 
@@ -1428,7 +1502,7 @@ puffs_vnop_reclaim(void *v)
 		if (__predict_true(VPTOPP(vp)->pn_parent != NULL))
 			vrele(VPTOPP(vp)->pn_parent);
 		else
-			KASSERT(vp->v_vflag & VV_ROOT);
+			KASSERT(vp->v_type == VNON || (vp->v_vflag & VV_ROOT));
 	}
 
 	puffs_putvnode(vp);
@@ -2318,19 +2392,20 @@ puffs_vnop_write(void *v)
 
 	mutex_enter(&pn->pn_sizemtx);
 
+	/*
+	 * userspace *should* be allowed to control this,
+	 * but with UBC it's a bit unclear how to handle it
+	 */
+	if (ap->a_ioflag & IO_APPEND)
+		uio->uio_offset = vp->v_size;
+
+	origoff = uio->uio_offset;
+
 	if (vp->v_type == VREG && 
 	    PUFFS_USE_PAGECACHE(pmp) &&
 	    !(pn->pn_stat & PNODE_WDIRECT)) {
 		ubcflags = UBC_WRITE | UBC_PARTIALOK | UBC_UNMAP_FLAG(vp);
 
-		/*
-		 * userspace *should* be allowed to control this,
-		 * but with UBC it's a bit unclear how to handle it
-		 */
-		if (ap->a_ioflag & IO_APPEND)
-			uio->uio_offset = vp->v_size;
-
-		origoff = uio->uio_offset;
 		while (uio->uio_resid > 0) {
 			oldoff = uio->uio_offset;
 			bytelen = uio->uio_resid;
@@ -2437,6 +2512,22 @@ puffs_vnop_write(void *v)
 			}
 		}
 		puffs_msgmem_release(park_write);
+
+		/*
+		 * Direct I/O on write but not on read: we must
+		 * invlidate the written pages so that we read
+		 * the written data and not the stalled cache.
+		 */
+		if ((error == 0) && 
+		    (vp->v_type == VREG) && PUFFS_USE_PAGECACHE(pmp) &&
+		    (pn->pn_stat & PNODE_WDIRECT) &&
+		    !(pn->pn_stat & PNODE_RDIRECT)) {
+			voff_t off_lo = trunc_page(origoff);
+			voff_t off_hi = round_page(uio->uio_offset);
+
+			mutex_enter(vp->v_uobj.vmobjlock);
+			error = VOP_PUTPAGES(vp, off_lo, off_hi, PGO_FREE);
+		}
 	}
 
 	if (vp->v_mount->mnt_flag & MNT_RELATIME)
@@ -2447,6 +2538,80 @@ puffs_vnop_write(void *v)
 
 	mutex_exit(&pn->pn_sizemtx);
 	return error;
+}
+
+int
+puffs_vnop_fallocate(void *v)
+{
+	struct vop_fallocate_args /* {
+		const struct vnodeop_desc *a_desc;
+		struct vnode *a_vp;
+		off_t a_pos;
+		off_t a_len;
+	} */ *ap = v;
+	struct vnode *vp = ap->a_vp;
+	struct puffs_node *pn = VPTOPP(vp);
+	struct puffs_mount *pmp = MPTOPUFFSMP(vp->v_mount);
+	PUFFS_MSG_VARS(vn, fallocate);
+	int error;
+
+	mutex_enter(&pn->pn_sizemtx);
+
+	PUFFS_MSG_ALLOC(vn, fallocate);
+	fallocate_msg->pvnr_off = ap->a_pos;
+	fallocate_msg->pvnr_len = ap->a_len;
+	puffs_msg_setinfo(park_fallocate, PUFFSOP_VN,
+	    PUFFS_VN_FALLOCATE, VPTOPNC(vp));
+
+	PUFFS_MSG_ENQUEUEWAIT2(pmp, park_fallocate, vp->v_data, NULL, error);
+	error = checkerr(pmp, error, __func__);
+	PUFFS_MSG_RELEASE(fallocate);
+
+	switch (error) {
+	case 0:
+		break;
+	case EAGAIN:
+		error = EIO;
+		/* FALLTHROUGH */
+	default:
+		goto out;
+	}
+
+	if (ap->a_pos + ap->a_len > vp->v_size) {
+		uvm_vnp_setsize(vp, ap->a_pos + ap->a_len);
+		puffs_updatenode(pn, PUFFS_UPDATESIZE, vp->v_size);
+	}
+out:
+ 	mutex_exit(&pn->pn_sizemtx);
+
+ 	return error;
+}
+
+int
+puffs_vnop_fdiscard(void *v)
+{
+	struct vop_fdiscard_args /* {
+		const struct vnodeop_desc *a_desc;
+		struct vnode *a_vp;
+		off_t a_pos;
+		off_t a_len;
+	} */ *ap = v;
+	struct vnode *vp = ap->a_vp;
+	struct puffs_mount *pmp = MPTOPUFFSMP(vp->v_mount);
+	PUFFS_MSG_VARS(vn, fdiscard);
+	int error;
+
+	PUFFS_MSG_ALLOC(vn, fdiscard);
+	fdiscard_msg->pvnr_off = ap->a_pos;
+	fdiscard_msg->pvnr_len = ap->a_len;
+	puffs_msg_setinfo(park_fdiscard, PUFFSOP_VN,
+	    PUFFS_VN_FALLOCATE, VPTOPNC(vp));
+
+	PUFFS_MSG_ENQUEUEWAIT2(pmp, park_fdiscard, vp->v_data, NULL, error);
+	error = checkerr(pmp, error, __func__);
+	PUFFS_MSG_RELEASE(fdiscard);
+
+ 	return error;
 }
 
 int
@@ -2715,13 +2880,6 @@ puffs_vnop_strategy(void *v)
 
 		if (dobiodone == 0)
 			goto out;
-
-		/*
-		 * XXXXXXXX: wrong, but kernel can't survive strategy
-		 * failure currently.  Here, have one more X: X.
-		 */
-		if (error != ENOMEM)
-			error = 0;
 
 		error = checkerr(pmp, error, __func__);
 		if (error)

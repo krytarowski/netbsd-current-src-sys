@@ -1,4 +1,4 @@
-# $NetBSD: XEN3_DOM0,v 1.106 2014/08/23 20:26:56 dholland Exp $
+# $NetBSD: XEN3_DOM0,v 1.110 2014/10/18 16:56:51 uebayasi Exp $
 
 include 	"arch/amd64/conf/std.xen"
 
@@ -81,8 +81,8 @@ options 	COMPAT_BSDPTY	# /dev/[pt]ty?? ptys.
 # Wedge support
 options 	DKWEDGE_AUTODISCOVER	# Automatically add dk(4) instances
 options 	DKWEDGE_METHOD_GPT	# Supports GPT partitions as wedges
-options 	DKWEDGE_METHOD_BSDLABEL	# Support disklabel entries as wedges
-options 	DKWEDGE_METHOD_MBR	# Support MBR partitions as wedges
+#options 	DKWEDGE_METHOD_BSDLABEL	# Support disklabel entries as wedges
+#options 	DKWEDGE_METHOD_MBR	# Support MBR partitions as wedges
 options		DKWEDGE_METHOD_APPLE    # Support Apple partitions as wedges
 
 # File systems
@@ -219,6 +219,7 @@ options 	MPBIOS_SCANPCI		# MPBIOS configures PCI roots
 #options 	PCI_INTR_FIXUP		# fixup PCI interrupt routing
 #options 	PCIVERBOSE		# verbose PCI device autoconfig messages
 #options 	USBVERBOSE		# verbose USB device autoconfig messages
+#options 	HDAUDIOVERBOSE		# verbose HDAUDIO driver messages
 
 ioapic* 	at mainbus? apid ?
 
@@ -254,6 +255,7 @@ ichlpcib* at pci? dev ? function ?	# Intel ICH PCI-ISA w/ timecounter,
 					# watchdog and SpeedStep support
 pcib*	at pci? dev ? function ?	# PCI-ISA bridges
 pchb*	at pci? dev ? function ?	# PCI-Host bridges
+options 	AGP_X86
 ppb*	at pci? dev ? function ?	# PCI-PCI bridges
 # XXX 'puc's aren't really bridges, but there's no better place for them here
 puc*	at pci? dev ? function ?	# PCI "universal" comm. cards
@@ -846,3 +848,6 @@ pseudo-device	xbdback
 
 options 	PAX_MPROTECT=0		# PaX mprotect(2) restrictions
 options 	PAX_ASLR=0		# PaX Address Space Layout Randomization
+
+# Atheros HAL options
+include "external/isc/atheros_hal/conf/std.ath_hal"

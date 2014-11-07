@@ -1,7 +1,7 @@
-/com_mainbus.c/1.12/Sun Aug 31 15:08:22 2014//
-/if_ne_mainbus.c/1.1/Sun Aug 31 15:08:22 2014//
-/mmeyepcmcia.c/1.22/Sun Aug 31 15:08:22 2014//
-/mmeyepcmciareg.h/1.2/Sun Aug 31 15:08:22 2014//
-/rtciic.c/1.1/Sun Aug 31 15:08:22 2014//
-/wdc_mainbus.c/1.4/Sun Aug 31 15:08:22 2014//
+/com_mainbus.c/1.12/Wed Oct  1 21:58:41 2014//
+/if_ne_mainbus.c/1.1/Wed Oct  1 21:58:41 2014//
+/mmeyepcmcia.c/1.22/Wed Oct  1 21:58:41 2014//
+/mmeyepcmciareg.h/1.2/Wed Oct  1 21:58:41 2014//
+/rtciic.c/1.1/Wed Oct  1 21:58:41 2014//
+/wdc_mainbus.c/1.4/Wed Oct  1 21:58:41 2014//
 D

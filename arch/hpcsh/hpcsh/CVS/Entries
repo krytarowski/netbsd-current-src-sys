@@ -1,10 +1,10 @@
-/autoconf.c/1.27/Sun Aug 31 15:08:22 2014//
-/bus_space.c/1.19/Sun Aug 31 15:08:22 2014//
-/clock_machdep.c/1.5/Sun Aug 31 15:08:22 2014//
-/console.c/1.15/Sun Aug 31 15:08:22 2014//
-/debug.c/1.11/Sun Aug 31 15:08:22 2014//
-/kloader_machdep.c/1.14/Sun Aug 31 15:08:22 2014//
-/locore.S/1.12/Sun Aug 31 15:08:22 2014//
-/machdep.c/1.77/Sun Aug 31 15:08:22 2014//
-/mainbus.c/1.20/Sun Aug 31 15:08:22 2014//
+/autoconf.c/1.27/Wed Oct  1 21:58:40 2014//
+/bus_space.c/1.19/Wed Oct  1 21:58:40 2014//
+/clock_machdep.c/1.5/Wed Oct  1 21:58:40 2014//
+/console.c/1.15/Wed Oct  1 21:58:40 2014//
+/debug.c/1.11/Wed Oct  1 21:58:40 2014//
+/kloader_machdep.c/1.14/Wed Oct  1 21:58:40 2014//
+/locore.S/1.12/Sat Sep 27 16:53:16 2014//
+/machdep.c/1.77/Wed Oct  1 21:58:40 2014//
+/mainbus.c/1.20/Wed Oct  1 21:58:40 2014//
 D

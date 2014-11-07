@@ -1,13 +1,13 @@
-/autoconf.c/1.38/Sun Aug 31 15:08:22 2014//
-/bus.c/1.32/Sun Aug 31 15:08:22 2014//
-/clock.c/1.16/Sun Aug 31 15:08:22 2014//
-/cpu.c/1.12/Sun Aug 31 15:08:22 2014//
-/cpu_cons.c/1.13/Sun Aug 31 15:08:22 2014//
-/disksubr.c/1.28/Sun Aug 31 15:08:22 2014//
-/locore_machdep.S/1.16/Sun Aug 31 15:08:22 2014//
-/machdep.c/1.115/Sun Aug 31 15:08:22 2014//
-/machid.h/1.6/Sun Aug 31 15:08:22 2014//
-/mainbus.c/1.11/Sun Aug 31 15:08:22 2014//
-/news3400.c/1.23/Sun Aug 31 15:08:22 2014//
-/news5000.c/1.20/Sun Aug 31 15:08:22 2014//
+/autoconf.c/1.38/Wed Oct  1 21:58:42 2014//
+/bus.c/1.32/Wed Oct  1 21:58:42 2014//
+/clock.c/1.16/Wed Oct  1 21:58:42 2014//
+/cpu.c/1.12/Wed Oct  1 21:58:42 2014//
+/cpu_cons.c/1.13/Wed Oct  1 21:58:42 2014//
+/disksubr.c/1.28/Wed Oct  1 21:58:42 2014//
+/locore_machdep.S/1.16/Sat Sep 27 16:53:17 2014//
+/machdep.c/1.115/Wed Oct  1 21:58:42 2014//
+/machid.h/1.6/Wed Oct  1 21:58:42 2014//
+/mainbus.c/1.11/Wed Oct  1 21:58:42 2014//
+/news3400.c/1.23/Wed Oct  1 21:58:42 2014//
+/news5000.c/1.20/Wed Oct  1 21:58:42 2014//
 D

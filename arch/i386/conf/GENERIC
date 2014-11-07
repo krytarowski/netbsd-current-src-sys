@@ -1,4 +1,4 @@
-# $NetBSD: GENERIC,v 1.1111 2014/08/24 07:59:22 jnemeth Exp $
+# $NetBSD: GENERIC,v 1.1116 2014/11/02 23:14:20 christos Exp $
 #
 # GENERIC machine description file
 #
@@ -22,7 +22,7 @@ include 	"arch/i386/conf/std.i386"
 
 options 	INCLUDE_CONFIG_FILE	# embed config file in kernel binary
 
-#ident 		"GENERIC-$Revision: 1.1111 $"
+#ident 		"GENERIC-$Revision: 1.1116 $"
 
 maxusers	64		# estimated number of users
 
@@ -123,6 +123,7 @@ options 	DDB_HISTORY_SIZE=512	# enable history editing in DDB
 #options 	SYSCALL_STATS	# per syscall counts
 #options 	SYSCALL_TIMES	# per syscall times
 #options 	SYSCALL_TIMES_HASCOUNTER	# use 'broken' rdtsc (soekris)
+#options 	KDTRACE_HOOKS	# kernel DTrace hooks
 
 # Compatibility options
 options 	COMPAT_NOMID	# NetBSD 0.8, 386BSD, and BSDI
@@ -155,8 +156,8 @@ options 	COMPAT_BSDPTY	# /dev/[pt]ty?? ptys.
 # Wedge support
 options 	DKWEDGE_AUTODISCOVER	# Automatically add dk(4) instances
 options 	DKWEDGE_METHOD_GPT	# Supports GPT partitions as wedges
-options 	DKWEDGE_METHOD_BSDLABEL	# Support disklabel entries as wedges
-options 	DKWEDGE_METHOD_MBR	# Support MBR partitions as wedges
+#options 	DKWEDGE_METHOD_BSDLABEL	# Support disklabel entries as wedges
+#options 	DKWEDGE_METHOD_MBR	# Support MBR partitions as wedges
 options		DKWEDGE_METHOD_APPLE    # Support Apple partitions as wedges
 
 file-system	FFS		# UFS
@@ -241,6 +242,7 @@ options 	SCSIVERBOSE	# human readable SCSI error messages
 #options 	PNPBIOSVERBOSE	# verbose PnP BIOS messages
 #options 	PNPBIOSDEBUG	# more fulsome PnP BIOS debugging messages
 #options 	MCAVERBOSE	# verbose MCA device autoconfig messages
+#options 	HDAUDIOVERBOSE	# verbose HDAUDIO driver messages
 
 options 	NFS_BOOT_DHCP,NFS_BOOT_BOOTPARAM
 
@@ -462,6 +464,7 @@ iic*	at viapcib?
 rdcpcib* at pci? dev ? function ?	# RDC Vortex86/PMX-1000 PCI-ISA w/
 					# watchdog
 pchb*	at pci? dev ? function ?	# PCI-Host bridges
+options 	AGP_X86
 pceb*	at pci? dev ? function ?	# PCI-EISA bridges
 pcib*	at pci? dev ? function ?	# PCI-ISA bridges
 pcmb*	at pci? dev ? function ?	# PCI-MCA bridges
@@ -554,16 +557,25 @@ attimer0	at isa?
 pcppi0		at isa?
 sysbeep0	at pcppi?
 
-# DRI driver
-i915drm*	at drm?		# Intel i915, i945 DRM driver
-mach64drm*	at drm?		# mach64 (3D Rage Pro, Rage) DRM driver
-mgadrm* 	at drm?		# Matrox G[24]00, G[45]50 DRM driver
-r128drm*	at drm?		# ATI Rage 128 DRM driver
-radeondrm*	at drm?		# ATI Radeon DRM driver
-savagedrm*	at drm?		# S3 Savage DRM driver
-sisdrm* 	at drm?		# SiS DRM driver
-tdfxdrm*	at drm?		# 3dfx (voodoo) DRM driver
-viadrm* 	at drm?		# VIA DRM driver
+# DRI legacy drivers
+#i915drm*	at drm?		# Intel i915, i945 DRM driver
+#mach64drm*	at drm?		# mach64 (3D Rage Pro, Rage) DRM driver
+#mgadrm* 	at drm?		# Matrox G[24]00, G[45]50 DRM driver
+#r128drm*	at drm?		# ATI Rage 128 DRM driver
+#radeondrm*	at drm?		# ATI Radeon DRM driver
+#savagedrm*	at drm?		# S3 Savage DRM driver
+#sisdrm* 	at drm?		# SiS DRM driver
+#tdfxdrm*	at drm?		# 3dfx (voodoo) DRM driver
+#viadrm* 	at drm?		# VIA DRM driver
+
+i915drmkms* 	at pci? dev ? function ?
+intelfb* 	at intelfbbus?
+
+radeon* 	at pci? dev ? function ?
+radeondrmkmsfb* at radeonfbbus?
+
+#nouveau*	at pci? dev ? function ?
+#nouveaufb*	at nouveaufbbus
 
 # Serial Devices
 

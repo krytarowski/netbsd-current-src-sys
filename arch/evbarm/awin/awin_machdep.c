@@ -1,4 +1,4 @@
-/*	$NetBSD: awin_machdep.c,v 1.8 2014/09/10 07:39:17 skrll Exp $ */
+/*	$NetBSD: awin_machdep.c,v 1.25 2014/11/07 11:42:28 jmcneill Exp $ */
 
 /*
  * Machine dependent functions for kernel setup for TI OSK5912 board.
@@ -125,7 +125,7 @@
  */
 
 #include <sys/cdefs.h>
-__KERNEL_RCSID(0, "$NetBSD: awin_machdep.c,v 1.8 2014/09/10 07:39:17 skrll Exp $");
+__KERNEL_RCSID(0, "$NetBSD: awin_machdep.c,v 1.25 2014/11/07 11:42:28 jmcneill Exp $");
 
 #include "opt_machdep.h"
 #include "opt_ddb.h"
@@ -182,6 +182,10 @@ __KERNEL_RCSID(0, "$NetBSD: awin_machdep.c,v 1.8 2014/09/10 07:39:17 skrll Exp $
 #include <evbarm/include/autoconf.h>
 #include <evbarm/awin/platform.h>
 
+#ifdef AWIN_SYSCONFIG
+#include <evbarm/awin/awin_sysconfig.h>
+#endif
+
 #include <dev/i2c/i2cvar.h>
 #include <dev/i2c/ddcreg.h>
 
@@ -199,6 +203,12 @@ bool cubietruck_p;
 #define cubietruck_p	true
 #else
 #define cubietruck_p	false
+#endif
+
+#ifdef AWIN_SYSCONFIG
+bool awin_sysconfig_p;
+#else
+#define awin_sysconfig_p false
 #endif
 
 /*
@@ -235,6 +245,10 @@ static void kgdb_port_init(void);
 #endif
 
 static void awin_device_register(device_t, void *);
+
+#ifdef AWIN_SYSCONFIG
+static void awin_gpio_sysconfig(prop_dictionary_t);
+#endif
 
 #if NCOM > 0
 #include <dev/ic/comreg.h>
@@ -335,7 +349,7 @@ initarm(void *arg)
 
 #ifdef VERBOSE_INIT_ARM
 	/* Talk to the user */
-	printf("\nNetBSD/evbarm (" __STRING(BOARDTYPE) ") booting ...\n");
+	printf("\nNetBSD/evbarm (" BOARDTYPE ") booting ...\n");
 #endif
 
 #ifdef BOOT_ARGS
@@ -416,10 +430,17 @@ initarm(void *arg)
 			     (uboot_args[3] + KERNEL_BASE_VOFFSET);
 			strlcpy(bootargs, args, sizeof(bootargs));
 		}
+
 	}
 
 	boot_args = bootargs;
 	parse_mi_bootargs(boot_args);
+
+#ifdef AWIN_SYSCONFIG
+	if (mapallmem_p) {
+		awin_sysconfig_p = awin_sysconfig_init();
+	}
+#endif
 
 	/* we've a specific device_register routine */
 	evbarm_device_register = awin_device_register;
@@ -586,19 +607,49 @@ awin_device_register(device_t self, void *aux)
 	}
 
 	if (device_is_a(self, "awingpio")) {
+#ifdef AWIN_SYSCONFIG
+		/*
+		 * Configure GPIOs using FEX script
+		 */
+		if (awin_sysconfig_p) {
+			awin_gpio_sysconfig(dict);
+			return;
+		}
+#endif
+
 		/*
 		 * These are GPIOs being used for various functions.
 		 */
 		prop_dictionary_set_cstring(dict, "satapwren",
 		    (cubietruck_p ? ">PH12" : ">PB8"));
-		prop_dictionary_set_cstring(dict, "usb0drv",
-		    (cubietruck_p ? ">PH17" : ">PB2"));
+#if AWIN_board == AWIN_cubieboard || AWIN_board == AWIN_cubietruck || AWIN_board == AWIN_bpi
+		if (cubietruck_p) {
+			prop_dictionary_set_cstring(dict, "usb0drv", ">PH17");
+		} else if (awin_chip_id() == AWIN_CHIP_ID_A20) {
+			prop_dictionary_set_cstring(dict, "usb0drv", ">PB9");
+		} else {
+			prop_dictionary_set_cstring(dict, "usb0drv", ">PB2");
+		}
+#endif
+#if AWIN_board == AWIN_hummingbird_a31
+		prop_dictionary_set_cstring(dict, "usb0iddet", "<PA15");
+		prop_dictionary_set_cstring(dict, "usb0vbusdet", "<PA16");
+		prop_dictionary_set_cstring(dict, "usb0drv", ">PA17");
+		prop_dictionary_set_cstring(dict, "usb0restrict", ">PA18");
+		prop_dictionary_set_cstring(dict, "usb1drv", ">PH27");
+		prop_dictionary_set_cstring(dict, "usb1restrict", ">PH26");
+		prop_dictionary_set_cstring(dict, "usb2drv", ">PH24");
+#else
 		prop_dictionary_set_cstring(dict, "usb2drv", ">PH3");
 		prop_dictionary_set_cstring(dict, "usb0iddet",
 		    (cubietruck_p ? "<PH19" : "<PH4"));
 		prop_dictionary_set_cstring(dict, "usb0vbusdet",
 		    (cubietruck_p ? "<PH22" : "<PH5"));
 		prop_dictionary_set_cstring(dict, "usb1drv", ">PH6");
+#endif
+#if AWIN_board == AWIN_cubietruck
+		prop_dictionary_set_cstring(dict, "usb0restrict", ">PH0");
+#endif
 		prop_dictionary_set_cstring(dict, "status-led1", ">PH21");
 		prop_dictionary_set_cstring(dict, "status-led2", ">PH20");
 		if (cubietruck_p) {
@@ -612,8 +663,19 @@ awin_device_register(device_t self, void *aux)
 		prop_dictionary_set_cstring(dict, "mmc0detect", "<PH1");
 #elif AWIN_board == AWIN_bpi
 		prop_dictionary_set_cstring(dict, "mmc0detect", "<PH10");
+#elif AWIN_board == AWIN_hummingbird_a31
+		prop_dictionary_set_cstring(dict, "mmc0detect", "<PH8");
 #endif
+
+#if AWIN_board == AWIN_hummingbird_a31
+		prop_dictionary_set_cstring(dict, "audiopactrl", ">PH22");
+#else
 		prop_dictionary_set_cstring(dict, "audiopactrl", ">PH15");
+#endif
+
+#if AWIN_board == AWIN_bpi
+		prop_dictionary_set_cstring(dict, "gmacpwren", ">PH23");
+#endif
 
 		/*
 		 * These pins have no connections.
@@ -640,14 +702,49 @@ awin_device_register(device_t self, void *aux)
 		if (aio->aio_loc.loc_port == 0) {
 			prop_dictionary_set_cstring(dict,
 			    "detect-gpio", "mmc0detect");
+#if !(AWIN_board == AWIN_hummingbird_a31)
 			prop_dictionary_set_cstring(dict,
 			    "led-gpio", "status-led2");
+#endif
 		}
 		return;
 	}
 
 	if (device_is_a(self, "awinac")) {
 		prop_dictionary_set_cstring(dict, "pactrl-gpio", "audiopactrl");
+		return;
+	}
+
+	if (device_is_a(self, "awge")) {
+		/*
+		 * Get the GMAC MAC address from cmdline.
+		 */
+		uint8_t enaddr[ETHER_ADDR_LEN];
+		char argname[strlen("awge?.mac-address") + 1];
+		char *mac_addr;
+		snprintf(argname, sizeof(argname), "%s.mac-address",
+		    device_xname(self));
+		if (get_bootconf_option(boot_args, argname,
+		    BOOTOPT_TYPE_STRING, &mac_addr) &&
+		    ether_aton_r(enaddr, sizeof(enaddr), mac_addr) == 0) {
+			prop_data_t pd;
+			pd = prop_data_create_data(enaddr, sizeof(enaddr));
+			KASSERT(pd != NULL);
+			prop_dictionary_set(dict, "mac-address", pd);
+			prop_object_release(pd);
+		}
+
+#if AWIN_board == AWIN_cubieboard
+		if (awin_chip_id() == AWIN_CHIP_ID_A20) {
+			/* Cubieboard2 uses GMAC with a 100Mbit PHY */
+			prop_dictionary_set_cstring(dict, "phy-type", "mii");
+		}
+#endif
+#if AWIN_BOARD == AWIN_bpi
+		prop_dictionary_set_cstring(dict, "phy-power", "gmacpwren");
+		prop_dictionary_set_cstring(dict, "phy-type", "rgmii-bpi");
+		prop_dictionary_set_uint8(dict, "pinset-func", 2);
+#endif
 		return;
 	}
 
@@ -659,3 +756,48 @@ awin_device_register(device_t self, void *aux)
 		return;
 	}
 }
+
+#ifdef AWIN_SYSCONFIG
+static void
+awin_gpio_sysconfig(prop_dictionary_t dict)
+{
+	static const struct {
+		const char *prop;
+		const char *key;
+		const char *subkey;
+	} gpios[] = {
+		{ "satapwren",		"sata_para", "sata_power_en" },
+		{ "usb0drv",		"usbc0", "usb_drv_vbus_gpio" },
+		{ "usb0iddet",		"usbc0", "usb_id_gpio" },
+		{ "usb0vbusdet",	"usbc0", "usb_det_vbus_gpio" },
+		{ "usb0restrict",	"usbc0", "usb_restrict_gpio" },
+		{ "usb1drv",		"usbc1", "usb_drv_vbus_gpio" },
+		{ "usb1iddet",		"usbc1", "usb_id_gpio" },
+		{ "usb1vbusdet",	"usbc1", "usb_det_vbus_gpio" },
+		{ "usb1restrict",	"usbc1", "usb_restrict_gpio" },
+		{ "usb2drv",		"usbc2", "usb_drv_vbus_gpio" },
+		{ "usb2iddet",		"usbc2", "usb_id_gpio" },
+		{ "usb2vbusdet",	"usbc2", "usb_det_vbus_gpio" },
+		{ "usb2restrict",	"usbc2", "usb_restrict_gpio" },
+		{ "status-led1",	"leds_para", "leds_pin_1" },
+		{ "status-led2",	"leds_para", "leds_pin_2" },
+		{ "status-led3",	"leds_para", "leds_pin_3" },
+		{ "status-led4",	"leds_para", "leds_pin_4" },
+		{ "mmc0detect",		"mmc0_para", "sdc_det" },
+		{ "audiopactrl",	"audio_para", "audio_pa_ctrl" },
+		{ "gmacpwren",		"gmac_phy_power", "gmac_phy_power_en" },
+	};
+	unsigned int n;
+
+	aprint_normal(":");
+
+	for (n = 0; n < __arraycount(gpios); n++) {
+		const char *cfg = awin_sysconfig_get_gpio(
+		    gpios[n].key, gpios[n].subkey);
+		if (cfg) {
+			aprint_normal(" [%s %s]", gpios[n].prop, cfg);
+			prop_dictionary_set_cstring(dict, gpios[n].prop, cfg);
+		}
+	}
+}
+#endif

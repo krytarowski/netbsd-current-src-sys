@@ -1,5 +1,7 @@
-/awin_machdep.c/1.8/Thu Sep 11 20:24:34 2014//
-/awin_start.S/1.1/Wed Sep  3 22:54:01 2014//
-/genassym.cf/1.1/Wed Sep  3 22:54:01 2014//
-/platform.h/1.1/Wed Sep  3 22:54:01 2014//
+/awin_machdep.c/1.25/Fri Nov  7 18:25:03 2014//
+/awin_start.S/1.6/Fri Nov  7 18:25:03 2014//
+/genassym.cf/1.1/Sat Sep 27 16:53:16 2014//
+/platform.h/1.1/Wed Oct  1 21:58:39 2014//
+/awin_sysconfig.c/1.1/Fri Nov  7 18:56:13 2014//
+/awin_sysconfig.h/1.1/Fri Nov  7 18:56:13 2014//
 D

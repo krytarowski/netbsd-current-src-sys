@@ -65,7 +65,6 @@ D/des////
 D/dk_subr////
 D/dm////
 D/drm////
-D/drm2pci////
 D/drmkms////
 D/drmkms_linux////
 D/drmkms_pci////
@@ -230,7 +229,8 @@ D/xldscripts////
 D/zfs////
 D/zl10353////
 D/zlib////
-/Makefile/1.140/Sun Aug 31 15:08:24 2014//
-/Makefile.assym/1.4/Sun Aug 31 15:08:24 2014//
-/Makefile.inc/1.6/Sun Aug 31 15:08:24 2014//
-/README/1.1/Sun Aug 31 15:08:24 2014//
+/Makefile/1.141/Fri Nov  7 18:26:09 2014//
+/Makefile.assym/1.4/Sat Sep 27 16:53:20 2014//
+/Makefile.inc/1.6/Sat Sep 27 16:53:20 2014//
+/README/1.1/Sat Sep 27 16:53:20 2014//
+D/hdaudioverbose////

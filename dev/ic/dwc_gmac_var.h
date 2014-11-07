@@ -1,3 +1,5 @@
+/* $NetBSD: dwc_gmac_var.h,v 1.5 2014/10/26 17:39:16 martin Exp $ */
+
 /*-
  * Copyright (c) 2013, 2014 The NetBSD Foundation, Inc.
  * All rights reserved.
@@ -84,6 +86,7 @@ struct dwc_gmac_softc {
 	bus_dma_segment_t sc_dma_ring_seg;	/* and TX ring */
 	struct dwc_gmac_rx_ring sc_rxq;
 	struct dwc_gmac_tx_ring sc_txq;
+	short sc_if_flags;			/* shadow of ether flags */
 	uint16_t sc_mii_clk;
 };
 

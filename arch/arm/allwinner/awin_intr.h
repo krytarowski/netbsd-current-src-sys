@@ -1,4 +1,4 @@
-/* $NetBSD: awin_intr.h,v 1.4 2014/09/03 21:42:46 jmcneill Exp $ */
+/* $NetBSD: awin_intr.h,v 1.9 2014/11/02 23:55:06 jmcneill Exp $ */
 /*-
  * Copyright (c) 2013 The NetBSD Foundation, Inc.
  * All rights reserved.
@@ -133,5 +133,34 @@
 #define AWIN_IRQ_TWI3		120
 #define AWIN_IRQ_TWI4		121
 #define AWIN_IRQ_IIS2		122
+
+/*
+ * A31
+ */
+#define AWIN_A31_IRQ_UART0	32
+#define AWIN_A31_IRQ_UART1	33
+#define AWIN_A31_IRQ_UART2	34
+#define AWIN_A31_IRQ_UART3	35
+#define AWIN_A31_IRQ_UART4	36
+#define AWIN_A31_IRQ_UART5	37
+#define AWIN_A31_IRQ_TWI0	38
+#define AWIN_A31_IRQ_TWI1	39
+#define AWIN_A31_IRQ_TWI2	40
+#define AWIN_A31_IRQ_TWI3	41
+#define AWIN_A31_IRQ_AC		61
+#define AWIN_A31_IRQ_CIR	69
+#define AWIN_A31_IRQ_P2WI	71
+#define AWIN_A31_IRQ_DMA	82
+#define AWIN_A31_IRQ_SDMMC0	92
+#define AWIN_A31_IRQ_SDMMC1	93
+#define AWIN_A31_IRQ_SDMMC2	94
+#define AWIN_A31_IRQ_SDMMC3	95
+#define AWIN_A31_IRQ_USB0	103
+#define AWIN_A31_IRQ_USB1	104
+#define AWIN_A31_IRQ_USB2	105
+#define AWIN_A31_IRQ_USB3	106
+#define AWIN_A31_IRQ_USB4	108
+#define AWIN_A31_IRQ_GMAC	114
+#define AWIN_A31_IRQ_HDMI	120
 
 #endif /* _ARM_ALLWINNER_AWIN_INTR_H_ */

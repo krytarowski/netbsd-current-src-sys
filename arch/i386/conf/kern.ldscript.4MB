@@ -1,4 +1,4 @@
-/*	$NetBSD: kern.ldscript.4MB,v 1.10 2012/09/23 01:01:17 chs Exp $	*/
+/*	$NetBSD: kern.ldscript.4MB,v 1.12 2014/11/02 17:58:14 uebayasi Exp $	*/
 
 OUTPUT_FORMAT("elf32-i386", "elf32-i386",
 	      "elf32-i386")

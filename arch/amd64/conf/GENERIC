@@ -1,4 +1,4 @@
-# $NetBSD: GENERIC,v 1.396 2014/08/24 07:59:22 jnemeth Exp $
+# $NetBSD: GENERIC,v 1.402 2014/11/02 23:08:40 christos Exp $
 #
 # GENERIC machine description file
 #
@@ -22,7 +22,7 @@ include	"arch/amd64/conf/std.amd64"
 
 options 	INCLUDE_CONFIG_FILE	# embed config file in kernel binary
 
-#ident 		"GENERIC-$Revision: 1.396 $"
+#ident 		"GENERIC-$Revision: 1.402 $"
 
 maxusers	64		# estimated number of users
 
@@ -108,6 +108,7 @@ options 	DDB_HISTORY_SIZE=512	# enable history editing in DDB
 #options 	SYSCALL_STATS	# per syscall counts
 #options 	SYSCALL_TIMES	# per syscall times
 #options 	SYSCALL_TIMES_HASCOUNTER	# use 'broken' rdtsc (soekris)
+#options 	KDTRACE_HOOKS	# kernel DTrace hooks
 
 # Compatibility options
 options 	COMPAT_15	# NetBSD 1.5,
@@ -131,8 +132,8 @@ options 	COMPAT_BSDPTY	# /dev/[pt]ty?? ptys.
 # Wedge support
 options 	DKWEDGE_AUTODISCOVER	# Automatically add dk(4) instances
 options 	DKWEDGE_METHOD_GPT	# Supports GPT partitions as wedges
-options 	DKWEDGE_METHOD_BSDLABEL	# Support disklabel entries as wedges
-options 	DKWEDGE_METHOD_MBR	# Support MBR partitions as wedges
+#options 	DKWEDGE_METHOD_BSDLABEL	# Support disklabel entries as wedges
+#options 	DKWEDGE_METHOD_MBR	# Support MBR partitions as wedges
 options		DKWEDGE_METHOD_APPLE    # Support Apple partitions as wedges
 
 # File systems
@@ -214,6 +215,7 @@ options 	IPFILTER_COMPAT # Compat for IP-Filter
 #options 	PCMCIAVERBOSE	# verbose PCMCIA configuration messages
 options 	SCSIVERBOSE	# human readable SCSI error messages
 #options 	USBVERBOSE	# verbose USB device autoconfig messages
+#options 	HDAUDIOVERBOSE	# verbose HDAUDIO driver messages
 
 options 	NFS_BOOT_DHCP,NFS_BOOT_BOOTPARAM
 
@@ -329,6 +331,7 @@ pci*	at ppb? bus ?
 
 # PCI bridges
 pchb*	at pci? dev ? function ?	# PCI-Host bridges
+options 	AGP_X86
 pcib*	at pci? dev ? function ?	# PCI-ISA bridges
 ppb*	at pci? dev ? function ?	# PCI-PCI bridges
 # XXX 'puc's aren't really bridges, but there's no better place for them here
@@ -383,16 +386,26 @@ attimer0	at isa?
 pcppi0		at isa?
 sysbeep0	at pcppi?
 
-# DRI driver
-i915drm*	at drm?		# Intel i915, i945 DRM driver
-mach64drm*	at drm?		# mach64 (3D Rage Pro, Rage) DRM driver
-mgadrm* 	at drm?		# Matrox G[24]00, G[45]50 DRM driver
-r128drm*	at drm?		# ATI Rage 128 DRM driver
-radeondrm*	at drm?		# ATI Radeon DRM driver
-savagedrm*	at drm?		# S3 Savage DRM driver
-sisdrm* 	at drm?		# SiS DRM driver
-tdfxdrm*	at drm?		# 3dfx (voodoo) DRM driver
-viadrm*		at drm?		# VIA DRM driver
+# DRI legacy drivers
+#i915drm*	at drm?		# Intel i915, i945 DRM driver
+#mach64drm*	at drm?		# mach64 (3D Rage Pro, Rage) DRM driver
+#mgadrm* 	at drm?		# Matrox G[24]00, G[45]50 DRM driver
+#r128drm*	at drm?		# ATI Rage 128 DRM driver
+#radeondrm*	at drm?		# ATI Radeon DRM driver
+#savagedrm*	at drm?		# S3 Savage DRM driver
+#sisdrm* 	at drm?		# SiS DRM driver
+#tdfxdrm*	at drm?		# 3dfx (voodoo) DRM driver
+#viadrm*	at drm?		# VIA DRM driver
+
+# DRMKMS drivers
+i915drmkms*     at pci? dev ? function ?
+intelfb*        at intelfbbus?
+
+radeon*         at pci? dev ? function ?
+radeondrmkmsfb* at radeonfbbus?
+
+#nouveau*       at pci? dev ? function ?
+#nouveaufb*     at nouveaufbbus
 
 # Cryptographic Devices
 
@@ -1168,6 +1181,7 @@ virtio*	at pci? dev ? function ?	# Virtio PCI device
 viomb*	at virtio?			# Virtio memory balloon device
 ld*	at virtio?			# Virtio disk device
 vioif*	at virtio?			# Virtio network device
+viornd*	at virtio?			# Virtio entropy device
 
 
 # Pull in optional local configuration

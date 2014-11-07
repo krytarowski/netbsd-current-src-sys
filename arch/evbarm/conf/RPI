@@ -1,5 +1,5 @@
 #
-#	$NetBSD: RPI,v 1.51 2014/09/07 14:17:23 jmcneill Exp $
+#	$NetBSD: RPI,v 1.58 2014/10/12 12:01:50 macallan Exp $
 #
 #	RPi -- Raspberry Pi
 #
@@ -70,8 +70,8 @@ options 	INET6		# IPV6
 #options 	PPP_FILTER	# Active filter support for PPP (requires bpf)
 #options 	TCP_DEBUG	# Record last TCP_NDEBUG packets with SO_DEBUG
 
-#options 	NFS_BOOT_BOOTP
-#options 	NFS_BOOT_DHCP
+options 	NFS_BOOT_BOOTP
+options 	NFS_BOOT_DHCP
 #options		NFS_BOOT_BOOTSTATIC
 #options		NFS_BOOTSTATIC_MYIP="\"192.168.1.4\""
 #options		NFS_BOOTSTATIC_GWIP="\"192.168.1.1\""
@@ -181,7 +181,7 @@ bcmmbox0	at obio?
 vcmbox0 	at bcmmbox0
 
 # DMA Controller
-#bcmdmac0	at obio?
+bcmdmac0	at obio?
 
 # VCHIQ
 vchiq0		at obio?
@@ -197,6 +197,7 @@ plcom0		at obio?
 genfb0		at obio?
 wsdisplay*	at genfb?
 options		VCONS_DRAW_INTR
+#options 	RPI_HWCURSOR
 
 # System timer
 bcmtmr0		at obio?
@@ -223,6 +224,8 @@ usb* 		at dwctwo?
 
 # USB device drivers
 include "dev/usb/usbdevices.config"
+
+midi*		at midibus?
 
 # MII/PHY support
 exphy* 		at mii? phy ?		# 3Com internal PHYs
@@ -254,13 +257,17 @@ ukphy*		at mii? phy ?		# generic unknown PHYs
 bsciic* at obio?
 iic* at i2cbus?
 
+# 'DS3231 Raspberry Pi RTC Board Real Time Clock Module for Arduino'
+# sold by linksprite.com
+#dsrtc* at iic1 addr 0x68 flags 3231
+
 # SPI controller
 bcmspi* at obio?
 spi* at spibus?
 
 # PIFace or other boards using that chip (needs gpio)
 #mcp23s17gpio0 at spi? slave 0 flags 0
-#mcp23s17gpio1 at spi? slave 0 flags 1 
+#mcp23s17gpio1 at spi? slave 0 flags 1
 #mcp23s17gpio2 at spi? slave 0 flags 2
 #mcp23s17gpio3 at spi? slave 0 flags 3
 

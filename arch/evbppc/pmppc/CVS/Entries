@@ -1,7 +1,7 @@
 D/dev////
 D/pci////
-/autoconf.c/1.7/Sun Aug 31 15:08:21 2014//
-/machdep.c/1.12/Sun Aug 31 15:08:21 2014//
-/mainbus.c/1.6/Sun Aug 31 15:08:21 2014//
-/pic_cpc700.c/1.6/Sun Aug 31 15:08:21 2014//
-/pmppc_locore.S/1.11/Sun Aug 31 15:08:21 2014//
+/autoconf.c/1.7/Wed Oct  1 21:58:40 2014//
+/machdep.c/1.12/Wed Oct  1 21:58:40 2014//
+/mainbus.c/1.6/Wed Oct  1 21:58:40 2014//
+/pic_cpc700.c/1.6/Wed Oct  1 21:58:40 2014//
+/pmppc_locore.S/1.11/Sat Sep 27 16:53:16 2014//

@@ -1,12 +1,12 @@
-/com_obio.c/1.13/Sun Aug 31 15:08:21 2014//
-/i80321_mainbus.c/1.18/Sun Aug 31 15:08:21 2014//
-/iq80321_7seg.c/1.7/Sun Aug 31 15:08:21 2014//
-/iq80321_machdep.c/1.54/Sun Aug 31 15:08:21 2014//
-/iq80321_pci.c/1.9/Sun Aug 31 15:08:21 2014//
-/iq80321_start.S/1.5/Sun Aug 31 15:08:21 2014//
-/iq80321reg.h/1.6/Sun Aug 31 15:08:21 2014//
-/iq80321var.h/1.1/Sun Aug 31 15:08:21 2014//
-/obio.c/1.16/Sun Aug 31 15:08:21 2014//
-/obio_space.c/1.12/Sun Aug 31 15:08:21 2014//
-/obiovar.h/1.4/Sun Aug 31 15:08:21 2014//
+/com_obio.c/1.13/Wed Oct  1 21:58:40 2014//
+/i80321_mainbus.c/1.18/Wed Oct  1 21:58:40 2014//
+/iq80321_7seg.c/1.7/Wed Oct  1 21:58:40 2014//
+/iq80321_machdep.c/1.55/Fri Nov  7 18:25:05 2014//
+/iq80321_pci.c/1.9/Wed Oct  1 21:58:40 2014//
+/iq80321_start.S/1.5/Sat Sep 27 16:53:16 2014//
+/iq80321reg.h/1.6/Wed Oct  1 21:58:40 2014//
+/iq80321var.h/1.1/Wed Oct  1 21:58:40 2014//
+/obio.c/1.16/Wed Oct  1 21:58:40 2014//
+/obio_space.c/1.12/Wed Oct  1 21:58:40 2014//
+/obiovar.h/1.4/Wed Oct  1 21:58:40 2014//
 D

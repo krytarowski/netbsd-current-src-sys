@@ -1,14 +1,14 @@
-/files.fpu/1.1/Sun Aug 31 15:08:22 2014//
-/fpu_add.c/1.4/Sun Aug 31 15:08:22 2014//
-/fpu_arith.h/1.4/Sun Aug 31 15:08:22 2014//
-/fpu_compare.c/1.4/Sun Aug 31 15:08:22 2014//
-/fpu_div.c/1.4/Sun Aug 31 15:08:22 2014//
-/fpu_emu.c/1.17/Sun Aug 31 15:08:22 2014//
-/fpu_emu.h/1.4/Sun Aug 31 15:08:22 2014//
-/fpu_explode.c/1.6/Sun Aug 31 15:08:22 2014//
-/fpu_extern.h/1.5/Sun Aug 31 15:08:22 2014//
-/fpu_implode.c/1.6/Sun Aug 31 15:08:22 2014//
-/fpu_mul.c/1.4/Sun Aug 31 15:08:22 2014//
-/fpu_sqrt.c/1.5/Sun Aug 31 15:08:22 2014//
-/fpu_subr.c/1.4/Sun Aug 31 15:08:22 2014//
+/files.fpu/1.1/Sat Sep 27 16:53:17 2014//
+/fpu_add.c/1.4/Wed Oct  1 21:58:42 2014//
+/fpu_arith.h/1.4/Wed Oct  1 21:58:42 2014//
+/fpu_compare.c/1.4/Wed Oct  1 21:58:42 2014//
+/fpu_div.c/1.4/Wed Oct  1 21:58:42 2014//
+/fpu_emu.c/1.17/Wed Oct  1 21:58:42 2014//
+/fpu_emu.h/1.4/Wed Oct  1 21:58:42 2014//
+/fpu_explode.c/1.6/Wed Oct  1 21:58:42 2014//
+/fpu_extern.h/1.5/Wed Oct  1 21:58:42 2014//
+/fpu_implode.c/1.6/Wed Oct  1 21:58:42 2014//
+/fpu_mul.c/1.4/Wed Oct  1 21:58:42 2014//
+/fpu_sqrt.c/1.5/Wed Oct  1 21:58:42 2014//
+/fpu_subr.c/1.4/Wed Oct  1 21:58:42 2014//
 D

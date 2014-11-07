@@ -1,4 +1,4 @@
-/* $NetBSD: awin_var.h,v 1.16 2014/09/11 02:16:15 jmcneill Exp $ */
+/* $NetBSD: awin_var.h,v 1.19 2014/11/02 23:54:16 jmcneill Exp $ */
 /*-
  * Copyright (c) 2013 The NetBSD Foundation, Inc.
  * All rights reserved.
@@ -66,16 +66,12 @@ struct awin_gpio_pinset {
 	uint8_t pinset_group;
 	uint8_t pinset_func;
 	uint32_t pinset_mask;
+	int pinset_flags;
 };
 
 struct awin_gpio_pindata {
 	gpio_chipset_tag_t pd_gc;
 	int pd_pin;
-};
-
-enum awin_dma_type {
-	AWIN_DMA_TYPE_NDMA,
-	AWIN_DMA_TYPE_DDMA,
 };
 
 struct awin_dma_channel;
@@ -94,11 +90,11 @@ void	awin_pll6_enable(void);
 void	awin_pll7_enable(void);
 void	awin_cpu_hatch(struct cpu_info *);
 
-#define AWIN_CHIP_ID_A10	0x1623
-#define AWIN_CHIP_ID_A13	0x1625
-#define AWIN_CHIP_ID_A31	0x1633
-#define AWIN_CHIP_ID_A23	0x1650
-#define AWIN_CHIP_ID_A20	0x1651
+#define AWIN_CHIP_ID_A10	AWIN_SRAM_VER_KEY_A10
+#define AWIN_CHIP_ID_A13	AWIN_SRAM_VER_KEY_A13
+#define AWIN_CHIP_ID_A31	AWIN_SRAM_VER_KEY_A31
+#define AWIN_CHIP_ID_A23	AWIN_SRAM_VER_KEY_A23
+#define AWIN_CHIP_ID_A20	AWIN_SRAM_VER_KEY_A20
 uint16_t awin_chip_id(void);
 const char *awin_chip_name(void);
 
@@ -108,13 +104,12 @@ void	awin_gpio_pinset_acquire(const struct awin_gpio_pinset *);
 void	awin_gpio_pinset_release(const struct awin_gpio_pinset *);
 bool	awin_gpio_pin_reserve(const char *, struct awin_gpio_pindata *);
 
-struct awin_dma_channel *awin_dma_alloc(enum awin_dma_type,
-					      void (*)(void *), void *);
-void	awin_dma_free(struct awin_dma_channel *);
-uint32_t awin_dma_get_config(struct awin_dma_channel *);
-void	awin_dma_set_config(struct awin_dma_channel *, uint32_t);
-int	awin_dma_transfer(struct awin_dma_channel *, paddr_t, paddr_t, size_t);
-void	awin_dma_halt(struct awin_dma_channel *);
+void *	awin_dma_alloc(const char *, void (*)(void *), void *);
+void	awin_dma_free(void *);
+uint32_t awin_dma_get_config(void *);
+void	awin_dma_set_config(void *, uint32_t);
+int	awin_dma_transfer(void *, paddr_t, paddr_t, size_t);
+void	awin_dma_halt(void *);
 
 void	awin_wdog_reset(void);
 void	awin_tmr_cpu_init(struct cpu_info *);
