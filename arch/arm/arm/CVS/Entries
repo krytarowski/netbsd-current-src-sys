@@ -32,7 +32,6 @@
 /cpufunc_asm_armv5.S/1.7/Sat Sep 27 16:53:16 2014//
 /cpufunc_asm_armv5_ec.S/1.6/Sat Sep 27 16:53:16 2014//
 /cpufunc_asm_armv6.S/1.7/Sat Sep 27 16:53:16 2014//
-/cpufunc_asm_armv7.S/1.20/Fri Nov  7 18:24:53 2014//
 /cpufunc_asm_fa526.S/1.7/Sat Sep 27 16:53:16 2014//
 /cpufunc_asm_ixp12x0.S/1.4/Sat Sep 27 16:53:16 2014//
 /cpufunc_asm_pj4b.S/1.5/Fri Nov  7 18:24:53 2014//
@@ -42,7 +41,6 @@
 /cpufunc_asm_xscale.S/1.23/Sat Sep 27 16:53:16 2014//
 /db_disasm.c/1.6/Wed Oct  1 21:58:39 2014//
 /db_trace.c/1.30/Wed Oct  1 21:58:39 2014//
-/disassem.c/1.24/Wed Oct  1 21:58:39 2014//
 /disassem.h/1.4/Wed Oct  1 21:58:39 2014//
 /disksubr.c/1.25/Wed Oct  1 21:58:39 2014//
 /disksubr_acorn.c/1.12/Wed Oct  1 21:58:39 2014//
@@ -62,4 +60,6 @@
 /syscall.c/1.60/Wed Oct  1 21:58:39 2014//
 /undefined.c/1.55/Fri Nov  7 18:24:53 2014//
 /vectors.S/1.10/Sat Sep 27 16:53:16 2014//
+/cpufunc_asm_armv7.S/1.21/Tue Nov 25 23:07:23 2014//
+/disassem.c/1.25/Tue Nov 25 23:07:23 2014//
 D

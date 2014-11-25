@@ -1,4 +1,4 @@
-# $NetBSD: GENERIC,v 1.63 2014/08/23 20:26:57 dholland Exp $
+# $NetBSD: GENERIC,v 1.65 2014/11/16 16:01:40 manu Exp $
 #
 # GENERIC machine description file
 # 
@@ -84,6 +84,7 @@ options 	FIFO		# POSIX fifo support (in all filesystems)
 #options 	QUOTA		# legacy UFS quotas
 #options 	QUOTA2		# new, in-filesystem UFS quotas
 #options 	NFSSERVER	# Network filesystem server
+#options 	UFS_EXTATTR	# Extended attribute support for UFS1
 
 # Networking options
 options 	INET		# Internet protocols

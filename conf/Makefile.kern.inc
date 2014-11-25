@@ -1,4 +1,4 @@
-#	$NetBSD: Makefile.kern.inc,v 1.179 2014/11/07 12:34:14 nakayama Exp $
+#	$NetBSD: Makefile.kern.inc,v 1.183 2014/11/15 12:56:28 uebayasi Exp $
 #
 # This file contains common `MI' targets and definitions and it is included
 # at the bottom of each `MD' ${MACHINE}/conf/Makefile.${MACHINE}.
@@ -160,8 +160,8 @@ NORMAL_S?=	@${_MKSHMSG} "compile  ${.CURDIR:T}/${.TARGET}" && \
 # link rules: 
 LINK_O?=	@${_MKSHMSG} "   link  ${.CURDIR:T}/${.TARGET}" && \
 		${_MKSHECHO}\
-		${LD} -r -Map=${.TARGET}.map -o ${.TARGET} ${.ALLSRC} && \
-		${LD} -r -Map=${.TARGET}.map -o ${.TARGET} ${.ALLSRC}
+		${LD} -r ${LINKFORMAT} -Map=${.TARGET}.map -o ${.TARGET} ${.ALLSRC} && \
+		${LD} -r ${LINKFORMAT} -Map=${.TARGET}.map -o ${.TARGET} ${.ALLSRC}
 
 ##
 ## (3) libkern and compat
@@ -215,16 +215,20 @@ ${_cfile:T:R}.o: ${_cfile}
 ##
 ## (5) link settings
 ##
-## TEXTADDR (or LOADADDRESS), LINKFORMAT, and any EXTRA_LINKFLAGS must
-## be set in the port's Makefile.  The port specific definitions for
+## TEXTADDR (or LOADADDRESS), LINKFORMAT, LINKSCRIPT, and any EXTRA_LINKFLAGS
+## must be set in the port's Makefile.  The port specific definitions for
 ## LINKFLAGS_NORMAL and LINKFLAGS_DEBUG will added to the LINKFLAGS
 ## depending on the value of DEBUG.
 ##
 # load lines for config "xxx" will be emitted as:
 # xxx: ${SYSTEM_DEP} swapxxxx.o vers.o build_kernel
 
+.if !empty(OBJS:Mnetbsd.ko)
+SYSTEM_OBJ?=	${MD_OBJS} ${MI_OBJS} ${OBJS} ${SYSLIBCOMPAT} ${LIBKERN}
+.else
 SYSTEM_OBJ?=	${MD_OBJS} ${MI_OBJS} ${OBJS:O} ${SYSLIBCOMPAT} ${LIBKERN}
-SYSTEM_DEP+=	Makefile ${SYSTEM_OBJ:O} .gdbinit
+.endif
+SYSTEM_DEP+=	Makefile ${SYSTEM_OBJ} .gdbinit
 .if defined(KERNLDSCRIPT)
 SYSTEM_DEP+=	${KERNLDSCRIPT}
 .endif
@@ -244,7 +248,7 @@ LINKTEXT?=	${TEXTADDR:C/.+/-Ttext &/}
 LINKDATA?=	${DATAADDR:C/.+/-Tdata &/}
 ENTRYPOINT?=	start
 LINKENTRY?=	${ENTRYPOINT:C/.+/-e &/}
-LINKFLAGS?=	${LINKFORMAT} ${LINKTEXT} ${LINKDATA} ${LINKENTRY} \
+LINKFLAGS?=	${LINKFORMAT} ${LINKSCRIPT} ${LINKTEXT} ${LINKDATA} ${LINKENTRY} \
 		${EXTRA_LINKFLAGS}
 
 LINKFLAGS_DEBUG?=	-X
@@ -373,7 +377,7 @@ MKDEP_CFLAGS?=	${CFLAGS}
 SSRCS=${MD_SFILES} ${SFILES}
 CSRCS=${MD_CFILES} ${MI_CFILES} ${CFILES}
 SRCS=${SSRCS} ${CSRCS}
-DEPS=	${SRCS:T:O:u:R:S/$/.d/g}
+DEPS=	${SRCS:T:u:R:S/$/.d/g}
 
 .for _s in ${SSRCS}
 .if !target(${_s:T:R}.d)

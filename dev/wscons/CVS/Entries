@@ -11,14 +11,12 @@
 /wscons_rfont.h/1.4/Wed Oct  1 21:58:47 2014//
 /wscons_rinit.c/1.7/Wed Oct  1 21:58:47 2014//
 /wscons_rops.c/1.11/Wed Oct  1 21:58:47 2014//
-/wsconsio.h/1.108/Wed Oct  1 21:58:47 2014//
 /wsdisplay.c/1.138/Wed Oct  1 21:58:47 2014//
 /wsdisplay_compat_usl.c/1.48/Wed Oct  1 21:58:47 2014//
 /wsdisplay_glyphcache.c/1.6/Wed Oct  1 21:58:47 2014//
 /wsdisplay_glyphcachevar.h/1.4/Wed Oct  1 21:58:47 2014//
 /wsdisplay_usl_io.h/1.3/Wed Oct  1 21:58:47 2014//
 /wsdisplay_util.c/1.2/Wed Oct  1 21:58:47 2014//
-/wsdisplay_vcons.c/1.32/Wed Oct  1 21:58:47 2014//
 /wsdisplay_vcons_util.c/1.2/Wed Oct  1 21:58:47 2014//
 /wsdisplay_vconsvar.h/1.23/Wed Oct  1 21:58:47 2014//
 /wsdisplayvar.h/1.51/Wed Oct  1 21:58:47 2014//
@@ -33,7 +31,6 @@
 /wsemulvar.h/1.15/Wed Oct  1 21:58:47 2014//
 /wsevent.c/1.35/Wed Oct  1 21:58:47 2014//
 /wseventvar.h/1.15/Wed Oct  1 21:58:47 2014//
-/wskbd.c/1.134/Wed Oct  1 21:58:47 2014//
 /wskbdutil.c/1.18/Wed Oct  1 21:58:47 2014//
 /wskbdvar.h/1.19/Wed Oct  1 21:58:47 2014//
 /wsksymdef.h/1.66/Wed Oct  1 21:58:47 2014//
@@ -42,4 +39,7 @@
 /wsmousevar.h/1.11/Wed Oct  1 21:58:47 2014//
 /wsmux.c/1.58/Wed Oct  1 21:58:47 2014//
 /wsmuxvar.h/1.15/Wed Oct  1 21:58:47 2014//
+/wsconsio.h/1.109/Tue Nov 25 23:08:38 2014//
+/wsdisplay_vcons.c/1.33/Tue Nov 25 23:08:38 2014//
+/wskbd.c/1.135/Tue Nov 25 23:08:38 2014//
 D

@@ -1,8 +1,11 @@
-/* $NetBSD: padvol.h,v 1.3 2011/11/23 23:07:33 jmcneill Exp $ */
+/* $NetBSD: autoconf.c,v 1.1 2014/11/22 15:17:02 macallan Exp $ */
 
 /*-
- * Copyright (c) 2007 Jared D. McNeill <jmcneill@invisible.ca>
+ * Copyright (c) 2001 The NetBSD Foundation, Inc.
  * All rights reserved.
+ *
+ * This code is derived from software contributed to The NetBSD Foundation
+ * by Jason R. Thorpe.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -26,28 +29,41 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _SYS_DEV_PAD_PADVOL_H
-#define _SYS_DEV_PAD_PADVOL_H
+#include <sys/cdefs.h>
+__KERNEL_RCSID(0, "$NetBSD: autoconf.c,v 1.1 2014/11/22 15:17:02 macallan Exp $");
 
-stream_filter_t *	pad_vol_slinear16_le(struct audio_softc *,
-			    const audio_params_t *, const audio_params_t *);
-stream_filter_t *	pad_vol_slinear16_be(struct audio_softc *,
-			    const audio_params_t *, const audio_params_t *);
+#include <sys/param.h>
+#include <sys/bus.h>
+#include <sys/conf.h>
+#include <sys/device.h>
+#include <sys/systm.h>
 
-#define PAD_DEFINE_FILTER(name)						\
-	static int							\
-	name##_fetch_to(struct audio_softc *, stream_fetcher_t *, 	\
-			audio_stream_t *, int);				\
-	stream_filter_t * name(struct audio_softc *,			\
-	    const audio_params_t *, const audio_params_t *);		\
-	stream_filter_t *						\
-	name(struct audio_softc *asc, const audio_params_t *from,	\
-	    const audio_params_t *to)					\
-	{								\
-		return pad_filter_factory(asc, name##_fetch_to);	\
-	}								\
-	static int							\
-	name##_fetch_to(struct audio_softc *asc, stream_fetcher_t *self, \
-			audio_stream_t *dst, int max_used)
+/*
+ * Configure all devices on system
+ */     
+void
+cpu_configure(void)
+{
 
-#endif /* !_SYS_DEV_PAD_PADVOL_H */
+	intr_init();
+
+	/* Kick off autoconfiguration. */
+	(void)splhigh();
+	if (config_rootfound("mainbus", NULL) == NULL)
+		panic("no mainbus found");
+}
+
+void
+cpu_rootconf(void)
+{
+
+	rootconf();
+}
+
+void
+device_register(device_t dev, void *aux)
+{
+#ifdef notyet
+	(*platformsw->apsw_device_register)(dev, aux);
+#endif
+}

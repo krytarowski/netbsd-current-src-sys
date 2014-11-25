@@ -1,4 +1,3 @@
-/Makefile/1.151/Fri Nov  7 18:09:37 2014//
 /acct.h/1.27/Wed Oct  1 21:58:50 2014//
 /agpio.h/1.10/Wed Oct  1 21:58:50 2014//
 /aio.h/1.12/Wed Oct  1 21:58:50 2014//
@@ -46,7 +45,6 @@
 /ctype_bits.h/1.5/Wed Oct  1 21:58:50 2014//
 /ctype_inline.h/1.3/Wed Oct  1 21:58:50 2014//
 /debug.h/1.4/Wed Oct  1 21:58:50 2014//
-/device.h/1.145/Wed Oct  1 21:58:50 2014//
 /device_if.h/1.5/Wed Oct  1 21:58:50 2014//
 /devmon.h/1.1/Wed Oct  1 21:58:50 2014//
 /dir.h/1.11/Wed Oct  1 21:58:50 2014//
@@ -168,7 +166,6 @@
 /ptrace.h/1.45/Wed Oct  1 21:58:50 2014//
 /ptree.h/1.8/Wed Oct  1 21:58:50 2014//
 /pty.h/1.11/Fri Nov  7 18:26:15 2014//
-/queue.h/1.67/Wed Oct  1 21:58:50 2014//
 /quota.h/1.12/Wed Oct  1 21:58:50 2014//
 /quotactl.h/1.38/Wed Oct  1 21:58:50 2014//
 /radioio.h/1.2/Wed Oct  1 21:58:50 2014//
@@ -233,7 +230,6 @@
 /tprintf.h/1.18/Wed Oct  1 21:58:50 2014//
 /trace.h/1.11/Wed Oct  1 21:58:50 2014//
 /tree.h/1.20/Wed Oct  1 21:58:50 2014//
-/tty.h/1.92/Wed Oct  1 21:58:50 2014//
 /ttychars.h/1.9/Wed Oct  1 21:58:50 2014//
 /ttycom.h/1.20/Wed Oct  1 21:58:50 2014//
 /ttydefaults.h/1.16/Wed Oct  1 21:58:50 2014//
@@ -267,4 +263,9 @@
 /workqueue.h/1.9/Wed Oct  1 21:58:50 2014//
 /xattr.h/1.5/Wed Oct  1 21:58:50 2014//
 /xcall.h/1.5/Wed Oct  1 21:58:50 2014//
+/Makefile/1.152/Tue Nov 25 23:09:26 2014//
+/clock.h/1.3/Mon Nov 17 17:11:29 2014//
+/device.h/1.146/Tue Nov 25 23:09:26 2014//
+/queue.h/1.68/Tue Nov 25 23:09:26 2014//
+/tty.h/1.93/Tue Nov 25 23:09:26 2014//
 D

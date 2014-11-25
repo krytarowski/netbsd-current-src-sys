@@ -1,7 +1,5 @@
 D/i2c////
 D/ttm////
-/drmP.h/1.7/Wed Oct  1 21:58:48 2014//
-/drm_agpsupport.h/1.2/Wed Oct  1 21:58:48 2014//
 /drm_buffer.h/1.1.1.1/Wed Oct  1 21:58:48 2014//
 /drm_cache.h/1.1.1.1/Wed Oct  1 21:58:48 2014//
 /drm_core.h/1.1.1.1/Wed Oct  1 21:58:48 2014//
@@ -33,3 +31,5 @@ D/ttm////
 /i915_pciids.h/1.1.1.1/Wed Oct  1 21:58:48 2014//
 /i915_powerwell.h/1.1.1.1/Wed Oct  1 21:58:48 2014//
 /intel-gtt.h/1.1.1.1/Wed Oct  1 21:58:48 2014//
+/drmP.h/1.8/Tue Nov 25 23:08:42 2014//
+/drm_agpsupport.h/1.4/Tue Nov 25 23:08:42 2014//

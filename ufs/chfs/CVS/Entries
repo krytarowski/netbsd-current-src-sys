@@ -12,8 +12,6 @@
 /chfs_readinode.c/1.9/Wed Oct  1 21:58:50 2014//
 /chfs_scan.c/1.5/Wed Oct  1 21:58:50 2014//
 /chfs_subr.c/1.9/Wed Oct  1 21:58:50 2014//
-/chfs_vfsops.c/1.13/Fri Nov  7 18:26:15 2014//
-/chfs_vnode.c/1.11/Wed Oct  1 21:58:50 2014//
 /chfs_vnode_cache.c/1.3/Wed Oct  1 21:58:50 2014//
 /chfs_vnops.c/1.22/Wed Oct  1 21:58:50 2014//
 /chfs_wbuf.c/1.7/Fri Nov  7 18:26:15 2014//
@@ -24,4 +22,6 @@
 /ebh_media.h/1.1/Wed Oct  1 21:58:50 2014//
 /ebh_misc.h/1.2/Wed Oct  1 21:58:50 2014//
 /media.h/1.2/Wed Oct  1 21:58:50 2014//
+/chfs_vfsops.c/1.14/Tue Nov 25 23:09:26 2014//
+/chfs_vnode.c/1.12/Tue Nov 25 23:09:26 2014//
 D

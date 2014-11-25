@@ -1,8 +1,6 @@
 /Makefile/1.6/Sat Sep 27 16:53:21 2014//
 /files.netsmb/1.2/Sat Sep 27 16:53:21 2014//
-/iconv.c/1.13/Wed Oct  1 21:58:49 2014//
 /iconv.h/1.10/Wed Oct  1 21:58:49 2014//
-/mchain.h/1.9/Wed Oct  1 21:58:49 2014//
 /netbios.h/1.7/Wed Oct  1 21:58:49 2014//
 /smb.h/1.20/Wed Oct  1 21:58:49 2014//
 /smb_conn.c/1.29/Wed Oct  1 21:58:49 2014//
@@ -14,11 +12,13 @@
 /smb_rq.c/1.34/Wed Oct  1 21:58:49 2014//
 /smb_rq.h/1.13/Wed Oct  1 21:58:49 2014//
 /smb_smb.c/1.33/Wed Oct  1 21:58:49 2014//
-/smb_subr.c/1.36/Wed Oct  1 21:58:49 2014//
 /smb_subr.h/1.21/Wed Oct  1 21:58:49 2014//
 /smb_tran.h/1.6/Wed Oct  1 21:58:49 2014//
 /smb_trantcp.c/1.47/Wed Oct  1 21:58:49 2014//
 /smb_trantcp.h/1.7/Wed Oct  1 21:58:49 2014//
 /smb_usr.c/1.16/Wed Oct  1 21:58:49 2014//
-/subr_mchain.c/1.22/Wed Oct  1 21:58:49 2014//
+/iconv.c/1.14/Tue Nov 25 23:09:11 2014//
+/mchain.h/1.10/Tue Nov 25 23:09:11 2014//
+/smb_subr.c/1.37/Tue Nov 25 23:09:11 2014//
+/subr_mchain.c/1.23/Tue Nov 25 23:09:11 2014//
 D

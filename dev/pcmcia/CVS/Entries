@@ -3,7 +3,6 @@
 /aic_pcmcia.c/1.43/Wed Oct  1 21:58:46 2014//
 /bluecardreg.h/1.1/Wed Oct  1 21:58:46 2014//
 /bt3c.c/1.23/Wed Oct  1 21:58:46 2014//
-/btbc.c/1.16/Wed Oct  1 21:58:46 2014//
 /com_pcmcia.c/1.61/Wed Oct  1 21:58:46 2014//
 /devlist2h.awk/1.12/Sat Sep 27 16:53:18 2014//
 /esp_pcmcia.c/1.38/Wed Oct  1 21:58:46 2014//
@@ -51,4 +50,5 @@
 /spc_pcmcia.c/1.21/Wed Oct  1 21:58:46 2014//
 /wdc_pcmcia.c/1.124/Wed Oct  1 21:58:46 2014//
 /xirc.c/1.33/Wed Oct  1 21:58:46 2014//
+/btbc.c/1.17/Tue Nov 25 23:08:31 2014//
 D

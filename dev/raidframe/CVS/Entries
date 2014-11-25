@@ -1,7 +1,6 @@
 /Makefile/1.1/Sat Sep 27 16:53:18 2014//
 /files.raidframe/1.9/Sat Sep 27 16:53:18 2014//
 /raidframeio.h/1.6/Wed Oct  1 21:58:46 2014//
-/raidframevar.h/1.16/Wed Oct  1 21:58:46 2014//
 /rf_acctrace.c/1.24/Wed Oct  1 21:58:46 2014//
 /rf_acctrace.h/1.10/Wed Oct  1 21:58:46 2014//
 /rf_alloclist.c/1.26/Wed Oct  1 21:58:46 2014//
@@ -69,12 +68,10 @@
 /rf_kintf.h/1.23/Wed Oct  1 21:58:46 2014//
 /rf_layout.c/1.20/Wed Oct  1 21:58:46 2014//
 /rf_layout.h/1.17/Wed Oct  1 21:58:46 2014//
-/rf_map.c/1.45/Wed Oct  1 21:58:46 2014//
 /rf_map.h/1.13/Wed Oct  1 21:58:46 2014//
 /rf_mcpair.c/1.24/Wed Oct  1 21:58:46 2014//
 /rf_mcpair.h/1.10/Wed Oct  1 21:58:46 2014//
 /rf_netbsd.h/1.30/Wed Oct  1 21:58:46 2014//
-/rf_netbsdkintf.c/1.315/Fri Nov  7 18:25:37 2014//
 /rf_nwayxor.c/1.11/Wed Oct  1 21:58:46 2014//
 /rf_nwayxor.h/1.4/Wed Oct  1 21:58:46 2014//
 /rf_options.c/1.8/Wed Oct  1 21:58:46 2014//
@@ -115,7 +112,6 @@
 /rf_reconbuffer.h/1.8/Wed Oct  1 21:58:46 2014//
 /rf_reconmap.c/1.34/Wed Oct  1 21:58:46 2014//
 /rf_reconmap.h/1.12/Wed Oct  1 21:58:46 2014//
-/rf_reconstruct.c/1.120/Wed Oct  1 21:58:46 2014//
 /rf_reconstruct.h/1.28/Wed Oct  1 21:58:46 2014//
 /rf_reconutil.c/1.35/Wed Oct  1 21:58:46 2014//
 /rf_reconutil.h/1.6/Wed Oct  1 21:58:46 2014//
@@ -133,4 +129,8 @@
 /rf_threadstuff.h/1.34/Wed Oct  1 21:58:46 2014//
 /rf_utils.c/1.16/Wed Oct  1 21:58:46 2014//
 /rf_utils.h/1.5/Wed Oct  1 21:58:46 2014//
+/raidframevar.h/1.17/Tue Nov 25 23:08:31 2014//
+/rf_map.c/1.46/Tue Nov 25 23:08:31 2014//
+/rf_netbsdkintf.c/1.316/Tue Nov 25 23:08:31 2014//
+/rf_reconstruct.c/1.121/Tue Nov 25 23:08:31 2014//
 D

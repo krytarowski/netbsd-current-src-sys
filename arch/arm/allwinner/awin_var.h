@@ -1,4 +1,4 @@
-/* $NetBSD: awin_var.h,v 1.19 2014/11/02 23:54:16 jmcneill Exp $ */
+/* $NetBSD: awin_var.h,v 1.26 2014/11/23 23:04:58 jmcneill Exp $ */
 /*-
  * Copyright (c) 2013 The NetBSD Foundation, Inc.
  * All rights reserved.
@@ -62,11 +62,21 @@ struct awinio_attach_args {
 	bus_dma_tag_t aio_coherent_dmat;
 };
 
+struct awinfb_attach_args {
+	void *afb_fb;
+	uint32_t afb_width;
+	uint32_t afb_height;
+	bus_dma_tag_t afb_dmat;
+	bus_dma_segment_t *afb_dmasegs;
+	int afb_ndmasegs;
+};
+
 struct awin_gpio_pinset {
 	uint8_t pinset_group;
 	uint8_t pinset_func;
 	uint32_t pinset_mask;
 	int pinset_flags;
+	int pinset_drv;
 };
 
 struct awin_gpio_pindata {
@@ -86,8 +96,12 @@ psize_t awin_memprobe(void);
 void	awin_bootstrap(vaddr_t, vaddr_t); 
 void	awin_dma_bootstrap(psize_t);
 void	awin_pll2_enable(void);
+void	awin_pll3_enable(void);
 void	awin_pll6_enable(void);
 void	awin_pll7_enable(void);
+void	awin_pll3_set_rate(uint32_t);
+uint32_t awin_pll5x_get_rate(void);
+uint32_t awin_pll6_get_rate(void);
 void	awin_cpu_hatch(struct cpu_info *);
 
 #define AWIN_CHIP_ID_A10	AWIN_SRAM_VER_KEY_A10
@@ -110,6 +124,26 @@ uint32_t awin_dma_get_config(void *);
 void	awin_dma_set_config(void *, uint32_t);
 int	awin_dma_transfer(void *, paddr_t, paddr_t, size_t);
 void	awin_dma_halt(void *);
+
+struct videomode;
+unsigned int awin_tcon_get_clk_div(void);
+bool	awin_tcon_get_clk_dbl(void);
+void	awin_tcon_set_videomode(const struct videomode *);
+void	awin_tcon_enable(bool);
+void	awin_debe_set_videomode(const struct videomode *);
+void	awin_debe_enable(bool);
+int	awin_debe_ioctl(device_t, u_long, void *);
+
+struct awin_hdmi_info {
+	bool	display_connected;
+	char	display_vendor[16];
+	char	display_product[16];
+	bool	display_hdmimode;
+};
+void	awin_hdmi_get_info(struct awin_hdmi_info *);
+
+void	awin_fb_set_videomode(device_t, u_int, u_int);
+void	awin_fb_ddb_trap_callback(int);
 
 void	awin_wdog_reset(void);
 void	awin_tmr_cpu_init(struct cpu_info *);

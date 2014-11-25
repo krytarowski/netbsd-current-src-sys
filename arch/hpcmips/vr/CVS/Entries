@@ -16,8 +16,6 @@
 /icureg.h/1.8/Wed Oct  1 21:58:40 2014//
 /ite8181_vrip.c/1.10/Wed Oct  1 21:58:40 2014//
 /mq200_vrip.c/1.13/Wed Oct  1 21:58:40 2014//
-/rtc.c/1.32/Thu Oct  9 20:46:50 2014//
-/rtcreg.h/1.9/Thu Oct  9 20:46:50 2014//
 /siureg.h/1.1.1.1/Wed Oct  1 21:58:40 2014//
 /vr.c/1.65/Wed Oct  1 21:58:40 2014//
 /vr.h/1.4/Wed Oct  1 21:58:40 2014//
@@ -82,4 +80,6 @@
 /vrpmu.c/1.20/Wed Oct  1 21:58:40 2014//
 /vrpmureg.h/1.4/Wed Oct  1 21:58:40 2014//
 /vrpmuvar.h/1.2/Wed Oct  1 21:58:40 2014//
+/rtc.c/1.34/Tue Nov 25 23:07:40 2014//
+/rtcreg.h/1.10/Tue Nov 25 23:07:40 2014//
 D

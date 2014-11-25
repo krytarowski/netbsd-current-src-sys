@@ -1,12 +1,10 @@
 D/arch////
 D/opt////
 /Makefile/1.43/Sat Sep 27 16:53:21 2014//
-/Makefile.rumpkern/1.149/Sat Sep 27 16:53:21 2014//
 /accessors.c/1.1/Wed Oct  1 21:58:49 2014//
 /atomic_cas_generic.c/1.2/Wed Oct  1 21:58:50 2014//
 /cons.c/1.4/Wed Oct  1 21:58:50 2014//
 /devsw.c/1.7/Wed Oct  1 21:58:50 2014//
-/emul.c/1.166/Wed Oct  1 21:58:50 2014//
 /etfs_wrap.c/1.1/Wed Oct  1 21:58:50 2014//
 /hyperentropy.c/1.7/Wed Oct  1 21:58:50 2014//
 /hyperstubs.c/1.2/Wed Oct  1 21:58:50 2014//
@@ -35,3 +33,7 @@ D/opt////
 /sleepq.c/1.16/Wed Oct  1 21:58:50 2014//
 /threads.c/1.23/Wed Oct  1 21:58:50 2014//
 /vm.c/1.159/Wed Oct  1 21:58:50 2014//
+/Makefile.rumpkern/1.150/Tue Nov 25 23:09:20 2014//
+/emul.c/1.168/Tue Nov 25 23:09:20 2014//
+/rump.3/1.11/Sun Nov  9 17:39:38 2014//
+/rump_lwproc.3/1.1/Sun Nov  9 17:39:38 2014//

@@ -1,5 +1,4 @@
 /Makefile/1.6/Sat Sep 27 16:53:17 2014//
-/bcsp.c/1.24/Wed Oct  1 21:58:45 2014//
 /bcsp.h/1.2/Wed Oct  1 21:58:45 2014//
 /bluetoothdevices.config/1.1/Sat Sep 27 16:53:17 2014//
 /btdev.h/1.9/Wed Oct  1 21:58:45 2014//
@@ -7,11 +6,12 @@
 /bthidev.c/1.29/Wed Oct  1 21:58:45 2014//
 /bthidev.h/1.5/Wed Oct  1 21:58:45 2014//
 /bthub.c/1.20/Wed Oct  1 21:58:45 2014//
-/btkbd.c/1.16/Wed Oct  1 21:58:45 2014//
 /btmagic.c/1.11/Wed Oct  1 21:58:45 2014//
 /btms.c/1.11/Wed Oct  1 21:58:45 2014//
 /btsco.c/1.33/Wed Oct  1 21:58:45 2014//
 /btsco.h/1.2/Wed Oct  1 21:58:45 2014//
 /btuart.c/1.27/Wed Oct  1 21:58:45 2014//
 /files.bluetooth/1.14/Sat Sep 27 16:53:17 2014//
+/bcsp.c/1.25/Tue Nov 25 23:08:23 2014//
+/btkbd.c/1.17/Tue Nov 25 23:08:23 2014//
 D

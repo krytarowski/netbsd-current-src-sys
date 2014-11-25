@@ -2,9 +2,9 @@
 /Makefile.inc/1.6/Sat Sep 27 16:53:17 2014//
 /SRT0.S/1.4/Sat Sep 27 16:53:17 2014//
 /bugdev.c/1.12/Wed Oct  1 21:58:42 2014//
-/chiptotime.c/1.4/Thu Oct  9 20:46:50 2014//
-/clock.c/1.9/Thu Oct  9 20:46:50 2014//
 /exec_mvme.c/1.16/Wed Oct  1 21:58:42 2014//
 /libsa.h/1.6/Wed Oct  1 21:58:42 2014//
 /parse_args.c/1.11/Wed Oct  1 21:58:42 2014//
+/chiptotime.c/1.7/Tue Nov 25 23:07:57 2014//
+/clock.c/1.11/Tue Nov 25 23:07:57 2014//
 D

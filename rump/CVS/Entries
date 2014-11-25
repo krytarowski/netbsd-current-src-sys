@@ -4,7 +4,6 @@ D/include////
 D/kern////
 D/librump////
 D/net////
-/Makefile/1.6/Sat Sep 27 16:53:21 2014//
 /Makefile.rump/1.99/Sat Sep 27 16:53:21 2014//
 /README.compileopts/1.6/Sat Sep 27 16:53:21 2014//
 /README.dirs/1.12/Sat Sep 27 16:53:21 2014//
@@ -16,3 +15,5 @@ D/net////
 /makerumpsyscalls.sh/1.2/Sat Sep 27 16:53:21 2014//
 /rump.sysmap/1.2/Sat Sep 27 16:53:21 2014//
 /sunldgen.sh/1.1/Sat Sep 27 16:53:21 2014//
+/Makefile/1.7/Tue Nov 25 23:09:11 2014//
+D/share////

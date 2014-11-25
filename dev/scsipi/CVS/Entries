@@ -22,7 +22,6 @@
 /scsiconf.c/1.273/Wed Oct  1 21:58:47 2014//
 /scsiconf.h/1.58/Wed Oct  1 21:58:47 2014//
 /scsipi_all.h/1.33/Wed Oct  1 21:58:47 2014//
-/scsipi_base.c/1.162/Fri Nov  7 18:25:37 2014//
 /scsipi_base.h/1.22/Wed Oct  1 21:58:47 2014//
 /scsipi_cd.h/1.21/Wed Oct  1 21:58:47 2014//
 /scsipi_debug.h/1.17/Wed Oct  1 21:58:47 2014//
@@ -45,4 +44,5 @@
 /st_scsi.c/1.36/Fri Nov  7 18:25:37 2014//
 /stvar.h/1.24/Wed Oct  1 21:58:47 2014//
 /uk.c/1.62/Wed Oct  1 21:58:47 2014//
+/scsipi_base.c/1.164/Tue Nov 25 23:08:31 2014//
 D

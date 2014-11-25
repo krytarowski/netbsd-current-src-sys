@@ -1,12 +1,9 @@
 /Makefile.ediddevs/1.2/Sat Sep 27 16:53:18 2014//
 /Makefile.videomode/1.2/Sat Sep 27 16:53:18 2014//
 /devlist2h.awk/1.1/Sat Sep 27 16:53:18 2014//
-/edid.c/1.12/Wed Oct  1 21:58:47 2014//
 /ediddevs/1.3/Sat Sep 27 16:53:18 2014//
 /ediddevs.h/1.2/Wed Oct  1 21:58:47 2014//
 /ediddevs_data.h/1.2/Wed Oct  1 21:58:47 2014//
-/edidreg.h/1.3/Wed Oct  1 21:58:47 2014//
-/edidvar.h/1.2/Wed Oct  1 21:58:47 2014//
 /files.videomode/1.4/Sat Sep 27 16:53:18 2014//
 /modelines/1.9/Sat Sep 27 16:53:18 2014//
 /modelines2c.awk/1.5/Sat Sep 27 16:53:18 2014//
@@ -16,4 +13,7 @@
 /vesagtf.h/1.1/Wed Oct  1 21:58:47 2014//
 /videomode.c/1.11/Wed Oct  1 21:58:47 2014//
 /videomode.h/1.3/Wed Oct  1 21:58:47 2014//
+/edid.c/1.13/Tue Nov 25 23:08:35 2014//
+/edidreg.h/1.4/Tue Nov 25 23:08:35 2014//
+/edidvar.h/1.3/Tue Nov 25 23:08:35 2014//
 D

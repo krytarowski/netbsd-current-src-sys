@@ -6,7 +6,6 @@
 /adv_isa.c/1.20/Wed Oct  1 21:58:45 2014//
 /aha_isa.c/1.30/Fri Nov  7 18:25:32 2014//
 /aic_isa.c/1.26/Wed Oct  1 21:58:45 2014//
-/aps.c/1.15/Wed Oct  1 21:58:45 2014//
 /aria.c/1.37/Wed Oct  1 21:58:45 2014//
 /ariareg.h/1.6/Wed Oct  1 21:58:45 2014//
 /ast.c/1.65/Wed Oct  1 21:58:45 2014//
@@ -181,4 +180,5 @@
 /wtreg.h/1.8/Wed Oct  1 21:58:46 2014//
 /ym.c/1.44/Wed Oct  1 21:58:46 2014//
 /ymvar.h/1.13/Wed Oct  1 21:58:46 2014//
+/aps.c/1.16/Tue Nov 25 23:08:27 2014//
 D

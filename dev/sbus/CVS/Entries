@@ -27,7 +27,6 @@
 /lebuffer.c/1.36/Wed Oct  1 21:58:46 2014//
 /lebuffervar.h/1.8/Wed Oct  1 21:58:46 2014//
 /magma.c/1.59/Wed Oct  1 21:58:46 2014//
-/magmareg.h/1.17/Wed Oct  1 21:58:46 2014//
 /mbppio.h/1.2/Wed Oct  1 21:58:46 2014//
 /p9100.c/1.62/Wed Oct  1 21:58:46 2014//
 /p9100reg.h/1.6/Wed Oct  1 21:58:46 2014//
@@ -39,7 +38,6 @@
 /sbusvar.h/1.27/Wed Oct  1 21:58:46 2014//
 /sio16.c/1.24/Wed Oct  1 21:58:46 2014//
 /spif.c/1.31/Wed Oct  1 21:58:46 2014//
-/spifreg.h/1.4/Wed Oct  1 21:58:46 2014//
 /spifvar.h/1.4/Wed Oct  1 21:58:46 2014//
 /stp4020.c/1.67/Wed Oct  1 21:58:46 2014//
 /stp4020reg.h/1.4/Wed Oct  1 21:58:46 2014//
@@ -50,4 +48,6 @@
 /zx.c/1.39/Wed Oct  1 21:58:46 2014//
 /zxreg.h/1.7/Wed Oct  1 21:58:46 2014//
 /zxvar.h/1.6/Wed Oct  1 21:58:46 2014//
+/magmareg.h/1.18/Tue Nov 25 23:08:31 2014//
+/spifreg.h/1.5/Tue Nov 25 23:08:31 2014//
 D

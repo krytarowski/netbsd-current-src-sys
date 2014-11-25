@@ -100,7 +100,6 @@
 /imxspireg.h/1.1/Wed Oct  1 21:58:39 2014//
 /imxspivar.h/1.1/Wed Oct  1 21:58:39 2014//
 /imxssireg.h/1.1/Wed Oct  1 21:58:39 2014//
-/imxuart.c/1.15/Fri Nov  7 18:24:58 2014//
 /imxuartreg.h/1.5/Wed Oct  1 21:58:39 2014//
 /imxuartvar.h/1.5/Wed Oct  1 21:58:39 2014//
 /imxusb.c/1.7/Fri Nov  7 18:24:58 2014//
@@ -136,4 +135,5 @@
 /imx6_usdhc.c/1.1/Fri Nov  7 18:56:12 2014//
 /imx6_wdog.c/1.1/Fri Nov  7 18:56:12 2014//
 /imx6var.h/1.2/Fri Nov  7 18:56:12 2014//
+/imxuart.c/1.16/Tue Nov 25 23:07:23 2014//
 D

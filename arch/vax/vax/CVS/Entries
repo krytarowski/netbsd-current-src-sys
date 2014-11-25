@@ -2,7 +2,6 @@
 /bus_dma.c/1.34/Wed Oct  1 21:58:44 2014//
 /bus_mem.c/1.13/Wed Oct  1 21:58:44 2014//
 /cfl.c/1.22/Wed Oct  1 21:58:44 2014//
-/clock.c/1.56/Thu Oct  9 20:46:50 2014//
 /cmi.c/1.13/Wed Oct  1 21:58:44 2014//
 /compat_13_machdep.c/1.4/Wed Oct  1 21:58:44 2014//
 /compat_16_machdep.c/1.4/Wed Oct  1 21:58:44 2014//
@@ -66,4 +65,5 @@
 /vm_machdep.c/1.117/Wed Oct  1 21:58:44 2014//
 /xmi_mainbus.c/1.8/Wed Oct  1 21:58:44 2014//
 /yyyin_cksum.c/1.9/Wed Oct  1 21:58:44 2014//
+/clock.c/1.57/Tue Nov 25 23:08:07 2014//
 D

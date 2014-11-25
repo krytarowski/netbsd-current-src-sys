@@ -1,7 +1,6 @@
 /Makefile/1.1/Sat Sep 27 16:53:18 2014//
 /ceareg.h/1.1/Wed Oct  1 21:58:46 2014//
 /eldreg.h/1.1/Wed Oct  1 21:58:46 2014//
-/files.hdaudio/1.6/Fri Nov  7 18:25:36 2014//
 /hdafg.c/1.25/Fri Nov  7 18:25:36 2014//
 /hdafg_dd.c/1.2/Wed Oct  1 21:58:46 2014//
 /hdafg_dd.h/1.2/Wed Oct  1 21:58:46 2014//
@@ -20,4 +19,5 @@
 /hdaudiodevs/1.1/Fri Nov  7 18:56:26 2014//
 /hdaudiodevs.h/1.2/Fri Nov  7 18:56:26 2014//
 /hdaudiodevs_data.h/1.2/Fri Nov  7 18:56:26 2014//
+/files.hdaudio/1.7/Tue Nov 25 23:08:31 2014//
 D

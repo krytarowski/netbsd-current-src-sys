@@ -1,7 +1,6 @@
 /apci.c/1.13/Wed Oct  1 21:58:40 2014//
 /apcireg.h/1.2/Wed Oct  1 21:58:40 2014//
 /autoconf.c/1.13/Wed Oct  1 21:58:40 2014//
-/clock.c/1.12/Thu Oct  9 20:46:50 2014//
 /conf.c/1.12/Wed Oct  1 21:58:40 2014//
 /conf.h/1.2/Wed Oct  1 21:58:40 2014//
 /cons.c/1.7/Wed Oct  1 21:58:40 2014//
@@ -59,4 +58,5 @@
 /sd.c/1.11/Wed Oct  1 21:58:40 2014//
 /srt0.S/1.17/Sat Sep 27 16:53:16 2014//
 /tgets.c/1.5/Wed Oct  1 21:58:40 2014//
+/clock.c/1.13/Tue Nov 25 23:07:40 2014//
 D

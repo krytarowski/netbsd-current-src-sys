@@ -1,4 +1,4 @@
-/*	$NetBSD: awin_machdep.c,v 1.25 2014/11/07 11:42:28 jmcneill Exp $ */
+/*	$NetBSD: awin_machdep.c,v 1.29 2014/11/17 00:50:40 jmcneill Exp $ */
 
 /*
  * Machine dependent functions for kernel setup for TI OSK5912 board.
@@ -125,7 +125,7 @@
  */
 
 #include <sys/cdefs.h>
-__KERNEL_RCSID(0, "$NetBSD: awin_machdep.c,v 1.25 2014/11/07 11:42:28 jmcneill Exp $");
+__KERNEL_RCSID(0, "$NetBSD: awin_machdep.c,v 1.29 2014/11/17 00:50:40 jmcneill Exp $");
 
 #include "opt_machdep.h"
 #include "opt_ddb.h"
@@ -138,6 +138,7 @@ __KERNEL_RCSID(0, "$NetBSD: awin_machdep.c,v 1.25 2014/11/07 11:42:28 jmcneill E
 
 #include "com.h"
 #include "ukbd.h"
+#include "genfb.h"
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -724,14 +725,18 @@ awin_device_register(device_t self, void *aux)
 		char *mac_addr;
 		snprintf(argname, sizeof(argname), "%s.mac-address",
 		    device_xname(self));
+
 		if (get_bootconf_option(boot_args, argname,
-		    BOOTOPT_TYPE_STRING, &mac_addr) &&
-		    ether_aton_r(enaddr, sizeof(enaddr), mac_addr) == 0) {
-			prop_data_t pd;
-			pd = prop_data_create_data(enaddr, sizeof(enaddr));
-			KASSERT(pd != NULL);
-			prop_dictionary_set(dict, "mac-address", pd);
-			prop_object_release(pd);
+		    BOOTOPT_TYPE_STRING, &mac_addr)) {
+			char mac[strlen("XX:XX:XX:XX:XX:XX") + 1];
+			strlcpy(mac, mac_addr, sizeof(mac));
+			if (!ether_aton_r(enaddr, sizeof(enaddr), mac)) {
+				prop_data_t pd;
+				pd = prop_data_create_data(enaddr, sizeof(enaddr));
+				KASSERT(pd != NULL);
+				prop_dictionary_set(dict, "mac-address", pd);
+				prop_object_release(pd);
+			}
 		}
 
 #if AWIN_board == AWIN_cubieboard
@@ -755,6 +760,46 @@ awin_device_register(device_t self, void *aux)
 #endif
 		return;
 	}
+
+	if (device_is_a(self, "awindebe")) {
+		int margin;
+		if (get_bootconf_option(boot_args, "fb.margin",
+		    BOOTOPT_TYPE_INT, &margin) && margin > 0) {
+			prop_dictionary_set_uint16(dict, "margin", margin);
+		}
+	}
+
+	if (device_is_a(self, "awinhdmi")) {
+		char *display_mode;
+		if (get_bootconf_option(boot_args, "hdmi.forcemode",
+		    BOOTOPT_TYPE_STRING, &display_mode)) {
+			if (strcasecmp(display_mode, "hdmi") == 0) {
+				prop_dictionary_set_cstring(dict,
+				    "display-mode", "hdmi");
+			} else if (strcasecmp(display_mode, "dvi") == 0) {
+				prop_dictionary_set_cstring(dict,
+				    "display-mode", "dvi");
+			}
+		}
+	}
+
+#if NGENFB > 0
+	if (device_is_a(self, "genfb")) {
+#ifdef DDB
+		db_trap_callback = awin_fb_ddb_trap_callback;
+#endif
+		char *ptr;
+		if (get_bootconf_option(boot_args, "console",
+		    BOOTOPT_TYPE_STRING, &ptr) && strncmp(ptr, "fb", 2) == 0) {
+			prop_dictionary_set_bool(dict, "is_console", true);
+#if NUKBD > 0
+			ukbd_cnattach();
+#endif
+		} else {
+			prop_dictionary_set_bool(dict, "is_console", false);
+		}
+	}
+#endif
 }
 
 #ifdef AWIN_SYSCONFIG

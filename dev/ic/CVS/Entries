@@ -28,7 +28,6 @@
 /aha.c/1.61/Wed Oct  1 21:58:45 2014//
 /ahareg.h/1.15/Wed Oct  1 21:58:45 2014//
 /ahavar.h/1.15/Wed Oct  1 21:58:45 2014//
-/ahcisata_core.c/1.51/Wed Oct  1 21:58:45 2014//
 /ahcisatareg.h/1.12/Wed Oct  1 21:58:45 2014//
 /ahcisatavar.h/1.16/Wed Oct  1 21:58:45 2014//
 /aic6360.c/1.99/Wed Oct  1 21:58:45 2014//
@@ -151,18 +150,13 @@
 /cd1400reg.h/1.6/Wed Oct  1 21:58:45 2014//
 /cd18xx.c/1.31/Wed Oct  1 21:58:45 2014//
 /cd18xxreg.h/1.4/Wed Oct  1 21:58:45 2014//
-/cd18xxvar.h/1.4/Wed Oct  1 21:58:45 2014//
 /ciss.c/1.32/Wed Oct  1 21:58:45 2014//
 /cissreg.h/1.4/Wed Oct  1 21:58:45 2014//
 /cissvar.h/1.6/Wed Oct  1 21:58:45 2014//
-/clmpcc.c/1.50/Fri Nov  7 18:25:31 2014//
 /clmpccreg.h/1.4/Wed Oct  1 21:58:45 2014//
 /clmpccvar.h/1.13/Wed Oct  1 21:58:45 2014//
-/com.c/1.327/Wed Oct  1 21:58:45 2014//
 /com_cpcbus.c/1.11/Wed Oct  1 21:58:45 2014//
 /com_upc.c/1.11/Wed Oct  1 21:58:45 2014//
-/comreg.h/1.22/Wed Oct  1 21:58:45 2014//
-/comvar.h/1.78/Wed Oct  1 21:58:45 2014//
 /cpc700.c/1.19/Wed Oct  1 21:58:45 2014//
 /cpc700reg.h/1.5/Wed Oct  1 21:58:45 2014//
 /cpc700uic.h/1.4/Wed Oct  1 21:58:45 2014//
@@ -179,7 +173,6 @@
 /ct65550.c/1.10/Wed Oct  1 21:58:45 2014//
 /ct65550reg.h/1.2/Wed Oct  1 21:58:45 2014//
 /ct65550var.h/1.2/Wed Oct  1 21:58:45 2014//
-/cy.c/1.59/Wed Oct  1 21:58:45 2014//
 /cyreg.h/1.5/Wed Oct  1 21:58:45 2014//
 /cyvar.h/1.9/Wed Oct  1 21:58:45 2014//
 /daic.c/1.31/Wed Oct  1 21:58:45 2014//
@@ -211,9 +204,6 @@
 /ds.h/1.10/Wed Oct  1 21:58:45 2014//
 /ds1286reg.h/1.8/Wed Oct  1 21:58:45 2014//
 /ds1687reg.h/1.10/Wed Oct  1 21:58:45 2014//
-/dwc_gmac.c/1.24/Fri Nov  7 18:25:31 2014//
-/dwc_gmac_reg.h/1.12/Fri Nov  7 18:25:31 2014//
-/dwc_gmac_var.h/1.5/Fri Nov  7 18:25:31 2014//
 /elink3.c/1.135/Wed Oct  1 21:58:45 2014//
 /elink3reg.h/1.31/Wed Oct  1 21:58:45 2014//
 /elink3var.h/1.38/Wed Oct  1 21:58:45 2014//
@@ -258,7 +248,6 @@
 /i8253reg.h/1.9/Wed Oct  1 21:58:45 2014//
 /i82557.c/1.142/Wed Oct  1 21:58:45 2014//
 /i82557reg.h/1.25/Wed Oct  1 21:58:45 2014//
-/i82557var.h/1.50/Wed Oct  1 21:58:45 2014//
 /i82586.c/1.70/Wed Oct  1 21:58:45 2014//
 /i82586reg.h/1.13/Wed Oct  1 21:58:45 2014//
 /i82586var.h/1.23/Wed Oct  1 21:58:45 2014//
@@ -362,7 +351,6 @@
 /mb89352.c/1.54/Wed Oct  1 21:58:45 2014//
 /mb89352reg.h/1.6/Wed Oct  1 21:58:45 2014//
 /mb89352var.h/1.15/Wed Oct  1 21:58:45 2014//
-/mc146818.c/1.18/Thu Oct  9 20:46:50 2014//
 /mc146818reg.h/1.9/Wed Oct  1 21:58:45 2014//
 /mc146818var.h/1.7/Wed Oct  1 21:58:45 2014//
 /mc68450reg.h/1.5/Wed Oct  1 21:58:45 2014//
@@ -375,14 +363,12 @@
 /midway.c/1.94/Wed Oct  1 21:58:45 2014//
 /midwayreg.h/1.14/Wed Oct  1 21:58:45 2014//
 /midwayvar.h/1.19/Wed Oct  1 21:58:45 2014//
-/mk48txx.c/1.26/Thu Oct  9 20:46:50 2014//
 /mk48txxreg.h/1.11/Wed Oct  1 21:58:45 2014//
 /mk48txxvar.h/1.7/Wed Oct  1 21:58:45 2014//
 /mlx.c/1.62/Wed Oct  1 21:58:45 2014//
 /mlxio.h/1.3/Wed Oct  1 21:58:45 2014//
 /mlxreg.h/1.8/Wed Oct  1 21:58:45 2014//
 /mlxvar.h/1.15/Wed Oct  1 21:58:45 2014//
-/mm58167.c/1.15/Thu Oct  9 20:46:50 2014//
 /mm58167var.h/1.6/Wed Oct  1 21:58:45 2014//
 /monitors.h/1.2/Wed Oct  1 21:58:45 2014//
 /mpc105reg.h/1.3/Wed Oct  1 21:58:45 2014//
@@ -431,7 +417,6 @@
 /ns16450reg.h/1.6/Wed Oct  1 21:58:45 2014//
 /ns16550reg.h/1.10/Wed Oct  1 21:58:45 2014//
 /ns8477reg.h/1.3/Wed Oct  1 21:58:45 2014//
-/nslm7x.c/1.60/Wed Oct  1 21:58:45 2014//
 /nslm7xvar.h/1.28/Wed Oct  1 21:58:45 2014//
 /oosiop.c/1.14/Wed Oct  1 21:58:45 2014//
 /oosiopreg.h/1.4/Wed Oct  1 21:58:45 2014//
@@ -450,7 +435,6 @@
 /pcdisplay.h/1.1/Wed Oct  1 21:58:45 2014//
 /pcdisplay_chars.c/1.16/Wed Oct  1 21:58:45 2014//
 /pcdisplay_subr.c/1.35/Wed Oct  1 21:58:45 2014//
-/pcdisplayvar.h/1.19/Wed Oct  1 21:58:45 2014//
 /pcf8584.c/1.11/Wed Oct  1 21:58:45 2014//
 /pcf8584reg.h/1.1/Wed Oct  1 21:58:45 2014//
 /pcf8584var.h/1.4/Wed Oct  1 21:58:45 2014//
@@ -465,7 +449,6 @@
 /rrunner.c/1.78/Wed Oct  1 21:58:45 2014//
 /rrunnerreg.h/1.9/Wed Oct  1 21:58:45 2014//
 /rrunnervar.h/1.14/Wed Oct  1 21:58:45 2014//
-/rs5c313.c/1.9/Thu Oct  9 20:46:50 2014//
 /rs5c313reg.h/1.3/Wed Oct  1 21:58:45 2014//
 /rs5c313var.h/1.3/Wed Oct  1 21:58:45 2014//
 /rt2560.c/1.25/Wed Oct  1 21:58:45 2014//
@@ -478,7 +461,6 @@
 /rtl80x9.c/1.16/Wed Oct  1 21:58:45 2014//
 /rtl80x9reg.h/1.7/Wed Oct  1 21:58:45 2014//
 /rtl80x9var.h/1.6/Wed Oct  1 21:58:45 2014//
-/rtl8169.c/1.142/Fri Nov  7 18:25:32 2014//
 /rtl8169var.h/1.4/Wed Oct  1 21:58:45 2014//
 /rtl81x9.c/1.95/Wed Oct  1 21:58:45 2014//
 /rtl81x9reg.h/1.46/Fri Nov  7 18:25:32 2014//
@@ -575,7 +557,6 @@
 /vga_raster.c/1.42/Wed Oct  1 21:58:45 2014//
 /vga_subr.c/1.25/Wed Oct  1 21:58:45 2014//
 /vgareg.h/1.9/Wed Oct  1 21:58:45 2014//
-/vgavar.h/1.31/Wed Oct  1 21:58:45 2014//
 /w83l518d.c/1.2/Wed Oct  1 21:58:45 2014//
 /w83l518d_sdmmc.c/1.3/Wed Oct  1 21:58:45 2014//
 /w83l518d_sdmmc.h/1.2/Wed Oct  1 21:58:45 2014//
@@ -598,7 +579,26 @@
 /z8530reg.h/1.12/Wed Oct  1 21:58:45 2014//
 /z8530sc.c/1.31/Wed Oct  1 21:58:45 2014//
 /z8530sc.h/1.26/Wed Oct  1 21:58:45 2014//
-/z8530tty.c/1.130/Wed Oct  1 21:58:45 2014//
 /z8536reg.h/1.3/Wed Oct  1 21:58:45 2014//
 /files.athn/1.1/Fri Nov  7 18:56:25 2014//
+/ahcisata_core.c/1.52/Tue Nov 25 23:08:27 2014//
+/cd18xxvar.h/1.5/Tue Nov 25 23:08:27 2014//
+/clmpcc.c/1.51/Tue Nov 25 23:08:27 2014//
+/com.c/1.329/Tue Nov 25 23:08:27 2014//
+/comreg.h/1.23/Tue Nov 25 23:08:27 2014//
+/comvar.h/1.79/Tue Nov 25 23:08:27 2014//
+/cy.c/1.60/Tue Nov 25 23:08:27 2014//
+/dwc_gmac.c/1.27/Tue Nov 25 23:08:27 2014//
+/dwc_gmac_reg.h/1.13/Tue Nov 25 23:08:27 2014//
+/dwc_gmac_var.h/1.6/Tue Nov 25 23:08:27 2014//
+/i82557var.h/1.51/Tue Nov 25 23:08:27 2014//
+/mc146818.c/1.19/Tue Nov 25 23:08:27 2014//
+/mk48txx.c/1.27/Tue Nov 25 23:08:27 2014//
+/mm58167.c/1.16/Tue Nov 25 23:08:27 2014//
+/nslm7x.c/1.61/Tue Nov 25 23:08:27 2014//
+/pcdisplayvar.h/1.20/Tue Nov 25 23:08:27 2014//
+/rs5c313.c/1.10/Tue Nov 25 23:08:27 2014//
+/rtl8169.c/1.143/Tue Nov 25 23:08:27 2014//
+/vgavar.h/1.32/Tue Nov 25 23:08:27 2014//
+/z8530tty.c/1.131/Tue Nov 25 23:08:27 2014//
 D

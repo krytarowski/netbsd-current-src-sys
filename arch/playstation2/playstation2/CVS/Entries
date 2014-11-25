@@ -1,7 +1,6 @@
 /autoconf.c/1.9/Wed Oct  1 21:58:42 2014//
 /bus_dma.c/1.22/Wed Oct  1 21:58:42 2014//
 /bus_space.c/1.10/Wed Oct  1 21:58:42 2014//
-/clock.c/1.10/Thu Oct  9 20:46:50 2014//
 /console.c/1.7/Wed Oct  1 21:58:42 2014//
 /cpu.c/1.9/Wed Oct  1 21:58:42 2014//
 /disksubr.c/1.19/Wed Oct  1 21:58:42 2014//
@@ -13,4 +12,5 @@
 /mainbus.c/1.12/Wed Oct  1 21:58:42 2014//
 /sifbios.c/1.11/Wed Oct  1 21:58:42 2014//
 /sifbios.h/1.5/Wed Oct  1 21:58:42 2014//
+/clock.c/1.11/Tue Nov 25 23:08:00 2014//
 D

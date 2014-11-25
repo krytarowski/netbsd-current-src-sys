@@ -11,7 +11,6 @@
 /i915_debugfs.c/1.2/Wed Oct  1 21:58:48 2014//
 /i915_dma.c/1.12/Fri Nov  7 18:26:00 2014//
 /i915_drv.c/1.6/Wed Oct  1 21:58:48 2014//
-/i915_drv.h/1.10/Fri Nov  7 18:26:00 2014//
 /i915_gem.c/1.18/Fri Nov  7 18:26:00 2014//
 /i915_gem_context.c/1.6/Wed Oct  1 21:58:48 2014//
 /i915_gem_debug.c/1.1.1.2/Wed Oct  1 21:58:48 2014//
@@ -49,7 +48,6 @@
 /intel_i2c.c/1.4/Wed Oct  1 21:58:48 2014//
 /intel_lvds.c/1.6/Wed Oct  1 21:58:48 2014//
 /intel_modes.c/1.1.1.2/Wed Oct  1 21:58:48 2014//
-/intel_opregion.c/1.7/Fri Nov  7 18:26:01 2014//
 /intel_overlay.c/1.6/Fri Nov  7 18:26:01 2014//
 /intel_panel.c/1.6/Fri Nov  7 18:26:01 2014//
 /intel_pm.c/1.5/Wed Oct  1 21:58:48 2014//
@@ -61,4 +59,6 @@
 /intel_sprite.c/1.2/Wed Oct  1 21:58:48 2014//
 /intel_tv.c/1.6/Fri Nov  7 18:26:01 2014//
 /intel_uncore.c/1.6/Wed Oct  1 21:58:48 2014//
+/i915_drv.h/1.11/Tue Nov 25 23:08:42 2014//
+/intel_opregion.c/1.8/Tue Nov 25 23:08:42 2014//
 D

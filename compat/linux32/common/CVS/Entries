@@ -9,7 +9,6 @@
 /linux32_ipc.h/1.4/Wed Oct  1 21:58:45 2014//
 /linux32_ipccall.c/1.11/Wed Oct  1 21:58:45 2014//
 /linux32_machdep.h/1.3/Wed Oct  1 21:58:45 2014//
-/linux32_misc.c/1.23/Wed Oct  1 21:58:45 2014//
 /linux32_mman.c/1.8/Wed Oct  1 21:58:45 2014//
 /linux32_mod.c/1.6/Wed Oct  1 21:58:45 2014//
 /linux32_resource.c/1.11/Wed Oct  1 21:58:45 2014//
@@ -36,4 +35,5 @@
 /linux32_unistd.c/1.39/Wed Oct  1 21:58:45 2014//
 /linux32_utsname.c/1.9/Wed Oct  1 21:58:45 2014//
 /linux32_wait.c/1.11/Wed Oct  1 21:58:45 2014//
+/linux32_misc.c/1.25/Tue Nov 25 23:08:20 2014//
 D

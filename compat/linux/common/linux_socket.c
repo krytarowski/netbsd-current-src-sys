@@ -1,4 +1,4 @@
-/*	$NetBSD: linux_socket.c,v 1.119 2014/05/23 12:28:51 njoly Exp $	*/
+/*	$NetBSD: linux_socket.c,v 1.121 2014/11/21 06:03:04 ozaki-r Exp $	*/
 
 /*-
  * Copyright (c) 1995, 1998, 2008 The NetBSD Foundation, Inc.
@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__KERNEL_RCSID(0, "$NetBSD: linux_socket.c,v 1.119 2014/05/23 12:28:51 njoly Exp $");
+__KERNEL_RCSID(0, "$NetBSD: linux_socket.c,v 1.121 2014/11/21 06:03:04 ozaki-r Exp $");
 
 #if defined(_KERNEL_OPT)
 #include "opt_inet.h"
@@ -45,7 +45,6 @@ __KERNEL_RCSID(0, "$NetBSD: linux_socket.c,v 1.119 2014/05/23 12:28:51 njoly Exp
 #include <sys/kernel.h>
 #include <sys/systm.h>
 #include <sys/buf.h>
-#include <sys/malloc.h>
 #include <sys/ioctl.h>
 #include <sys/tty.h>
 #include <sys/file.h>
@@ -1235,45 +1234,46 @@ linux_getifhwaddr(struct lwp *l, register_t *retval, u_int fd,
 		}
 	}
 
-	if (strncmp(lreq.ifr_name, "eth", 3) == 0) {
-		for (ifnum = 0, index = 3;
-		     index < LINUX_IFNAMSIZ && lreq.ifr_name[index] != '\0';
-		     index++) {
-			ifnum *= 10;
-			ifnum += lreq.ifr_name[index] - '0';
-		}
-
-		error = EINVAL;			/* in case we don't find one */
-		found = 0;
-		IFNET_FOREACH(ifp) {
-			if (found)
-				break;
-			memcpy(lreq.ifr_name, ifp->if_xname,
-			       MIN(LINUX_IFNAMSIZ, IFNAMSIZ));
-			IFADDR_FOREACH(ifa, ifp) {
-				sadl = satosdl(ifa->ifa_addr);
-				/* only return ethernet addresses */
-				/* XXX what about FDDI, etc. ? */
-				if (sadl->sdl_family != AF_LINK ||
-				    sadl->sdl_type != IFT_ETHER)
-					continue;
-				if (ifnum--)
-					/* not the reqested iface */
-					continue;
-				memcpy(&lreq.ifr_hwaddr.sa_data,
-				       CLLADDR(sadl),
-				       MIN(sadl->sdl_alen,
-					   sizeof(lreq.ifr_hwaddr.sa_data)));
-				lreq.ifr_hwaddr.sa_family =
-					sadl->sdl_family;
-				error = copyout(&lreq, data, sizeof(lreq));
-				found = 1;
-				break;
-			}
-		}
-	} else {
+	if (strncmp(lreq.ifr_name, "eth", 3) != 0) {
 		/* unknown interface, not even an "eth*" name */
 		error = ENODEV;
+		goto out;
+	}
+
+	for (ifnum = 0, index = 3;
+	     index < LINUX_IFNAMSIZ && lreq.ifr_name[index] != '\0';
+	     index++) {
+		ifnum *= 10;
+		ifnum += lreq.ifr_name[index] - '0';
+	}
+
+	error = EINVAL;			/* in case we don't find one */
+	found = 0;
+	IFNET_FOREACH(ifp) {
+		if (found)
+			break;
+		memcpy(lreq.ifr_name, ifp->if_xname,
+		       MIN(LINUX_IFNAMSIZ, IFNAMSIZ));
+		IFADDR_FOREACH(ifa, ifp) {
+			sadl = satosdl(ifa->ifa_addr);
+			/* only return ethernet addresses */
+			/* XXX what about FDDI, etc. ? */
+			if (sadl->sdl_family != AF_LINK ||
+			    sadl->sdl_type != IFT_ETHER)
+				continue;
+			if (ifnum--)
+				/* not the reqested iface */
+				continue;
+			memcpy(&lreq.ifr_hwaddr.sa_data,
+			       CLLADDR(sadl),
+			       MIN(sadl->sdl_alen,
+				   sizeof(lreq.ifr_hwaddr.sa_data)));
+			lreq.ifr_hwaddr.sa_family =
+				sadl->sdl_family;
+			error = copyout(&lreq, data, sizeof(lreq));
+			found = 1;
+			break;
+		}
 	}
 
 out:
