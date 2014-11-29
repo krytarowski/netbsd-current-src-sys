@@ -1,8 +1,8 @@
-/autoconf.c/1.9/Wed Oct  1 21:58:40 2014//
-/cadmusreg.h/1.2/Wed Oct  1 21:58:40 2014//
-/ds1553rtc.c/1.2/Thu Oct  9 20:46:50 2014//
-/machdep.c/1.33/Wed Oct  1 21:58:40 2014//
-/mpc85xx_start.S/1.9/Sat Sep 27 16:53:16 2014//
-/pixisreg.h/1.2/Wed Oct  1 21:58:40 2014//
-/wdc_obio.c/1.4/Wed Oct  1 21:58:40 2014//
+/autoconf.c/1.9/Fri Nov 28 21:45:45 2014//
+/cadmusreg.h/1.2/Fri Nov 28 21:45:45 2014//
+/ds1553rtc.c/1.2/Fri Nov 28 21:45:45 2014//
+/machdep.c/1.33/Fri Nov 28 21:45:45 2014//
+/mpc85xx_start.S/1.9/Fri Nov 28 21:45:45 2014//
+/pixisreg.h/1.2/Fri Nov 28 21:45:45 2014//
+/wdc_obio.c/1.4/Fri Nov 28 21:45:45 2014//
 D

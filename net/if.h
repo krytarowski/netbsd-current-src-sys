@@ -1,4 +1,4 @@
-/*	$NetBSD: if.h,v 1.175 2014/09/09 20:16:12 rmind Exp $	*/
+/*	$NetBSD: if.h,v 1.181 2014/11/28 08:29:00 ozaki-r Exp $	*/
 
 /*-
  * Copyright (c) 1999, 2000, 2001 The NetBSD Foundation, Inc.
@@ -214,6 +214,7 @@ struct ifnet_lock;
 #ifdef _KERNEL
 #include <sys/condvar.h>
 #include <sys/percpu.h>
+#include <sys/callout.h>
 
 struct ifnet_lock {
 	kmutex_t il_lock;	/* Protects the critical section. */
@@ -244,6 +245,7 @@ TAILQ_HEAD(ifnet_head, ifnet);		/* the actual queue head */
 
 struct bridge_softc;
 struct bridge_iflist;
+struct callout;
 
 typedef struct ifnet {
 	void	*if_softc;		/* lower-level data for this if */
@@ -253,7 +255,7 @@ typedef struct ifnet {
 	int	if_pcount;		/* number of promiscuous listeners */
 	struct bpf_if *if_bpf;		/* packet filter structure */
 	u_short	if_index;		/* numeric abbreviation for this if */
-	short	if_timer;		/* time 'til if_watchdog called */
+	short	if_timer;		/* time 'til if_slowtimo called */
 	short	if_flags;		/* up/down, broadcast, etc. */
 	short	if__pad1;		/* be nice to m68k ports */
 	struct	if_data if_data;	/* statistics and other data about if */
@@ -274,8 +276,9 @@ typedef struct ifnet {
 		    (struct ifnet *);
 	void	(*if_stop)		/* stop routine */
 		    (struct ifnet *, int);
-	void	(*if_watchdog)		/* timer routine */
+	void	(*if_slowtimo)		/* timer routine */
 		    (struct ifnet *);
+#define	if_watchdog	if_slowtimo
 	void	(*if_drain)		/* routine to release resources */
 		    (struct ifnet *);
 	struct ifaltq if_snd;		/* output queue (includes altq) */
@@ -341,6 +344,9 @@ typedef struct ifnet {
 	    const struct sockaddr *);
 	int (*if_setflags)(struct ifnet *, const short);
 	struct ifnet_lock *if_ioctl_lock;
+#ifdef _KERNEL /* XXX kvm(3) */
+	struct callout *if_slowtimo_ch;
+#endif
 } ifnet_t;
  
 #define	if_mtu		if_data.ifi_mtu
@@ -858,7 +864,6 @@ void if_activate_sadl(struct ifnet *, struct ifaddr *,
     const struct sockaddr_dl *);
 void	if_set_sadl(struct ifnet *, const void *, u_char, bool);
 void	if_alloc_sadl(struct ifnet *);
-void	if_free_sadl(struct ifnet *);
 void	if_attach(struct ifnet *);
 void	if_attachdomain(void);
 void	if_attachdomain1(struct ifnet *);
@@ -867,7 +872,6 @@ void	if_purgeaddrs(struct ifnet *, int, void (*)(struct ifaddr *));
 void	if_detach(struct ifnet *);
 void	if_down(struct ifnet *);
 void	if_link_state_change(struct ifnet *, int);
-void	if_slowtimo(void *);
 void	if_up(struct ifnet *);
 int	ifconf(u_long, void *);
 void	ifinit(void);
@@ -926,7 +930,8 @@ void	if_nullstart(struct ifnet *);
 int	if_nullioctl(struct ifnet *, u_long, void *);
 int	if_nullinit(struct ifnet *);
 void	if_nullstop(struct ifnet *, int);
-void	if_nullwatchdog(struct ifnet *);
+void	if_nullslowtimo(struct ifnet *);
+#define	if_nullwatchdog	if_nullslowtimo
 void	if_nulldrain(struct ifnet *);
 #else
 struct if_nameindex {
@@ -962,6 +967,7 @@ extern struct ifnet_head ifnet_list;
 extern struct ifnet *lo0ifp;
 
 ifnet_t *	if_byindex(u_int);
+void		if_drain_all(void);
 
 /*
  * ifq sysctl support

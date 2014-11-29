@@ -1,6 +1,6 @@
-/cpu.c/1.16/Wed Oct  1 21:58:42 2014//
-/disksubr.c/1.25/Wed Oct  1 21:58:42 2014//
-/machdep.c/1.117/Wed Oct  1 21:58:42 2014//
-/mainbus.c/1.29/Wed Oct  1 21:58:42 2014//
-/locore.S/1.49/Tue Nov 25 23:07:57 2014//
+/cpu.c/1.16/Fri Nov 28 21:45:45 2014//
+/disksubr.c/1.25/Fri Nov 28 21:45:45 2014//
+/locore.S/1.49/Fri Nov 28 22:37:38 2014//
+/machdep.c/1.117/Fri Nov 28 21:45:45 2014//
+/mainbus.c/1.29/Fri Nov 28 21:45:45 2014//
 D
