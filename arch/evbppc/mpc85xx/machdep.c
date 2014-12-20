@@ -1,4 +1,4 @@
-/*	$NetBSD: machdep.c,v 1.33 2014/08/04 23:31:36 joerg Exp $	*/
+/*	$NetBSD: machdep.c,v 1.36 2014/12/19 04:31:41 nonaka Exp $	*/
 /*-
  * Copyright (c) 2010, 2011 The NetBSD Foundation, Inc.
  * All rights reserved.
@@ -639,6 +639,7 @@ cpu_probe_cache(void)
 {
 	struct cpu_info * const ci = curcpu();
 	const uint32_t l1cfg0 = mfspr(SPR_L1CFG0);
+	const int dcache_assoc = L1CFG_CNWAY_GET(l1cfg0);
 
 	ci->ci_ci.dcache_size = L1CFG_CSIZE_GET(l1cfg0);
 	ci->ci_ci.dcache_line_size = 32 << L1CFG_CBSIZE_GET(l1cfg0);
@@ -652,6 +653,11 @@ cpu_probe_cache(void)
 		ci->ci_ci.icache_size = ci->ci_ci.dcache_size;
 		ci->ci_ci.icache_line_size = ci->ci_ci.dcache_line_size;
 	}
+
+	/*
+	 * Possibly recolor.
+	 */
+	uvm_page_recolor(atop(curcpu()->ci_ci.dcache_size / dcache_assoc));
 
 #ifdef DEBUG
 	uint32_t l1csr0 = mfspr(SPR_L1CSR0);
@@ -939,15 +945,15 @@ e500_cpu_spinup(device_t self, struct cpu_info *ci)
 				+ (uint64_t)h->hatch_tbl),
 			    h->hatch_running);
 			/*
-			 * Now we wait for the hatching to complete.  10ms
+			 * Now we wait for the hatching to complete.  30ms
 			 * should be long enough.
 			 */
-			for (u_int timo = 10000; timo-- > 0; ) {
+			for (u_int timo = 30000; timo-- > 0; ) {
 				if (kcpuset_isset(hatchlings, id)) {
 					aprint_normal_dev(self,
 					    "hatch successful (%u spins, "
 					    "timebase adjusted by %"PRId64")\n",
-					    10000 - timo,
+					    30000 - timo,
 					    (int64_t)
 						(((uint64_t)h->hatch_tbu << 32)
 						+ (uint64_t)h->hatch_tbl));
@@ -983,6 +989,7 @@ e500_cpu_hatch(struct cpu_info *ci)
 
 	intr_cpu_hatch(ci);
 
+	cpu_probe_cache();
 	cpu_print_info(ci);
 
 /*

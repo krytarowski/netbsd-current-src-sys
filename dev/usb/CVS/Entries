@@ -102,7 +102,6 @@
 /ucom.c/1.108/Fri Nov 28 22:37:39 2014//
 /ucomvar.h/1.20/Fri Nov 28 21:45:46 2014//
 /ucycom.c/1.41/Fri Nov 28 22:37:39 2014//
-/udl.c/1.11/Fri Nov 28 21:45:46 2014//
 /udl.h/1.1/Fri Nov 28 21:45:46 2014//
 /udsbr.c/1.22/Fri Nov 28 21:45:46 2014//
 /udsir.c/1.1/Fri Nov 28 21:45:46 2014//
@@ -167,9 +166,6 @@
 /usb_verbose.h/1.4/Fri Nov 28 21:45:46 2014//
 /usbcdc.h/1.11/Fri Nov 28 21:45:46 2014//
 /usbdevices.config/1.24/Fri Nov 28 21:45:46 2014//
-/usbdevs/1.684/Fri Nov 28 22:37:39 2014//
-/usbdevs.h/1.676/Fri Nov 28 22:37:39 2014//
-/usbdevs_data.h/1.677/Fri Nov 28 22:37:39 2014//
 /usbdi.c/1.162/Fri Nov 28 21:45:46 2014//
 /usbdi.h/1.90/Fri Nov 28 21:45:46 2014//
 /usbdi_util.c/1.63/Fri Nov 28 21:45:46 2014//
@@ -200,4 +196,8 @@
 /xhcireg.h/1.2/Fri Nov 28 22:37:39 2014//
 /xhcivar.h/1.4/Fri Nov 28 21:45:46 2014//
 /xinput_rdesc.h/1.1/Fri Nov 28 21:45:46 2014//
+/udl.c/1.12/Sat Dec 20 22:31:23 2014//
+/usbdevs/1.687/Sat Dec 20 22:31:23 2014//
+/usbdevs.h/1.679/Sat Dec 20 22:31:23 2014//
+/usbdevs_data.h/1.680/Sat Dec 20 22:31:23 2014//
 D

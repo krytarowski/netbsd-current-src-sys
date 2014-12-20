@@ -1,10 +1,10 @@
-/*	$NetBSD: usbdevs.h,v 1.676 2014/11/22 14:31:53 njoly Exp $	*/
+/*	$NetBSD: usbdevs.h,v 1.679 2014/12/17 10:02:46 jnemeth Exp $	*/
 
 /*
  * THIS FILE AUTOMATICALLY GENERATED.  DO NOT EDIT.
  *
  * generated from:
- *	NetBSD: usbdevs,v 1.684 2014/11/22 14:30:57 njoly Exp
+ *	NetBSD: usbdevs,v 1.687 2014/12/17 10:02:01 jnemeth Exp
  */
 
 /*
@@ -493,6 +493,7 @@
 #define	USB_VENDOR_MOBILITY	0x1342		/* Mobility */
 #define	USB_VENDOR_DICKSMITH	0x1371		/* Dick Smith Electronics */
 #define	USB_VENDOR_NETGEAR3	0x1385		/* Netgear */
+#define	USB_VENDOR_VALIDITY	0x138a		/* Validity Sensors, Inc. */
 #define	USB_VENDOR_BALTECH	0x13ad		/* Baltech */
 #define	USB_VENDOR_CISCOLINKSYS	0x13b1		/* Cisco-Linksys */
 #define	USB_VENDOR_SHARK	0x13d2		/* Shark */
@@ -1307,6 +1308,7 @@
 #define	USB_PRODUCT_DISPLAYLINK_NL571	0x01d7		/* HP USB DVI */
 #define	USB_PRODUCT_DISPLAYLINK_M01061	0x01e2		/* Lenovo DVI */
 #define	USB_PRODUCT_DISPLAYLINK_NBDOCK	0x0215		/* VideoHome NBdock1920 */
+#define	USB_PRODUCT_DISPLAYLINK_GXDVIU2B	0x0223		/* BUFFALO GX-DVI/U2B */
 #define	USB_PRODUCT_DISPLAYLINK_SWDVI	0x024c		/* SUNWEIT DVI */
 #define	USB_PRODUCT_DISPLAYLINK_LUM70	0x02a9		/* Lilliput UM-70 */
 #define	USB_PRODUCT_DISPLAYLINK_LCD8000UD_DVI	0x02b8		/* LCD-8000UD-DVI */
@@ -2986,10 +2988,14 @@
 
 /* SMSC products */
 #define	USB_PRODUCT_SMSC_2020HUB	0x2020		/* USB Hub */
+#define	USB_PRODUCT_SMSC_2512HUB	0x2512		/* USB 2.0 2-Port Hub */
+#define	USB_PRODUCT_SMSC_2513HUB	0x2513		/* USB 2.0 3-Port Hub */
+#define	USB_PRODUCT_SMSC_2514HUB	0x2514		/* USB 2.0 4-Port Hub */
 #define	USB_PRODUCT_SMSC_LAN7500	0x7500		/* LAN7500 USB 2.0 gigabit ethernet device */
 #define	USB_PRODUCT_SMSC_SMSC9500	0x9500		/* SMSC9500 Ethernet device */
 #define	USB_PRODUCT_SMSC_SMSC9505	0x9505		/* SMSC9505 Ethernet device */
-#define	USB_PRODUCT_SMSC_SMSC9512	0x9512		/* SMSC9512 USB Hub */
+#define	USB_PRODUCT_SMSC_SMSC9512	0x9512		/* SMSC9512 USB Hub & Ethernet device */
+#define	USB_PRODUCT_SMSC_SMSC9514	0x9514		/* SMSC9514 USB Hub & Ethernet device */
 #define	USB_PRODUCT_SMSC_LAN9530	0x9530		/* LAN9530 Ethernet Device */
 #define	USB_PRODUCT_SMSC_LAN9730	0x9730		/* LAN9730 Ethernet Device */
 #define	USB_PRODUCT_SMSC_SMSC9500_SAL10	0x9900		/* SMSC9500 Ethernet device (SAL10) */
@@ -3239,6 +3245,14 @@
 
 /* GNU Radio USRP */
 #define	USB_PRODUCT_USRP_USRPv2	0x0002		/* USRP Revision 2 */
+
+/* Validity */
+#define	USB_PRODUCT_VALIDITY_VFS101	0x0001		/* VFS101 Fingerprint Reader */
+#define	USB_PRODUCT_VALIDITY_VFS301	0x0005		/* VFS301 Fingerprint Reader */
+#define	USB_PRODUCT_VALIDITY_VFS451	0x0007		/* VFS451 Fingerprint Reader */
+#define	USB_PRODUCT_VALIDITY_VFS300	0x0008		/* VFS300 Fingerprint Reader */
+#define	USB_PRODUCT_VALIDITY_VFS5011	0x0011		/* VFS5011 Fingerprint Reader */
+#define	USB_PRODUCT_VALIDITY_VFS471	0x003c		/* VFS471 Fingerprint Reader */
 
 /* VidzMedia products */
 #define	USB_PRODUCT_VIDZMEDIA_MONSTERTV	0x4fb1		/* MonsterTV P2H */

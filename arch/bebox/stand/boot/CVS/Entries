@@ -8,7 +8,6 @@
 /cons.h/1.8/Fri Nov 28 21:45:45 2014//
 /cpu.c/1.7/Fri Nov 28 21:45:45 2014//
 /devopen.c/1.11/Fri Nov 28 21:45:45 2014//
-/fd.c/1.10/Fri Nov 28 21:45:45 2014//
 /filesystem.c/1.9/Fri Nov 28 21:45:45 2014//
 /inkernel.c/1.9/Fri Nov 28 21:45:45 2014//
 /io.c/1.7/Fri Nov 28 21:45:45 2014//
@@ -23,14 +22,15 @@
 /prf.c/1.10/Fri Nov 28 21:45:45 2014//
 /sd.c/1.4/Fri Nov 28 21:45:45 2014//
 /sdvar.h/1.1/Fri Nov 28 21:45:45 2014//
-/siop.c/1.4/Fri Nov 28 21:45:45 2014//
 /srt0.s/1.4/Fri Nov 28 21:45:45 2014//
 /tgets.c/1.8/Fri Nov 28 21:45:45 2014//
 /version/1.12/Fri Nov 28 21:45:45 2014//
 /vga.c/1.10/Fri Nov 28 21:45:45 2014//
 /video.c/1.7/Fri Nov 28 21:45:45 2014//
-/vreset.c/1.13/Fri Nov 28 21:45:45 2014//
 /wd.c/1.2/Fri Nov 28 21:45:45 2014//
 /wdc.c/1.1/Fri Nov 28 21:45:45 2014//
 /wdvar.h/1.1/Fri Nov 28 21:45:45 2014//
+/fd.c/1.11/Sat Dec 20 22:31:13 2014//
+/siop.c/1.5/Sat Dec 20 22:31:13 2014//
+/vreset.c/1.14/Sat Dec 20 22:31:13 2014//
 D

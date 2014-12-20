@@ -1,4 +1,4 @@
-/*	$NetBSD: pq3pci.c,v 1.17 2014/07/30 10:50:54 joerg Exp $	*/
+/*	$NetBSD: pq3pci.c,v 1.19 2014/12/20 18:03:17 nonaka Exp $	*/
 /*-
  * Copyright (c) 2010, 2011 The NetBSD Foundation, Inc.
  * All rights reserved.
@@ -44,7 +44,7 @@
 
 #include <sys/cdefs.h>
 
-__KERNEL_RCSID(0, "$NetBSD: pq3pci.c,v 1.17 2014/07/30 10:50:54 joerg Exp $");
+__KERNEL_RCSID(0, "$NetBSD: pq3pci.c,v 1.19 2014/12/20 18:03:17 nonaka Exp $");
 
 #include <sys/param.h>
 #include <sys/device.h>

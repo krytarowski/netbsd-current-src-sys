@@ -55,6 +55,6 @@ D/vmwgfx////
 /drm_probe_helper.c/1.2/Fri Nov 28 21:45:47 2014//
 /drm_rect.c/1.1.1.1/Fri Nov 28 21:45:47 2014//
 /drm_scatter.c/1.1.1.2/Fri Nov 28 21:45:47 2014//
-/drm_stub.c/1.7/Fri Nov 28 22:37:39 2014//
 /drm_vm.c/1.1.1.2/Fri Nov 28 21:45:47 2014//
 /drm_vma_manager.c/1.1.1.1/Fri Nov 28 21:45:47 2014//
+/drm_stub.c/1.8/Sat Dec 20 22:31:24 2014//

@@ -1,4 +1,4 @@
-/*	$NetBSD: npf_conn.c,v 1.12 2014/08/24 20:36:30 rmind Exp $	*/
+/*	$NetBSD: npf_conn.c,v 1.14 2014/12/20 16:19:43 rmind Exp $	*/
 
 /*-
  * Copyright (c) 2014 Mindaugas Rasiukevicius <rmind at netbsd org>
@@ -99,7 +99,7 @@
  */
 
 #include <sys/cdefs.h>
-__KERNEL_RCSID(0, "$NetBSD: npf_conn.c,v 1.12 2014/08/24 20:36:30 rmind Exp $");
+__KERNEL_RCSID(0, "$NetBSD: npf_conn.c,v 1.14 2014/12/20 16:19:43 rmind Exp $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -660,7 +660,7 @@ npf_conn_setpass(npf_conn_t *con, npf_rproc_t *rp)
 	 * If rproc is set, the caller transfers its reference to us,
 	 * which will be released on npf_conn_destroy().
 	 */
-	con->c_flags |= CONN_PASS;
+	atomic_or_uint(&con->c_flags, CONN_PASS);
 	con->c_rproc = rp;
 }
 
@@ -673,18 +673,18 @@ npf_conn_release(npf_conn_t *con)
 {
 	if ((con->c_flags & (CONN_ACTIVE | CONN_EXPIRE)) == 0) {
 		/* Activate: after this, connection is globally visible. */
-		con->c_flags |= CONN_ACTIVE;
+		atomic_or_uint(&con->c_flags, CONN_ACTIVE);
 	}
 	KASSERT(con->c_refcnt > 0);
 	atomic_dec_uint(&con->c_refcnt);
 }
 
 /*
- * npf_conn_retnat: return associated NAT data entry and indicate
+ * npf_conn_getnat: return associated NAT data entry and indicate
  * whether it is a "forwards" or "backwards" stream.
  */
 npf_nat_t *
-npf_conn_retnat(npf_conn_t *con, const int di, bool *forw)
+npf_conn_getnat(npf_conn_t *con, const int di, bool *forw)
 {
 	KASSERT(con->c_refcnt > 0);
 	*forw = (con->c_flags & PFIL_ALL) == di;

@@ -12,7 +12,6 @@
 /BEAGLEBOARDXM/1.19/Fri Nov 28 21:45:45 2014//
 /BEAGLEBOARDXM_INSTALL/1.2/Fri Nov 28 21:45:45 2014//
 /BEAGLEBOARD_INSTALL/1.2/Fri Nov 28 21:45:45 2014//
-/BEAGLEBONE/1.29/Fri Nov 28 21:45:45 2014//
 /BEAGLEBONE_INSTALL/1.2/Fri Nov 28 21:45:45 2014//
 /BPI/1.13/Fri Nov 28 22:37:38 2014//
 /BPI_INSTALL/1.1/Fri Nov 28 21:45:45 2014//
@@ -123,7 +122,6 @@
 /files.beagle/1.4/Fri Nov 28 21:45:45 2014//
 /files.cp3100/1.2/Fri Nov 28 21:45:45 2014//
 /files.devkit8000/1.1/Fri Nov 28 21:45:45 2014//
-/files.evbarm/1.23/Fri Nov 28 21:45:45 2014//
 /files.g42xxeb/1.7/Fri Nov 28 21:45:45 2014//
 /files.gemini/1.1/Fri Nov 28 21:45:45 2014//
 /files.goldengate/1.1/Fri Nov 28 21:45:45 2014//
@@ -241,4 +239,8 @@
 /std.tisdp24xx/1.9/Fri Nov 28 21:45:45 2014//
 /std.tsarm/1.8/Fri Nov 28 21:45:45 2014//
 /std.viper/1.8/Fri Nov 28 21:45:45 2014//
+/ALLWINNER_A80/1.13/Thu Dec 11 23:35:31 2014//
+/ALLWINNER_A80_INSTALL/1.1/Sun Dec 14 18:12:38 2014//
+/BEAGLEBONE/1.30/Sat Dec 20 22:31:13 2014//
+/files.evbarm/1.25/Sat Dec 20 22:31:13 2014//
 D

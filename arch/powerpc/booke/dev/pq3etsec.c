@@ -1,4 +1,4 @@
-/*	$NetBSD: pq3etsec.c,v 1.16 2012/07/22 23:46:10 matt Exp $	*/
+/*	$NetBSD: pq3etsec.c,v 1.18 2014/12/20 18:03:17 nonaka Exp $	*/
 /*-
  * Copyright (c) 2010, 2011 The NetBSD Foundation, Inc.
  * All rights reserved.
@@ -39,7 +39,7 @@
 
 #include <sys/cdefs.h>
 
-__KERNEL_RCSID(0, "$NetBSD: pq3etsec.c,v 1.16 2012/07/22 23:46:10 matt Exp $");
+__KERNEL_RCSID(0, "$NetBSD: pq3etsec.c,v 1.18 2014/12/20 18:03:17 nonaka Exp $");
 
 #include <sys/param.h>
 #include <sys/cpu.h>

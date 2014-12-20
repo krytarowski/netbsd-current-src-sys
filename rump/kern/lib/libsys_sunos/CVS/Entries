@@ -4,7 +4,6 @@
 /rump_sunos_syscallargs.h/1.2/Fri Nov 28 21:45:47 2014//
 /rump_sunos_syscalls.c/1.2/Fri Nov 28 21:45:47 2014//
 /rump_sunos_sysent.c/1.2/Fri Nov 28 21:45:47 2014//
-/shlib_version/1.1/Fri Nov 28 21:45:47 2014//
 /sys_sunos_component.c/1.1/Fri Nov 28 21:45:47 2014//
 /syscalls.conf/1.1/Fri Nov 28 21:45:47 2014//
 /syscalls.master/1.2/Fri Nov 28 21:45:47 2014//

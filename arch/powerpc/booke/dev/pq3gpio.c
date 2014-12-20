@@ -1,4 +1,4 @@
-/*	$NetBSD: pq3gpio.c,v 1.8 2012/07/15 08:44:56 matt Exp $	*/
+/*	$NetBSD: pq3gpio.c,v 1.10 2014/12/20 18:03:17 nonaka Exp $	*/
 /*-
  * Copyright (c) 2010, 2011 The NetBSD Foundation, Inc.
  * All rights reserved.
@@ -41,7 +41,7 @@
 
 #include <sys/cdefs.h>
 
-__KERNEL_RCSID(0, "$NetBSD: pq3gpio.c,v 1.8 2012/07/15 08:44:56 matt Exp $");
+__KERNEL_RCSID(0, "$NetBSD: pq3gpio.c,v 1.10 2014/12/20 18:03:17 nonaka Exp $");
 
 #include <sys/param.h>
 #include <sys/cpu.h>

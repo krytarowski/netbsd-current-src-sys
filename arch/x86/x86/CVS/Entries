@@ -5,11 +5,9 @@
 /convert_xmm_s87.c/1.3/Fri Nov 28 21:45:46 2014//
 /core_machdep.c/1.5/Fri Nov 28 21:45:46 2014//
 /coretemp.c/1.32/Fri Nov 28 21:45:46 2014//
-/cpu.c/1.111/Fri Nov 28 21:45:46 2014//
 /cpu_topology.c/1.9/Fri Nov 28 21:45:46 2014//
 /cpu_ucode.c/1.4/Fri Nov 28 21:45:46 2014//
 /cpu_ucode_amd.c/1.7/Fri Nov 28 21:45:46 2014//
-/cpu_ucode_intel.c/1.5/Fri Nov 28 21:45:46 2014//
 /db_memrw.c/1.1/Fri Nov 28 21:45:46 2014//
 /db_trace.c/1.3/Fri Nov 28 21:45:46 2014//
 /errata.c/1.21/Fri Nov 28 21:45:46 2014//
@@ -17,9 +15,7 @@
 /fpu.c/1.10/Sat Nov 29 00:19:12 2014//
 /genfb_machdep.c/1.11/Fri Nov 28 21:45:46 2014//
 /i8259.c/1.16/Fri Nov 28 21:45:46 2014//
-/identcpu.c/1.47/Fri Nov 28 21:45:46 2014//
 /idt.c/1.3/Fri Nov 28 21:45:46 2014//
-/intel_busclock.c/1.19/Fri Nov 28 21:45:46 2014//
 /intr.c/1.77/Fri Nov 28 21:45:46 2014//
 /ioapic.c/1.48/Fri Nov 28 21:45:46 2014//
 /ipi.c/1.26/Fri Nov 28 21:45:46 2014//
@@ -53,4 +49,8 @@
 /x86_machdep.c/1.67/Fri Nov 28 21:45:46 2014//
 /x86_stub.c/1.4/Fri Nov 28 21:45:46 2014//
 /x86_userconf.c/1.1/Fri Nov 28 21:45:46 2014//
+/cpu.c/1.112/Sat Dec 20 22:31:18 2014//
+/cpu_ucode_intel.c/1.6/Sat Dec 20 22:31:18 2014//
+/identcpu.c/1.48/Sat Dec 20 22:31:18 2014//
+/intel_busclock.c/1.20/Sat Dec 20 22:31:18 2014//
 D
