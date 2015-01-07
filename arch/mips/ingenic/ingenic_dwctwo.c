@@ -1,4 +1,4 @@
-/*	$NetBSD: ingenic_dwctwo.c,v 1.1 2014/12/06 14:35:47 macallan Exp $ */
+/*	$NetBSD: ingenic_dwctwo.c,v 1.5 2014/12/27 17:22:15 macallan Exp $ */
 
 /*-
  * Copyright (c) 2014 Michael Lorenz
@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__KERNEL_RCSID(0, "$NetBSD: ingenic_dwctwo.c,v 1.1 2014/12/06 14:35:47 macallan Exp $");
+__KERNEL_RCSID(0, "$NetBSD: ingenic_dwctwo.c,v 1.5 2014/12/27 17:22:15 macallan Exp $");
 
 /*
  * adapted from bcm2835_dwctwo.c
@@ -53,6 +53,8 @@ __KERNEL_RCSID(0, "$NetBSD: ingenic_dwctwo.c,v 1.1 2014/12/06 14:35:47 macallan 
 #include <dwc2/dwc2.h>
 #include "dwc2_core.h"
 
+#include "opt_ingenic.h"
+
 struct ingenic_dwc2_softc {
 	struct dwc2_softc	sc_dwc2;
 
@@ -60,31 +62,31 @@ struct ingenic_dwc2_softc {
 };
 
 static struct dwc2_core_params ingenic_dwc2_params = {
-	.otg_cap			= 0,	/* HNP/SRP capable */
-	.otg_ver			= 0,	/* 1.3 */
+	.otg_cap			= -1,	/* HNP/SRP capable */
+	.otg_ver			= -1,	/* 1.3 */
 	.dma_enable			= 1,
 	.dma_desc_enable		= 0,
-	.speed				= 0,	/* High Speed */
-	.enable_dynamic_fifo		= 1,
-	.en_multiple_tx_fifo		= 1,
-	.host_rx_fifo_size		= 774,	/* 774 DWORDs */
-	.host_nperio_tx_fifo_size	= 256,	/* 256 DWORDs */
-	.host_perio_tx_fifo_size	= 512,	/* 512 DWORDs */
-	.max_transfer_size		= 65535,
-	.max_packet_count		= 511,
-	.host_channels			= 8,
-	.phy_type			= 1,	/* UTMI */
-	.phy_utmi_width			= 8,	/* 8 bits */
-	.phy_ulpi_ddr			= 0,	/* Single */
-	.phy_ulpi_ext_vbus		= 0,
-	.i2c_enable			= 0,
-	.ulpi_fs_ls			= 0,
-	.host_support_fs_ls_low_power	= 0,
-	.host_ls_low_power_phy_clk	= 0,	/* 48 MHz */
-	.ts_dline			= 0,
-	.reload_ctl			= 0,
-	.ahbcfg				= 0x10,
-	.uframe_sched			= 1,
+	.speed				= -1,	/* High Speed */
+	.enable_dynamic_fifo		= -1,
+	.en_multiple_tx_fifo		= -1,
+	.host_rx_fifo_size		= 1024,	/* 1024 DWORDs */
+	.host_nperio_tx_fifo_size	= 1024,	/* 1024 DWORDs */
+	.host_perio_tx_fifo_size	= 1024,	/* 1024 DWORDs */
+	.max_transfer_size		= -1,
+	.max_packet_count		= -1,
+	.host_channels			= -1,
+	.phy_type			= -1,	/* UTMI */
+	.phy_utmi_width			= -1,	/* 16 bits */
+	.phy_ulpi_ddr			= -1,	/* Single */
+	.phy_ulpi_ext_vbus		= -1,
+	.i2c_enable			= -1,
+	.ulpi_fs_ls			= -1,
+	.host_support_fs_ls_low_power	= -1,
+	.host_ls_low_power_phy_clk	= -1,	/* 48 MHz */
+	.ts_dline			= -1,
+	.reload_ctl			= -1,
+	.ahbcfg				= -1,
+	.uframe_sched			= 0,
 };
 
 static int ingenic_dwc2_match(device_t, struct cfdata *, void *);
@@ -112,6 +114,7 @@ ingenic_dwc2_attach(device_t parent, device_t self, void *aux)
 {
 	struct ingenic_dwc2_softc *sc = device_private(self);
 	struct apbus_attach_args *aa = aux;
+	uint32_t reg;
 	int error;
 
 	sc->sc_dwc2.sc_dev = self;
@@ -134,27 +137,58 @@ ingenic_dwc2_attach(device_t parent, device_t self, void *aux)
 	aprint_naive(": USB controller\n");
 	aprint_normal(": USB controller\n");
 
-#if notyet
-	sc->sc_ih = bcm2835_intr_establish(aaa->aaa_intr, IPL_SCHED,
-	   dwc2_intr, &sc->sc_dwc2);
+	reg = readreg(JZ_USBPCR);
+	reg |= PCR_VBUSVLDEXTSEL;
+	reg |= PCR_VBUSVLDEXT;
+	reg |= PCR_USB_MODE;
+	reg |= PCR_COMMONONN;
+	reg &= ~PCR_OTG_DISABLE;
+	writereg(JZ_USBPCR, reg);
+#ifdef INGENIC_DEBUG
+	printf("JZ_USBPCR  %08x\n", reg);
+#endif
+
+	reg = readreg(JZ_USBPCR1);
+	reg |= PCR_SYNOPSYS;
+	reg |= PCR_REFCLK_CORE;
+	reg &= ~PCR_CLK_M;
+	reg |= PCR_CLK_48;
+	reg |= PCR_WORD_I_F0;
+	reg |= PCR_WORD_I_F1;
+	writereg(JZ_USBPCR1, reg);
+#ifdef INGENIC_DEBUG
+	printf("JZ_USBPCR1 %08x\n", reg);
+	printf("JZ_USBRDT  %08x\n", readreg(JZ_USBRDT));
+#endif
+
+	delay(10000);
+
+	reg = readreg(JZ_USBPCR);
+	reg |= PCR_POR;
+	writereg(JZ_USBPCR, reg);
+	delay(1000);
+	reg &= ~PCR_POR;
+	writereg(JZ_USBPCR, reg);
+
+	delay(10000);
+
+	sc->sc_ih = evbmips_intr_establish(21, dwc2_intr, &sc->sc_dwc2);
 
 	if (sc->sc_ih == NULL) {
 		aprint_error_dev(self, "failed to establish interrupt %d\n",
-		     aaa->aaa_intr);
+		     21);
 		goto fail;
 	}
-#endif
+
 	config_defer(self, ingenic_dwc2_deferred);
 
 	return;
 
-#if notyet
 fail:
 	if (sc->sc_ih) {
-		intr_disestablish(sc->sc_ih);
+		evbmips_intr_disestablish(sc->sc_ih);
 		sc->sc_ih = NULL;
 	}
-#endif
 	bus_space_unmap(sc->sc_dwc2.sc_iot, sc->sc_dwc2.sc_ioh, 0x20000);
 }
 

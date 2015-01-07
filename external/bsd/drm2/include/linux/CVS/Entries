@@ -87,7 +87,6 @@
 /shmem_fs.h/1.2/Fri Nov 28 21:45:47 2014//
 /shrinker.h/1.3/Fri Nov 28 21:45:47 2014//
 /slab.h/1.4/Fri Nov 28 21:45:47 2014//
-/spinlock.h/1.5/Fri Nov 28 21:45:47 2014//
 /stat.h/1.2/Fri Nov 28 21:45:47 2014//
 /string.h/1.3/Fri Nov 28 21:45:47 2014//
 /suspend.h/1.2/Fri Nov 28 21:45:47 2014//
@@ -106,6 +105,7 @@
 /vmalloc.h/1.4/Fri Nov 28 21:45:47 2014//
 /wait.h/1.2/Fri Nov 28 21:45:47 2014//
 /workqueue.h/1.4/Fri Nov 28 21:45:47 2014//
-/ww_mutex.h/1.8/Fri Nov 28 21:45:47 2014//
 /mm.h/1.4/Sat Dec 20 22:31:24 2014//
+/spinlock.h/1.6/Wed Jan  7 00:50:28 2015//
+/ww_mutex.h/1.9/Wed Jan  7 00:50:28 2015//
 D

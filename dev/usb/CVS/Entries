@@ -1,4 +1,3 @@
-/FILES/1.12/Fri Nov 28 21:45:46 2014//
 /Makefile/1.9/Fri Nov 28 21:45:46 2014//
 /Makefile.usbdevs/1.7/Fri Nov 28 21:45:46 2014//
 /TODO/1.45/Fri Nov 28 21:45:46 2014//
@@ -13,7 +12,6 @@
 /auvitek_video.c/1.6/Fri Nov 28 21:45:46 2014//
 /auvitekreg.h/1.1/Fri Nov 28 21:45:46 2014//
 /auvitekvar.h/1.8/Fri Nov 28 21:45:46 2014//
-/ehci.c/1.234/Fri Nov 28 21:45:46 2014//
 /ehcireg.h/1.34/Fri Nov 28 21:45:46 2014//
 /ehcivar.h/1.42/Fri Nov 28 21:45:46 2014//
 /emdtv.c/1.9/Fri Nov 28 21:45:46 2014//
@@ -143,11 +141,7 @@
 /umcs.h/1.1/Fri Nov 28 21:45:46 2014//
 /umct.c/1.32/Fri Nov 28 21:45:46 2014//
 /umct.h/1.2/Fri Nov 28 21:45:46 2014//
-/umidi.c/1.65/Fri Nov 28 21:45:46 2014//
-/umidi_quirks.c/1.18/Fri Nov 28 21:45:46 2014//
 /umidi_quirks.h/1.8/Fri Nov 28 21:45:46 2014//
-/umidireg.h/1.8/Fri Nov 28 21:45:46 2014//
-/umidivar.h/1.19/Fri Nov 28 21:45:46 2014//
 /umodem.c/1.66/Fri Nov 28 21:45:46 2014//
 /umodem_common.c/1.22/Fri Nov 28 21:45:46 2014//
 /umodemvar.h/1.8/Fri Nov 28 21:45:46 2014//
@@ -200,4 +194,8 @@
 /usbdevs/1.687/Sat Dec 20 22:31:23 2014//
 /usbdevs.h/1.679/Sat Dec 20 22:31:23 2014//
 /usbdevs_data.h/1.680/Sat Dec 20 22:31:23 2014//
+/FILES/1.13/Wed Jan  7 00:50:22 2015//
+/ehci.c/1.235/Wed Jan  7 00:50:22 2015//
+/umidi.c/1.68/Wed Jan  7 00:50:22 2015//
+/umidi_quirks.c/1.19/Wed Jan  7 00:50:22 2015//
 D

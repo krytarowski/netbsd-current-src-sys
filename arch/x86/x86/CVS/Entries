@@ -19,7 +19,6 @@
 /intr.c/1.77/Fri Nov 28 21:45:46 2014//
 /ioapic.c/1.48/Fri Nov 28 21:45:46 2014//
 /ipi.c/1.26/Fri Nov 28 21:45:46 2014//
-/ipmi.c/1.59/Fri Nov 28 21:45:46 2014//
 /lapic.c/1.47/Fri Nov 28 21:45:46 2014//
 /linux_trap.c/1.11/Fri Nov 28 21:45:46 2014//
 /mp.c/1.3/Fri Nov 28 21:45:46 2014//
@@ -53,4 +52,5 @@
 /cpu_ucode_intel.c/1.6/Sat Dec 20 22:31:18 2014//
 /identcpu.c/1.48/Sat Dec 20 22:31:18 2014//
 /intel_busclock.c/1.20/Sat Dec 20 22:31:18 2014//
+/ipmi.c/1.60/Wed Jan  7 00:50:10 2015//
 D

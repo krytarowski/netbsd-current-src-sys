@@ -32,7 +32,6 @@
 /P2020RDB.MP/1.1/Fri Nov 28 21:45:45 2014//
 /PMPPC/1.35/Fri Nov 28 21:45:45 2014//
 /RB800/1.30/Fri Nov 28 21:45:45 2014//
-/TWRP1025/1.18/Fri Nov 28 21:45:45 2014//
 /TWRP1025.MP/1.1/Fri Nov 28 21:45:45 2014//
 /VIRTEX_DFC/1.26/Fri Nov 28 21:45:45 2014//
 /VIRTEX_GSRD1/1.24/Fri Nov 28 21:45:45 2014//
@@ -41,7 +40,6 @@
 /files.ev64260/1.14/Fri Nov 28 21:45:45 2014//
 /files.evbppc/1.6/Fri Nov 28 21:45:45 2014//
 /files.explora/1.9/Fri Nov 28 21:45:45 2014//
-/files.mpc85xx/1.9/Fri Nov 28 21:45:45 2014//
 /files.obs200/1.8/Fri Nov 28 21:45:45 2014//
 /files.obs266/1.1/Fri Nov 28 21:45:45 2014//
 /files.obs405/1.21/Fri Nov 28 21:45:45 2014//
@@ -60,4 +58,6 @@
 /std.pmppc/1.4/Fri Nov 28 21:45:45 2014//
 /std.virtex/1.3/Fri Nov 28 21:45:45 2014//
 /std.walnut/1.8/Fri Nov 28 21:45:45 2014//
+/TWRP1025/1.19/Wed Jan  7 00:49:47 2015//
+/files.mpc85xx/1.10/Wed Jan  7 00:49:47 2015//
 D

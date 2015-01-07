@@ -1,7 +1,6 @@
 D/doc////
 /Makefile/1.1/Fri Nov 28 21:45:46 2014//
 /TODO/1.6/Fri Nov 28 21:45:46 2014//
-/device-mapper.c/1.35/Fri Nov 28 21:45:46 2014//
 /dm.h/1.27/Fri Nov 28 21:45:46 2014//
 /dm_dev.c/1.9/Fri Nov 28 21:45:46 2014//
 /dm_ioctl.c/1.29/Fri Nov 28 21:45:46 2014//
@@ -16,3 +15,4 @@ D/doc////
 /dm_target_zero.c/1.12/Fri Nov 28 21:45:46 2014//
 /files.dm/1.6/Fri Nov 28 21:45:46 2014//
 /netbsd-dm.h/1.6/Fri Nov 28 21:45:46 2014//
+/device-mapper.c/1.36/Wed Jan  7 00:50:15 2015//

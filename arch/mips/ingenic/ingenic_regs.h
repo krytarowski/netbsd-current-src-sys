@@ -1,4 +1,4 @@
-/*	$NetBSD: ingenic_regs.h,v 1.2 2014/12/06 14:33:34 macallan Exp $ */
+/*	$NetBSD: ingenic_regs.h,v 1.6 2014/12/25 05:10:00 macallan Exp $ */
 
 /*-
  * Copyright (c) 2014 Michael Lorenz
@@ -160,6 +160,73 @@ MFC0(uint32_t r, uint32_t s)
 #define REIM_ENTRY_M	0xffff0000	/* reset exception entry if RPCn=1 */
 
 #define CP0_CORE_MBOX	20	/* select 0 for core 0, 1 for 1 */
+
+/* power management */
+#define JZ_CLKGR0	0x10000020	/* CLocK Gating Registers */
+#define JZ_OPCR		0x10000024	/* Oscillator Power Control Reg. */
+	#define OPCR_IDLE_DIS	0x80000000	/* don't stop CPU clk on idle */
+	#define OPCR_GPU_CLK_ST	0x40000000	/* stop GPU clock */
+	#define OPCR_L2CM_M	0x0c000000
+	#define OPCR_L2CM_ON	0x00000000	/* L2 stays on in sleep */
+	#define OPCR_L2CM_RET	0x04000000	/* L2 retention mode in sleep */
+	#define OPCR_L2CM_OFF	0x08000000	/* L2 powers down in sleep */
+	#define OPCR_SPENDN0	0x00000080	/* OTG port forced down */
+	#define OPCR_SPENDN1	0x00000040	/* UHC port forced down */
+	#define OPCR_BUS_MODE	0x00000020	/* 1 - bursts */
+	#define OPCR_O1SE	0x00000010	/* EXTCLK on in sleep */
+	#define OPCR_PD		0x00000008	/* P0 down in sleep */
+	#define OPCR_ERCS	0x00000004	/* 1 RTCCLK, 0 EXTCLK/512 */
+	#define OPCR_CPU_MODE	0x00000002	/* 1 access 'accelerated' */
+	#define OPCR_OSE	0x00000001	/* disable EXTCLK */
+#define JZ_CLKGR1	0x10000028	/* CLocK Gating Registers */
+#define JZ_USBPCR	0x1000003c
+	#define PCR_USB_MODE		0x80000000	/* 1 - otg */
+	#define PCR_AVLD_REG		0x40000000
+	#define PCR_IDPULLUP_MASK	0x30000000
+	#define PCR_INCR_MASK		0x08000000
+	#define PCR_TCRISETUNE		0x04000000
+	#define PCR_COMMONONN		0x02000000
+	#define PCR_VBUSVLDEXT		0x01000000
+	#define PCR_VBUSVLDEXTSEL	0x00800000
+	#define PCR_POR			0x00400000
+	#define PCR_SIDDQ		0x00200000
+	#define PCR_OTG_DISABLE		0x00100000
+	#define PCR_COMPDISTN_M		0x000e0000
+	#define PCR_OTGTUNE		0x0001c000
+	#define PCR_SQRXTUNE		0x00003800
+	#define PCR_TXFSLSTUNE		0x00000780
+	#define PCR_TXPREEMPHTUNE	0x00000040
+	#define PCR_TXHSXVTUNE		0x00000030
+	#define PCR_TXVREFTUNE		0x0000000f
+#define JZ_USBRDT	0x10000040	/* Reset Detect Timer Register */
+#define JZ_USBPCR1	0x10000048
+	#define PCR_SYNOPSYS	0x10000000	/* Mentor mode otherwise */
+	#define PCR_REFCLK_CORE	0x0c000000
+	#define PCR_REFCLK_XO25	0x04000000
+	#define PCR_REFCLK_CO	0x00000000
+	#define PCR_CLK_M	0x03000000	/* clock */
+	#define PCR_CLK_192	0x03000000	/* 19.2MHz */
+	#define PCR_CLK_48	0x02000000	/* 48MHz */
+	#define PCR_CLK_24	0x01000000	/* 24MHz */
+	#define PCR_CLK_12	0x00000000	/* 12MHz */
+	#define PCR_DMPD1	0x00800000	/* pull down D- on port 1 */ 
+	#define PCR_DPPD1	0x00400000	/* pull down D+ on port 1 */
+	#define PCR_PORT0_RST	0x00200000	/* port 0 reset */
+	#define PCR_PORT1_RST	0x00100000	/* port 1 reset */
+	#define PCR_WORD_I_F0	0x00080000	/* 1: 16bit/30M, 8/60 otherw. */
+	#define PCR_WORD_I_F1	0x00040000	/* same for port 1 */
+	#define PCR_COMPDISTUNE	0x00038000	/* disconnect threshold */
+	#define PCR_SQRXTUNE1	0x00007000	/* squelch threshold */
+	#define PCR_TXFSLSTUNE1	0x00000f00	/* FS/LS impedance adj. */
+	#define PCR_TXPREEMPH	0x00000080	/* HS transm. pre-emphasis */
+	#define PCR_TXHSXVTUNE1	0x00000060	/* dp/dm voltage adj. */
+	#define PCR_TXVREFTUNE1	0x00000017	/* HS DC voltage adj. */
+	#define PCR_TXRISETUNE1	0x00000001	/* risa/fall wave adj. */
+
+#define JZ_UHCCDR	0x1000006c	/* UHC Clock Divider Register */
+#define JZ_SPCR0	0x100000b8	/* SRAM Power Control Registers */
+#define JZ_SPCR1	0x100000bc
+#define JZ_SRBC		0x100000c4	/* Soft Reset & Bus Control */
 
 /* interrupt controller */
 #define JZ_ICSR0	0x10001000	/* raw IRQ line status */

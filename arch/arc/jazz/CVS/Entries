@@ -2,7 +2,6 @@
 /bus_dma_jazz.c/1.17/Fri Nov 28 21:45:45 2014//
 /com_jazzio.c/1.12/Fri Nov 28 21:45:45 2014//
 /dma.h/1.5/Fri Nov 28 21:45:45 2014//
-/fd.c/1.45/Fri Nov 28 21:45:45 2014//
 /fdc_jazzio.c/1.15/Fri Nov 28 21:45:45 2014//
 /fdcvar.h/1.6/Fri Nov 28 21:45:45 2014//
 /fdreg.h/1.4/Fri Nov 28 21:45:45 2014//
@@ -29,4 +28,5 @@
 /timer_jazziovar.h/1.6/Fri Nov 28 21:45:45 2014//
 /vga_jazzio.c/1.17/Fri Nov 28 21:45:45 2014//
 /vga_jazziovar.h/1.5/Fri Nov 28 21:45:45 2014//
+/fd.c/1.46/Wed Jan  7 00:49:36 2015//
 D

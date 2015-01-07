@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 
-__KERNEL_RCSID(1, "$NetBSD: awin_io.c,v 1.39 2014/12/07 18:32:13 jmcneill Exp $");
+__KERNEL_RCSID(1, "$NetBSD: awin_io.c,v 1.42 2014/12/23 13:34:40 jmcneill Exp $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -118,10 +118,15 @@ static const struct awin_locators awin_locators[] = {
 	{ "awinmp", OFFANDSIZE(MP), NOPORT, AWIN_A31_IRQ_MP, A31 },
 	{ "awindebe", AWIN_DE_BE0_OFFSET, 0x1000, 0, NOINTR, A20|A31 },
 	{ "awindebe", AWIN_DE_BE1_OFFSET, 0x1000, 1, NOINTR, A20|A31 },
+	{ "awindebe", AWIN_A80_DE_BE0_OFFSET, 0x1000, 0, NOINTR, A80 },
+	{ "awindebe", AWIN_A80_DE_BE1_OFFSET, 0x1000, 1, NOINTR, A80 },
+	{ "awindebe", AWIN_A80_DE_BE2_OFFSET, 0x1000, 2, NOINTR, A80 },
 	{ "awintcon", OFFANDSIZE(LCD0), 0, NOINTR, A20|A31 },
 	{ "awintcon", OFFANDSIZE(LCD1), 1, NOINTR, A20|A31 },
+	{ "awintcon", OFFANDSIZE(A80_LCD0), 0, NOINTR, A80 },
 	{ "awinhdmi", OFFANDSIZE(HDMI), NOPORT, AWIN_IRQ_HDMI0, A20 },
 	{ "awinhdmi", OFFANDSIZE(HDMI), NOPORT, AWIN_A31_IRQ_HDMI, A31 },
+	{ "awinhdmi", OFFANDSIZE(A80_HDMI), NOPORT, AWIN_A80_IRQ_HDMI, A80 },
 	{ "awinwdt", OFFANDSIZE(TMR), NOPORT, NOINTR, A10|A20|A31 },
 	{ "awinwdt", OFFANDSIZE(A80_TIMER), NOPORT, NOINTR, A80 },
 	{ "awinrtc", OFFANDSIZE(TMR), NOPORT, NOINTR, A10|A20 },
@@ -176,6 +181,7 @@ static const struct awin_locators awin_locators[] = {
 	{ "awincrypto", OFFANDSIZE(SS), NOPORT, AWIN_IRQ_SS, AANY },
 	{ "awinac", OFFANDSIZE(AC), NOPORT, AWIN_IRQ_AC, A10|A20 },
 	{ "awinac", OFFANDSIZE(AC), NOPORT, AWIN_A31_IRQ_AC, A31 },
+	{ "awindaudio", OFFANDSIZE(A80_DAUDIO1), 1, AWIN_A80_IRQ_R_DAUDIO, A80 },
 	{ "awinhdmiaudio", OFFANDSIZE(HDMI), NOPORT, NOINTR, A20 },
 	{ "awinhdmiaudio", OFFANDSIZE(HDMI), NOPORT, NOINTR, A31 },
 	{ "awinnand", OFFANDSIZE(NFC), NOPORT, AWIN_IRQ_NAND, A10|A20 },
@@ -222,13 +228,12 @@ awinio_attach(device_t parent, device_t self, void *aux)
 	switch (awin_chip_id()) {
 #ifdef ALLWINNER_A80
 	case AWIN_CHIP_ID_A80:
+		sc->sc_a80_core2_bsh = awin_core2_bsh;
 		sc->sc_a80_rcpus_bsh = awin_rcpus_bsh;
 		bus_space_subregion(sc->sc_bst, sc->sc_bsh,
 		    AWIN_A80_CCU_SCLK_OFFSET, 0x1000, &sc->sc_ccm_bsh);
 		bus_space_map(sc->sc_bst, AWIN_A80_USB_PBASE,
 		    AWIN_A80_USB_SIZE, 0, &sc->sc_a80_usb_bsh);
-		bus_space_map(sc->sc_bst, AWIN_A80_CORE2_PBASE,
-		    AWIN_A80_CORE2_SIZE, 0, &sc->sc_a80_core2_bsh);
 		break;
 #endif
 	default:
@@ -238,11 +243,7 @@ awinio_attach(device_t parent, device_t self, void *aux)
 	}
 
 	aprint_naive("\n");
-	aprint_normal(": %s", chip_name);
-	if ((chip_id & 0xff00) != 0xff00) {
-		aprint_normal(" (0x%04x)\n", chip_id);
-	}
-	aprint_normal("\n");
+	aprint_normal(": %s (0x%04x)\n", chip_name, chip_id);
 
 	const struct awin_locators * const eloc =
 	    awin_locators + __arraycount(awin_locators);

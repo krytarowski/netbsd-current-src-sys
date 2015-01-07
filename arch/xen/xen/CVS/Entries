@@ -9,7 +9,6 @@
 /pciide_machdep.c/1.18/Fri Nov 28 21:45:46 2014//
 /privcmd.c/1.49/Fri Nov 28 21:45:46 2014//
 /shutdown_xenbus.c/1.7/Fri Nov 28 21:45:46 2014//
-/xbd_xenbus.c/1.66/Fri Nov 28 21:45:46 2014//
 /xbdback_xenbus.c/1.60/Fri Nov 28 21:45:46 2014//
 /xen_acpi_machdep.c/1.5/Fri Nov 28 21:45:46 2014//
 /xen_debug.c/1.8/Fri Nov 28 21:45:46 2014//
@@ -21,4 +20,5 @@
 /xennet_checksum.c/1.3/Fri Nov 28 21:45:46 2014//
 /xennetback_xenbus.c/1.52/Fri Nov 28 21:45:46 2014//
 /xpci_xenbus.c/1.14/Fri Nov 28 21:45:46 2014//
+/xbd_xenbus.c/1.69/Wed Jan  7 00:50:10 2015//
 D

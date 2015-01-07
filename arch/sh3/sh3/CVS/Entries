@@ -6,7 +6,6 @@
 /compat_16_machdep.c/1.1/Fri Nov 28 21:45:45 2014//
 /core_machdep.c/1.5/Fri Nov 28 21:45:45 2014//
 /cpu.c/1.14/Fri Nov 28 21:45:45 2014//
-/cpu_in_cksum.S/1.4/Fri Nov 28 21:45:45 2014//
 /db_disasm.c/1.22/Fri Nov 28 21:45:45 2014//
 /db_interface.c/1.61/Fri Nov 28 21:45:45 2014//
 /db_memrw.c/1.9/Fri Nov 28 21:45:45 2014//
@@ -33,4 +32,5 @@
 /sys_machdep.c/1.13/Fri Nov 28 21:45:45 2014//
 /syscall.c/1.15/Fri Nov 28 21:45:45 2014//
 /vm_machdep.c/1.76/Fri Nov 28 21:45:45 2014//
+/cpu_in_cksum.S/1.5/Wed Jan  7 00:50:06 2015//
 D

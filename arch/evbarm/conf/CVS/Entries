@@ -230,7 +230,6 @@
 /std.nitrogen6/1.1/Fri Nov 28 21:45:45 2014//
 /std.npwr_fc/1.6/Fri Nov 28 21:45:45 2014//
 /std.nslu2/1.5/Fri Nov 28 21:45:45 2014//
-/std.odroid/1.4/Fri Nov 28 21:45:45 2014//
 /std.osk5912/1.5/Fri Nov 28 21:45:45 2014//
 /std.overo/1.6/Fri Nov 28 21:45:45 2014//
 /std.rpi/1.18/Fri Nov 28 22:37:38 2014//
@@ -239,8 +238,13 @@
 /std.tisdp24xx/1.9/Fri Nov 28 21:45:45 2014//
 /std.tsarm/1.8/Fri Nov 28 21:45:45 2014//
 /std.viper/1.8/Fri Nov 28 21:45:45 2014//
-/ALLWINNER_A80/1.13/Thu Dec 11 23:35:31 2014//
 /ALLWINNER_A80_INSTALL/1.1/Sun Dec 14 18:12:38 2014//
 /BEAGLEBONE/1.30/Sat Dec 20 22:31:13 2014//
 /files.evbarm/1.25/Sat Dec 20 22:31:13 2014//
+/ALLWINNER_A80/1.14/Wed Jan  7 00:49:43 2015//
+/ROCKCHIP/1.14/Mon Jan  5 22:17:38 2015//
+/files.rockchip/1.1/Fri Dec 26 16:53:33 2014//
+/mk.rockchip/1.2/Sun Dec 28 16:29:21 2014//
+/std.odroid/1.5/Wed Jan  7 00:49:44 2015//
+/std.rockchip/1.1/Fri Dec 26 16:53:33 2014//
 D

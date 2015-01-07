@@ -95,9 +95,7 @@
 /subr_debug.c/1.7/Fri Nov 28 21:45:47 2014//
 /subr_device.c/1.2/Fri Nov 28 21:45:47 2014//
 /subr_devsw.c/1.33/Fri Nov 28 21:45:47 2014//
-/subr_disk.c/1.103/Fri Nov 28 21:45:47 2014//
 /subr_disk_mbr.c/1.46/Fri Nov 28 21:45:47 2014//
-/subr_disk_open.c/1.11/Fri Nov 28 21:45:47 2014//
 /subr_evcnt.c/1.12/Fri Nov 28 21:45:47 2014//
 /subr_exec_fd.c/1.7/Fri Nov 28 21:45:47 2014//
 /subr_extent.c/1.76/Fri Nov 28 21:45:47 2014//
@@ -194,6 +192,8 @@
 /kern_timeout.c/1.48/Sat Dec 20 22:31:24 2014//
 /uipc_domain.c/1.96/Sat Dec 20 22:31:24 2014//
 /uipc_mbuf.c/1.160/Sat Dec 20 22:31:24 2014//
-/vfs_cache.c/1.102/Sat Dec 20 22:31:24 2014//
 /vfs_vnops.c/1.192/Sat Dec 20 22:31:24 2014//
+/subr_disk.c/1.111/Wed Jan  7 00:50:30 2015//
+/subr_disk_open.c/1.12/Wed Jan  7 00:50:30 2015//
+/vfs_cache.c/1.104/Wed Jan  7 00:50:31 2015//
 D

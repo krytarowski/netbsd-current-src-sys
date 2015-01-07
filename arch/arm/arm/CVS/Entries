@@ -3,7 +3,6 @@
 /bcopyinout.S/1.20/Fri Nov 28 21:45:45 2014//
 /bcopyinout_xscale.S/1.11/Fri Nov 28 21:45:45 2014//
 /blockio.S/1.8/Fri Nov 28 21:45:45 2014//
-/bootconfig.c/1.7/Fri Nov 28 21:45:45 2014//
 /bus_space_a2x.S/1.4/Fri Nov 28 21:45:45 2014//
 /bus_space_a4x.S/1.4/Fri Nov 28 21:45:45 2014//
 /bus_space_asm_generic.S/1.11/Fri Nov 28 21:45:45 2014//
@@ -13,7 +12,6 @@
 /copystr.S/1.11/Fri Nov 28 21:45:45 2014//
 /core_machdep.c/1.7/Fri Nov 28 21:45:45 2014//
 /cpu_exec.c/1.9/Fri Nov 28 21:45:45 2014//
-/cpu_in_cksum.S/1.8/Fri Nov 28 21:45:45 2014//
 /cpu_in_cksum_buffer.S/1.8/Fri Nov 28 21:45:45 2014//
 /cpu_in_cksum_fold.S/1.4/Fri Nov 28 21:45:45 2014//
 /cpu_in_cksum_v4hdr.S/1.4/Fri Nov 28 21:45:45 2014//
@@ -42,7 +40,6 @@
 /cpufunc_asm_xscale.S/1.23/Fri Nov 28 21:45:45 2014//
 /db_disasm.c/1.6/Fri Nov 28 21:45:45 2014//
 /db_trace.c/1.30/Fri Nov 28 21:45:45 2014//
-/disassem.c/1.25/Fri Nov 28 22:37:38 2014//
 /disassem.h/1.4/Fri Nov 28 21:45:45 2014//
 /disksubr.c/1.25/Fri Nov 28 21:45:45 2014//
 /disksubr_acorn.c/1.12/Fri Nov 28 21:45:45 2014//
@@ -62,4 +59,7 @@
 /syscall.c/1.60/Fri Nov 28 21:45:45 2014//
 /undefined.c/1.55/Fri Nov 28 21:45:45 2014//
 /vectors.S/1.10/Fri Nov 28 21:45:45 2014//
+/bootconfig.c/1.8/Wed Jan  7 00:49:39 2015//
+/cpu_in_cksum.S/1.9/Wed Jan  7 00:49:39 2015//
+/disassem.c/1.28/Wed Jan  7 00:49:39 2015//
 D

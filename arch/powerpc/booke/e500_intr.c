@@ -1,4 +1,4 @@
-/*	$NetBSD: e500_intr.c,v 1.27 2014/12/20 17:55:07 nonaka Exp $	*/
+/*	$NetBSD: e500_intr.c,v 1.29 2015/01/05 07:40:05 nonaka Exp $	*/
 /*-
  * Copyright (c) 2010, 2011 The NetBSD Foundation, Inc.
  * All rights reserved.
@@ -39,7 +39,7 @@
 #define __INTR_PRIVATE
 
 #include <sys/cdefs.h>
-__KERNEL_RCSID(0, "$NetBSD: e500_intr.c,v 1.27 2014/12/20 17:55:07 nonaka Exp $");
+__KERNEL_RCSID(0, "$NetBSD: e500_intr.c,v 1.29 2015/01/05 07:40:05 nonaka Exp $");
 
 #include <sys/param.h>
 #include <sys/proc.h>
@@ -358,6 +358,29 @@ const struct e500_intr_name p20x0_onchip_intr_names[] = {
 };
 
 INTR_INFO_DECL(p20x0, P20x0);
+#endif
+
+#ifdef P1023
+#define	p1023_external_intr_names	default_external_intr_names
+const struct e500_intr_name p1023_onchip_intr_names[] = {
+	{ ISOURCE_FMAN,            "fman" },
+	{ ISOURCE_MDIO,            "mdio" },
+	{ ISOURCE_QMAN0,           "qman0" },
+	{ ISOURCE_BMAN0,           "bman0" },
+	{ ISOURCE_QMAN1,           "qman1" },
+	{ ISOURCE_BMAN1,           "bman1" },
+	{ ISOURCE_QMAN2,           "qman2" },
+	{ ISOURCE_BMAN2,           "bman2" },
+	{ ISOURCE_SECURITY2_P1023, "sec2" },
+	{ ISOURCE_SEC_GENERAL,     "sec-general" },
+	{ ISOURCE_DMA2_CHAN1,      "dma2-chan1" },
+	{ ISOURCE_DMA2_CHAN2,      "dma2-chan2" },
+	{ ISOURCE_DMA2_CHAN3,      "dma2-chan3" },
+	{ ISOURCE_DMA2_CHAN4,      "dma2-chan4" },
+	{ 0, "" },
+};
+
+INTR_INFO_DECL(p1023, P1023);
 #endif
 
 static const char ist_names[][12] = {
@@ -1048,6 +1071,12 @@ e500_intr_init(void)
 		*ii = mpc8572_intr_info;
 		break;
 #endif
+#ifdef P1023
+	case SVR_P1017v1 >> 16:
+	case SVR_P1023v1 >> 16:
+		*ii = p1023_intr_info;
+		break;
+#endif
 #ifdef P1025
 	case SVR_P1016v1 >> 16:
 	case SVR_P1025v1 >> 16:
@@ -1064,6 +1093,11 @@ e500_intr_init(void)
 		panic("%s: don't know how to deal with SVR %#lx",
 		    __func__, mfspr(SPR_SVR));
 	}
+
+	/*
+	 * Initialize interrupt handler lock
+	 */
+	mutex_init(&e500_intr_lock, MUTEX_DEFAULT, IPL_HIGH);
 
 	/*
 	 * We need to be in mixed mode.

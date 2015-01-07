@@ -12,7 +12,6 @@
 /i915_dma.c/1.12/Fri Nov 28 21:45:47 2014//
 /i915_drv.c/1.6/Fri Nov 28 21:45:47 2014//
 /i915_drv.h/1.11/Fri Nov 28 22:37:39 2014//
-/i915_gem.c/1.18/Fri Nov 28 21:45:47 2014//
 /i915_gem_context.c/1.6/Fri Nov 28 21:45:47 2014//
 /i915_gem_debug.c/1.1.1.2/Fri Nov 28 21:45:47 2014//
 /i915_gem_dmabuf.c/1.1.1.2/Fri Nov 28 21:45:47 2014//
@@ -61,4 +60,5 @@
 /intel_sprite.c/1.2/Fri Nov 28 21:45:47 2014//
 /intel_tv.c/1.6/Fri Nov 28 21:45:47 2014//
 /intel_uncore.c/1.6/Fri Nov 28 21:45:47 2014//
+/i915_gem.c/1.19/Wed Jan  7 00:50:25 2015//
 D
