@@ -4,7 +4,6 @@
 /apmvar.h/1.2/Fri Nov 28 21:45:46 2014//
 /asm.h/1.1/Fri Nov 28 21:45:46 2014//
 /atomic.h/1.1/Fri Nov 28 21:45:46 2014//
-/bootconfig.h/1.1/Fri Nov 28 21:45:46 2014//
 /bootinfo.h/1.5/Fri Nov 28 21:45:46 2014//
 /bswap.h/1.1/Fri Nov 28 21:45:46 2014//
 /bus_defs.h/1.1/Fri Nov 28 21:45:46 2014//
@@ -56,4 +55,5 @@
 /types.h/1.6/Fri Nov 28 21:45:46 2014//
 /vmparam.h/1.4/Fri Nov 28 21:45:46 2014//
 /wchar_limits.h/1.1/Fri Nov 28 21:45:46 2014//
+/bootconfig.h/1.2/Sun Jan 11 12:42:08 2015//
 D

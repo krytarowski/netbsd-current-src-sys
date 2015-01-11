@@ -7,9 +7,7 @@
 /rockchip_dma.c/1.1/Fri Dec 26 16:53:33 2014//
 /rockchip_dwcmmc.c/1.5/Sat Jan  3 13:29:02 2015//
 /rockchip_dwctwo.c/1.2/Fri Dec 26 19:44:48 2014//
-/rockchip_emac.c/1.7/Tue Jan  6 11:22:09 2015//
 /rockchip_emacreg.h/1.1/Sun Jan  4 03:53:02 2015//
-/rockchip_i2c.c/1.5/Thu Jan  1 22:15:40 2015//
 /rockchip_i2creg.h/1.2/Tue Dec 30 18:57:36 2014//
 /rockchip_intr.h/1.1/Fri Dec 26 16:53:33 2014//
 /rockchip_reg.h/1.4/Sun Dec 28 16:03:09 2014//
@@ -17,4 +15,6 @@
 /rockchip_timer.c/1.1/Fri Jan  2 23:20:18 2015//
 /rockchip_timerreg.h/1.1/Fri Jan  2 23:20:18 2015//
 /rockchip_var.h/1.11/Mon Jan  5 21:35:53 2015//
+/rockchip_emac.c/1.9/Sun Jan 11 12:41:58 2015//
+/rockchip_i2c.c/1.6/Sun Jan 11 21:35:55 2015//
 D

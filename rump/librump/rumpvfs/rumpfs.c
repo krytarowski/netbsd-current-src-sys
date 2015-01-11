@@ -1,4 +1,4 @@
-/*	$NetBSD: rumpfs.c,v 1.132 2015/01/03 16:30:32 hannken Exp $	*/
+/*	$NetBSD: rumpfs.c,v 1.134 2015/01/07 04:05:26 riastradh Exp $	*/
 
 /*
  * Copyright (c) 2009, 2010, 2011 Antti Kantee.  All Rights Reserved.
@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__KERNEL_RCSID(0, "$NetBSD: rumpfs.c,v 1.132 2015/01/03 16:30:32 hannken Exp $");
+__KERNEL_RCSID(0, "$NetBSD: rumpfs.c,v 1.134 2015/01/07 04:05:26 riastradh Exp $");
 
 #include <sys/param.h>
 #include <sys/atomic.h>
@@ -221,6 +221,7 @@ static kmutex_t reclock;
 #define RUMPFS_DEFAULTMODE 0755
 static void freedir(struct rumpfs_node *, struct componentname *);
 static struct rumpfs_node *makeprivate(enum vtype, mode_t, dev_t, off_t, bool);
+static void freeprivate(struct rumpfs_node *);
 
 /*
  * Extra Terrestrial stuff.  We map a given key (pathname) to a file on
@@ -406,7 +407,7 @@ etfsregister(const char *key, const char *hostpath,
 			rumpblk_deregister(hostpath);
 		if (et->et_rn->rn_hostpath != NULL)
 			free(et->et_rn->rn_hostpath, M_TEMP);
-		kmem_free(et->et_rn, sizeof(*et->et_rn));
+		freeprivate(et->et_rn);
 		kmem_free(et, sizeof(*et));
 		return EEXIST;
 	}
@@ -492,7 +493,7 @@ etfsremove(const char *key)
 
 	if (et->et_rn->rn_hostpath != NULL)
 		free(et->et_rn->rn_hostpath, M_TEMP);
-	kmem_free(et->et_rn, sizeof(*et->et_rn));
+	freeprivate(et->et_rn);
 	kmem_free(et, sizeof(*et));
 
 	return 0;
@@ -553,6 +554,13 @@ makeprivate(enum vtype vt, mode_t mode, dev_t rdev, off_t size, bool et)
 	va->va_vaflags = 0;
 
 	return rn;
+}
+
+static void
+freeprivate(struct rumpfs_node *rn)
+{
+
+	kmem_free(rn, sizeof(*rn));
 }
 
 static void
@@ -749,8 +757,13 @@ rump_vop_lookup(void *v)
  getvnode:
 	KASSERT(rn);
 	rv = vcache_get(dvp->v_mount, &rn, sizeof(rn), vpp);
+	if (rv) {
+		if (rnd->rn_flags & RUMPNODE_DIR_ET)
+			freeprivate(rn);
+		return rv;
+	}
 
-	return rv;
+	return 0;
 }
 
 static int
@@ -948,8 +961,10 @@ rump_vop_mkdir(void *v)
 		rn->rn_va.va_flags |= UF_OPAQUE;
 	rn->rn_parent = rnd;
 	rv = vcache_get(dvp->v_mount, &rn, sizeof(rn), vpp);
-	if (rv)
+	if (rv) {
+		freeprivate(rn);
 		return rv;
+	}
 
 	makedir(rnd, cnp, rn);
 
@@ -1044,8 +1059,10 @@ rump_vop_mknod(void *v)
 	if ((cnp->cn_flags & ISWHITEOUT) != 0)
 		rn->rn_va.va_flags |= UF_OPAQUE;
 	rv = vcache_get(dvp->v_mount, &rn, sizeof(rn), vpp);
-	if (rv)
+	if (rv) {
+		freeprivate(rn);
 		return rv;
+	}
 
 	makedir(rnd, cnp, rn);
 
@@ -1075,8 +1092,10 @@ rump_vop_create(void *v)
 	if ((cnp->cn_flags & ISWHITEOUT) != 0)
 		rn->rn_va.va_flags |= UF_OPAQUE;
 	rv = vcache_get(dvp->v_mount, &rn, sizeof(rn), vpp);
-	if (rv)
+	if (rv) {
+		freeprivate(rn);
 		return rv;
+	}
 
 	makedir(rnd, cnp, rn);
 
@@ -1108,8 +1127,10 @@ rump_vop_symlink(void *v)
 	if ((cnp->cn_flags & ISWHITEOUT) != 0)
 		rn->rn_va.va_flags |= UF_OPAQUE;
 	rv = vcache_get(dvp->v_mount, &rn, sizeof(rn), vpp);
-	if (rv)
+	if (rv) {
+		freeprivate(rn);
 		return rv;
+	}
 
 	makedir(rnd, cnp, rn);
 
@@ -1607,7 +1628,7 @@ rump_vop_reclaim(void *v)
 			PNBUF_PUT(rn->rn_linktarg);
 		if (rn->rn_hostpath)
 			free(rn->rn_hostpath, M_TEMP);
-		kmem_free(rn, sizeof(*rn));
+		freeprivate(rn);
 	}
 
 	return 0;
@@ -1698,7 +1719,9 @@ rumpfs_mountfs(struct mount *mp)
 
 	rn = makeprivate(VDIR, RUMPFS_DEFAULTMODE, NODEV, DEV_BSIZE, false);
 	rn->rn_parent = rn;
-	if ((error = vcache_get(mp, &rn, sizeof(rn), &rfsmp->rfsmp_rvp)) != 0) {
+	if ((error = vcache_get(mp, &rn, sizeof(rn), &rfsmp->rfsmp_rvp))
+	    != 0) {
+		freeprivate(rn);
 		kmem_free(rfsmp, sizeof(*rfsmp));
 		return error;
 	}

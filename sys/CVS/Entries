@@ -4,7 +4,6 @@
 /aio.h/1.12/Fri Nov 28 21:45:47 2014//
 /ansi.h/1.14/Fri Nov 28 21:45:47 2014//
 /ataio.h/1.9/Fri Nov 28 21:45:47 2014//
-/atomic.h/1.12/Fri Nov 28 21:45:47 2014//
 /audioio.h/1.34/Fri Nov 28 21:45:47 2014//
 /bitops.h/1.11/Fri Nov 28 21:45:47 2014//
 /blist.h/1.8/Fri Nov 28 21:45:47 2014//
@@ -268,4 +267,5 @@
 /param.h/1.464/Wed Jan  7 00:50:40 2015//
 /power.h/1.20/Wed Jan  7 00:50:40 2015//
 /sysctl.h/1.215/Wed Jan  7 00:50:40 2015//
+/atomic.h/1.13/Sun Jan 11 12:42:19 2015//
 D

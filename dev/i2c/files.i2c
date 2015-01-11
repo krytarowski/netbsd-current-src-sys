@@ -1,4 +1,4 @@
-#	$NetBSD: files.i2c,v 1.62 2015/01/01 17:33:18 jmcneill Exp $
+#	$NetBSD: files.i2c,v 1.64 2015/01/11 16:54:21 jmcneill Exp $
 
 obsolete defflag	opt_i2cbus.h		I2C_SCAN
 define	i2cbus { }
