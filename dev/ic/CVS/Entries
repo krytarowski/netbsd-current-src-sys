@@ -562,12 +562,9 @@
 /upc.c/1.15/Fri Nov 28 21:45:46 2014//
 /upcreg.h/1.3/Fri Nov 28 21:45:46 2014//
 /upcvar.h/1.6/Fri Nov 28 21:45:46 2014//
-/vga.c/1.113/Fri Nov 28 21:45:46 2014//
 /vga_common.c/1.11/Fri Nov 28 21:45:46 2014//
-/vga_raster.c/1.42/Fri Nov 28 21:45:46 2014//
 /vga_subr.c/1.25/Fri Nov 28 21:45:46 2014//
 /vgareg.h/1.9/Fri Nov 28 21:45:46 2014//
-/vgavar.h/1.32/Fri Nov 28 22:37:39 2014//
 /w83l518d.c/1.2/Fri Nov 28 21:45:46 2014//
 /w83l518d_sdmmc.c/1.3/Fri Nov 28 21:45:46 2014//
 /w83l518d_sdmmc.h/1.2/Fri Nov 28 21:45:46 2014//
@@ -604,4 +601,7 @@
 /bwi.c/1.25/Sun Jan 11 12:42:09 2015//
 /dwc_gmac.c/1.31/Sun Jan 11 12:42:09 2015//
 /rt2661.c/1.30/Sun Jan 11 12:42:10 2015//
+/vga.c/1.114/Sat Jan 17 00:10:42 2015//
+/vga_raster.c/1.43/Sat Jan 17 00:10:42 2015//
+/vgavar.h/1.33/Sat Jan 17 00:10:42 2015//
 D

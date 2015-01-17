@@ -46,11 +46,11 @@
 /x86_machdep.c/1.67/Fri Nov 28 21:45:46 2014//
 /x86_stub.c/1.4/Fri Nov 28 21:45:46 2014//
 /x86_userconf.c/1.1/Fri Nov 28 21:45:46 2014//
-/cpu.c/1.112/Sat Dec 20 22:31:18 2014//
 /cpu_ucode_intel.c/1.6/Sat Dec 20 22:31:18 2014//
 /identcpu.c/1.48/Sat Dec 20 22:31:18 2014//
 /intel_busclock.c/1.20/Sat Dec 20 22:31:18 2014//
 /ipmi.c/1.60/Wed Jan  7 00:50:10 2015//
 /cpu_ucode.c/1.5/Sun Jan 11 12:42:07 2015//
 /consinit.c/1.28/Sun Jan 11 21:36:01 2015//
+/cpu.c/1.113/Sat Jan 17 00:10:39 2015//
 D
