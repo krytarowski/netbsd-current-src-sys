@@ -1,6 +1,5 @@
 /arp.h/1.2/Fri Nov 28 21:45:47 2014//
 /opt_atalk.h/1.1/Fri Nov 28 21:45:47 2014//
-/opt_inet.h/1.2/Fri Nov 28 21:45:47 2014//
 /opt_inet6.h/1.1/Fri Nov 28 21:45:47 2014//
 /opt_mbuftrace.h/1.1/Fri Nov 28 21:45:47 2014//
 /opt_natm.h/1.1/Fri Nov 28 21:45:47 2014//
@@ -11,4 +10,5 @@
 /opt_somaxkva.h/1.1/Fri Nov 28 21:45:47 2014//
 /opt_sosend_loan.h/1.1/Fri Nov 28 21:45:47 2014//
 /pfsync.h/1.1/Fri Nov 28 21:45:47 2014//
+/opt_inet.h/1.4/Mon Jan 19 22:34:12 2015//
 D

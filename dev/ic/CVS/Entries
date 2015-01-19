@@ -592,8 +592,6 @@
 /ahcisata_core.c/1.53/Sat Dec 20 22:31:21 2014//
 /oosiop.c/1.15/Sat Dec 20 22:31:21 2014//
 /am7930.c/1.52/Wed Jan  7 00:50:15 2015//
-/dwc_mmc.c/1.4/Tue Dec 30 12:36:06 2014//
-/dwc_mmc_reg.h/1.2/Sat Dec 27 19:18:04 2014//
 /dwc_mmc_var.h/1.4/Tue Dec 30 00:19:50 2014//
 /i82801lpcreg.h/1.12/Wed Jan  7 00:50:16 2015//
 /isp_netbsd.c/1.88/Wed Jan  7 00:50:16 2015//
@@ -604,4 +602,9 @@
 /vga.c/1.114/Sat Jan 17 00:10:42 2015//
 /vga_raster.c/1.43/Sat Jan 17 00:10:42 2015//
 /vgavar.h/1.33/Sat Jan 17 00:10:42 2015//
+/dwc_mmc.c/1.5/Mon Jan 19 22:34:08 2015//
+/dwc_mmc_reg.h/1.4/Mon Jan 19 22:34:08 2015//
+/dwc_tmr.c/1.1/Sat Jan 17 15:04:47 2015//
+/dwc_tmr_reg.h/1.1/Sat Jan 17 15:04:47 2015//
+/dwc_tmr_var.h/1.1/Sat Jan 17 15:04:47 2015//
 D

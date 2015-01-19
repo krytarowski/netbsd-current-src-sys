@@ -1,4 +1,4 @@
-/* $NetBSD: rockchip_timer.c,v 1.2 2015/01/17 15:05:24 jmcneill Exp $ */
+/* $NetBSD: rockchip_dwctmr.c,v 1.1 2015/01/17 17:21:55 jmcneill Exp $ */
 
 /*-
  * Copyright (c) 2015 Jared D. McNeill <jmcneill@invisible.ca>
@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__KERNEL_RCSID(0, "$NetBSD: rockchip_timer.c,v 1.2 2015/01/17 15:05:24 jmcneill Exp $");
+__KERNEL_RCSID(0, "$NetBSD: rockchip_dwctmr.c,v 1.1 2015/01/17 17:21:55 jmcneill Exp $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -35,47 +35,32 @@ __KERNEL_RCSID(0, "$NetBSD: rockchip_timer.c,v 1.2 2015/01/17 15:05:24 jmcneill 
 #include <sys/intr.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
-#include <sys/timetc.h>
+
+#include <dev/ic/dwc_tmr_var.h>
 
 #include <arm/rockchip/rockchip_reg.h>
 #include <arm/rockchip/rockchip_var.h>
 
-#include <arm/rockchip/rockchip_timerreg.h>
+static int	rk_dwctmr_match(device_t, cfdata_t, void *);
+static void	rk_dwctmr_attach(device_t, device_t, void *);
 
-struct rktimer_softc {
-	device_t sc_dev;
-	bus_space_tag_t sc_bst;
-	bus_space_handle_t sc_bsh;
-	struct timecounter sc_tc;
-};
-
-#define TIMER_READ(sc, reg) \
-    bus_space_read_4((sc)->sc_bst, (sc)->sc_bsh, (reg))
-#define TIMER_WRITE(sc, reg, val) \
-    bus_space_write_4((sc)->sc_bst, (sc)->sc_bsh, (reg), (val))
-
-static int	rktimer_match(device_t, cfdata_t, void *);
-static void	rktimer_attach(device_t, device_t, void *);
-
-static u_int	rktimer_get_timecount(struct timecounter *);
-
-CFATTACH_DECL_NEW(rktimer, sizeof(struct rktimer_softc),
-	rktimer_match, rktimer_attach, NULL, NULL);
+CFATTACH_DECL_NEW(rkdwctmr, sizeof(struct dwc_tmr_softc),
+	rk_dwctmr_match, rk_dwctmr_attach, NULL, NULL);
 
 static int
-rktimer_match(device_t parent, cfdata_t cf, void *aux)
+rk_dwctmr_match(device_t parent, cfdata_t cf, void *aux)
 {
 
-	if (rockchip_chip_id() == ROCKCHIP_CHIP_ID_RK3066)
+	if (rockchip_chip_id() != ROCKCHIP_CHIP_ID_RK3066)
 		return 0;
 
 	return 1;
 }
 
 static void
-rktimer_attach(device_t parent, device_t self, void *aux)
+rk_dwctmr_attach(device_t parent, device_t self, void *aux)
 {
-	struct rktimer_softc *sc = device_private(self);
+	struct dwc_tmr_softc *sc = device_private(self);
 	struct obio_attach_args * const obio = aux;
 
 	sc->sc_dev = self;
@@ -86,26 +71,5 @@ rktimer_attach(device_t parent, device_t self, void *aux)
 	aprint_naive("\n");
 	aprint_normal("\n");
 
-	TIMER_WRITE(sc, TIMER0_CONTROL_REG, 0);
-	TIMER_WRITE(sc, TIMER0_LOAD_COUNT0_REG, 0xffffffff);
-	TIMER_WRITE(sc, TIMER0_LOAD_COUNT1_REG, 0xffffffff);
-	TIMER_WRITE(sc, TIMER0_CONTROL_REG, TIMER_CONTROL_ENABLE);
-
-	sc->sc_tc.tc_get_timecount = rktimer_get_timecount;
-	sc->sc_tc.tc_poll_pps = NULL;
-	sc->sc_tc.tc_counter_mask = ~0;
-	sc->sc_tc.tc_frequency = ROCKCHIP_REF_FREQ;
-	sc->sc_tc.tc_name = "TIMER0";
-	sc->sc_tc.tc_priv = sc;
-	sc->sc_tc.tc_quality = 900;
-
-	tc_init(&sc->sc_tc);
-}
-
-static u_int
-rktimer_get_timecount(struct timecounter *tc)
-{
-	struct rktimer_softc *sc = tc->tc_priv;
-
-	return ~TIMER_READ(sc, TIMER0_CURRENT_VALUE0_REG);
+	dwc_tmr_attach_subr(sc, ROCKCHIP_REF_FREQ);
 }

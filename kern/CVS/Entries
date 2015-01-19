@@ -99,7 +99,6 @@
 /subr_hash.c/1.6/Fri Nov 28 21:45:47 2014//
 /subr_humanize.c/1.1/Fri Nov 28 21:45:47 2014//
 /subr_iostat.c/1.21/Fri Nov 28 21:45:47 2014//
-/subr_ipi.c/1.2/Fri Nov 28 21:45:47 2014//
 /subr_kcpuset.c/1.11/Fri Nov 28 21:45:47 2014//
 /subr_kmem.c/1.60/Fri Nov 28 21:45:47 2014//
 /subr_kobj.c/1.50/Fri Nov 28 21:45:47 2014//
@@ -196,4 +195,5 @@
 /vfs_mount.c/1.32/Sun Jan 11 12:42:16 2015//
 /kern_todr.c/1.38/Sun Jan 11 21:36:07 2015//
 /vfs_cache.c/1.105/Sat Jan 17 00:11:09 2015//
+/subr_ipi.c/1.3/Mon Jan 19 22:34:11 2015//
 D

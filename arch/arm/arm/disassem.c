@@ -1,4 +1,4 @@
-/*	$NetBSD: disassem.c,v 1.28 2015/01/02 15:52:33 skrll Exp $	*/
+/*	$NetBSD: disassem.c,v 1.31 2015/01/18 18:23:25 skrll Exp $	*/
 
 /*
  * Copyright (c) 1996 Mark Brinicombe.
@@ -49,7 +49,7 @@
 
 #include <sys/param.h>
 
-__KERNEL_RCSID(0, "$NetBSD: disassem.c,v 1.28 2015/01/02 15:52:33 skrll Exp $");
+__KERNEL_RCSID(0, "$NetBSD: disassem.c,v 1.31 2015/01/18 18:23:25 skrll Exp $");
 
 #include <sys/systm.h>
 
@@ -77,6 +77,7 @@ __KERNEL_RCSID(0, "$NetBSD: disassem.c,v 1.28 2015/01/02 15:52:33 skrll Exp $");
  * b - branch address
  * c - comment field bits(0-23)
  * d - destination register (bits 12-15)
+ * e - address operand of ldrh/strh instruction
  * f - 1st fp operand (register) (bits 12-14)
  * g - 2nd fp operand (register) (bits 16-18)
  * h - 3rd fp operand (register/immediate) (bits 0-4)
@@ -157,8 +158,6 @@ static const struct arm32_insn arm32_i[] = {
     { 0x0ff00ff0, 0x01a00f90, "strexd",	"dma" },
     { 0x0ff00ff0, 0x01c00f90, "strexb",	"dma" },
     { 0x0ff00ff0, 0x01e00f90, "strexh",	"dma" },
-    { 0x0e1000f0, 0x00100090, "ldrb",	"de" },
-    { 0x0e1000f0, 0x00000090, "strb",	"de" },
     { 0x0e1000f0, 0x001000d0, "ldrsb",	"de" },
     { 0x0e1000f0, 0x001000b0, "ldrh",	"de" },
     { 0x0e1000f0, 0x000000b0, "strh",	"de" },
@@ -239,7 +238,6 @@ static const struct arm32_insn arm32_i[] = {
     { 0x0f100010, 0x0e100010, "mrc",	"#z" },
     { 0xff000010, 0xfe000000, "cdp2",	"#y" },
     { 0x0f000010, 0x0e000000, "cdp",	"#y" },
-    { 0x0f100010, 0x0e000010, "mcr",	"#z" },
     { 0x0ff00000, 0x0c400000, "mcrr",	"#&" },
     { 0x0ff00000, 0x0c500000, "mrrc",	"#&" },
     { 0xfe100090, 0xfc100000, "ldc2",	"L#v" },

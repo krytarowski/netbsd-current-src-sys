@@ -1,4 +1,4 @@
-/*	$NetBSD: rockchip_machdep.c,v 1.19 2015/01/06 00:45:45 jmcneill Exp $ */
+/*	$NetBSD: rockchip_machdep.c,v 1.21 2015/01/17 17:30:26 jmcneill Exp $ */
 
 /*
  * Machine dependent functions for kernel setup for TI OSK5912 board.
@@ -125,7 +125,7 @@
  */
 
 #include <sys/cdefs.h>
-__KERNEL_RCSID(0, "$NetBSD: rockchip_machdep.c,v 1.19 2015/01/06 00:45:45 jmcneill Exp $");
+__KERNEL_RCSID(0, "$NetBSD: rockchip_machdep.c,v 1.21 2015/01/17 17:30:26 jmcneill Exp $");
 
 #include "opt_machdep.h"
 #include "opt_ddb.h"
@@ -530,12 +530,12 @@ initarm(void *arg)
 
 #ifdef VERBOSE_INIT_ARM
 	printf("initarm: Configuring system ...\n");
-#endif
 
 #if !defined(CPU_CORTEXA8)
 	printf("initarm: cbar=%#x\n", armreg_cbar_read());
 	printf("KERNEL_BASE=0x%x, KERNEL_VM_BASE=0x%x, KERNEL_VM_BASE - KERNEL_BASE=0x%x, KERNEL_BASE_VOFFSET=0x%x\n",
 		KERNEL_BASE, KERNEL_VM_BASE, KERNEL_VM_BASE - KERNEL_BASE, KERNEL_BASE_VOFFSET);
+#endif
 #endif
 
 	ram_size = rockchip_get_memsize();
