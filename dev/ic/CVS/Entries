@@ -602,9 +602,12 @@
 /vga.c/1.114/Sat Jan 17 00:10:42 2015//
 /vga_raster.c/1.43/Sat Jan 17 00:10:42 2015//
 /vgavar.h/1.33/Sat Jan 17 00:10:42 2015//
-/dwc_mmc.c/1.5/Mon Jan 19 22:34:08 2015//
 /dwc_mmc_reg.h/1.4/Mon Jan 19 22:34:08 2015//
 /dwc_tmr.c/1.1/Sat Jan 17 15:04:47 2015//
 /dwc_tmr_reg.h/1.1/Sat Jan 17 15:04:47 2015//
 /dwc_tmr_var.h/1.1/Sat Jan 17 15:04:47 2015//
+/dwc_mmc.c/1.6/Fri Jan 30 01:43:07 2015//
+/pl181.c/1.1/Tue Jan 27 16:33:26 2015//
+/pl181reg.h/1.1/Tue Jan 27 16:33:26 2015//
+/pl181var.h/1.1/Tue Jan 27 16:33:26 2015//
 D

@@ -32,7 +32,6 @@
 /lock_stubs.S/1.26/Fri Nov 28 21:45:45 2014//
 /locore.S/1.113/Fri Nov 28 21:45:45 2014//
 /longrun.c/1.4/Fri Nov 28 21:45:45 2014//
-/machdep.c/1.752/Fri Nov 28 21:45:45 2014//
 /mainbus.c/1.98/Fri Nov 28 21:45:45 2014//
 /mptramp.S/1.27/Fri Nov 28 21:45:45 2014//
 /mtrr_k6.c/1.13/Fri Nov 28 21:45:45 2014//
@@ -47,4 +46,5 @@
 /trap.c/1.273/Fri Nov 28 21:45:45 2014//
 /vector.S/1.64/Fri Nov 28 21:45:45 2014//
 /vm86.c/1.51/Fri Nov 28 21:45:45 2014//
+/machdep.c/1.753/Fri Jan 30 01:43:02 2015//
 D

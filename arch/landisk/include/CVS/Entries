@@ -16,7 +16,6 @@
 /disklabel.h/1.4/Fri Nov 28 21:45:45 2014//
 /elf_machdep.h/1.1/Fri Nov 28 21:45:45 2014//
 /endian.h/1.1/Fri Nov 28 21:45:45 2014//
-/endian_machdep.h/1.1/Fri Nov 28 21:45:45 2014//
 /float.h/1.1/Fri Nov 28 21:45:45 2014//
 /frame.h/1.1/Fri Nov 28 21:45:45 2014//
 /ieee.h/1.1/Fri Nov 28 21:45:45 2014//
@@ -52,4 +51,5 @@
 /types.h/1.4/Fri Nov 28 21:45:45 2014//
 /vmparam.h/1.1/Fri Nov 28 21:45:45 2014//
 /wchar_limits.h/1.1/Fri Nov 28 21:45:45 2014//
+/endian_machdep.h/1.2/Fri Jan 30 01:43:02 2015//
 D

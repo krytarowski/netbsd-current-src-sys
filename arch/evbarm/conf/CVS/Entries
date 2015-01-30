@@ -43,7 +43,6 @@
 /IMX31LITE/1.29/Fri Nov 28 21:45:45 2014//
 /INSTALL/1.7/Fri Nov 28 21:45:45 2014//
 /INTEGRATOR/1.79/Fri Nov 28 21:45:45 2014//
-/INTEGRATOR_CP/1.9/Fri Nov 28 21:45:45 2014//
 /INTEGRATOR_INSTALL/1.2/Fri Nov 28 21:45:45 2014//
 /IQ31244/1.69/Fri Nov 28 21:45:45 2014//
 /IQ80310/1.87/Fri Nov 28 21:45:45 2014//
@@ -128,7 +127,6 @@
 /files.hawk/1.1/Fri Nov 28 21:45:45 2014//
 /files.hdl_g/1.3/Fri Nov 28 21:45:45 2014//
 /files.imx31/1.3/Fri Nov 28 21:45:45 2014//
-/files.integrator/1.10/Fri Nov 28 21:45:45 2014//
 /files.iq31244/1.8/Fri Nov 28 21:45:45 2014//
 /files.iq80310/1.12/Fri Nov 28 21:45:45 2014//
 /files.iq80321/1.9/Fri Nov 28 21:45:45 2014//
@@ -247,4 +245,16 @@
 /IMX23_OLINUXINO/1.11/Sun Jan 11 12:41:59 2015//
 /files.imx23_olinuxino/1.3/Sun Jan 11 12:41:59 2015//
 /ROCKCHIP/1.18/Mon Jan 19 22:33:59 2015//
+/INTEGRATOR_CP/1.10/Fri Jan 30 01:43:02 2015//
+/INTEGRATOR_CP_INSTALL/1.1/Tue Jan 27 20:26:15 2015//
+/PARALLELLA/1.1/Fri Jan 23 12:34:09 2015//
+/PARALLELLA_INSTALL/1.1/Fri Jan 23 12:34:09 2015//
+/ZEDBOARD/1.1/Fri Jan 23 12:34:09 2015//
+/ZEDBOARD_INSTALL/1.1/Fri Jan 23 12:34:09 2015//
+/files.integrator/1.11/Fri Jan 30 01:43:02 2015//
+/files.parallella/1.1/Fri Jan 23 12:34:09 2015//
+/files.zedboard/1.1/Fri Jan 23 12:34:09 2015//
+/files.zynq/1.1/Fri Jan 23 12:34:09 2015//
+/mk.zynq/1.1/Fri Jan 23 12:34:09 2015//
+/std.zynq/1.1/Fri Jan 23 12:34:09 2015//
 D

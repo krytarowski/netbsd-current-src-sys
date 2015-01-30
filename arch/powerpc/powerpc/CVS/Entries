@@ -6,7 +6,6 @@
 /copystr.c/1.6/Fri Nov 28 21:45:45 2014//
 /core_machdep.c/1.9/Fri Nov 28 21:45:45 2014//
 /db_disasm.c/1.28/Fri Nov 28 21:45:45 2014//
-/db_interface.c/1.52/Fri Nov 28 21:45:45 2014//
 /db_memrw.c/1.9/Fri Nov 28 21:45:45 2014//
 /db_trace.c/1.57/Fri Nov 28 21:45:45 2014//
 /fixup.c/1.10/Fri Nov 28 21:45:45 2014//
@@ -33,7 +32,6 @@
 /openpic.c/1.6/Fri Nov 28 21:45:45 2014//
 /pio_subr.S/1.16/Fri Nov 28 21:45:45 2014//
 /pmap_subr.c/1.27/Fri Nov 28 21:45:45 2014//
-/powerpc_machdep.c/1.70/Fri Nov 28 21:45:45 2014//
 /process_machdep.c/1.37/Fri Nov 28 21:45:45 2014//
 /procfs_machdep.c/1.9/Fri Nov 28 21:45:45 2014//
 /rtas.c/1.14/Fri Nov 28 21:45:45 2014//
@@ -50,4 +48,6 @@
 /trap_subr.S/1.78/Fri Nov 28 21:45:45 2014//
 /vm_machdep.c/1.98/Fri Nov 28 21:45:45 2014//
 /sig_machdep.c/1.44/Sat Dec 20 22:31:16 2014//
+/db_interface.c/1.53/Fri Jan 30 01:43:02 2015//
+/powerpc_machdep.c/1.71/Fri Jan 30 01:43:02 2015//
 D

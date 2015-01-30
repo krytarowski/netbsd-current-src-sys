@@ -39,7 +39,6 @@
 /cpufunc_asm_sheeva.S/1.6/Fri Nov 28 21:45:45 2014//
 /cpufunc_asm_xscale.S/1.23/Fri Nov 28 21:45:45 2014//
 /db_disasm.c/1.6/Fri Nov 28 21:45:45 2014//
-/db_trace.c/1.30/Fri Nov 28 21:45:45 2014//
 /disassem.h/1.4/Fri Nov 28 21:45:45 2014//
 /disksubr.c/1.25/Fri Nov 28 21:45:45 2014//
 /disksubr_acorn.c/1.12/Fri Nov 28 21:45:45 2014//
@@ -62,4 +61,5 @@
 /bootconfig.c/1.8/Wed Jan  7 00:49:39 2015//
 /cpu_in_cksum.S/1.9/Wed Jan  7 00:49:39 2015//
 /disassem.c/1.31/Mon Jan 19 22:33:58 2015//
+/db_trace.c/1.31/Fri Jan 30 01:42:57 2015//
 D
