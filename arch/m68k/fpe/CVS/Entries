@@ -9,7 +9,6 @@
 /fpu_emulate.c/1.38/Fri Nov 28 21:45:45 2014//
 /fpu_emulate.h/1.24/Fri Nov 28 21:45:45 2014//
 /fpu_exp.c/1.8/Fri Nov 28 21:45:45 2014//
-/fpu_explode.c/1.14/Fri Nov 28 21:45:45 2014//
 /fpu_fmovecr.c/1.16/Fri Nov 28 21:45:45 2014//
 /fpu_fscale.c/1.16/Fri Nov 28 21:45:45 2014//
 /fpu_fstore.c/1.14/Fri Nov 28 21:45:45 2014//
@@ -19,8 +18,9 @@
 /fpu_int.c/1.12/Fri Nov 28 21:45:45 2014//
 /fpu_log.c/1.18/Fri Nov 28 21:45:45 2014//
 /fpu_mul.c/1.8/Fri Nov 28 21:45:45 2014//
-/fpu_rem.c/1.16/Fri Nov 28 21:45:45 2014//
 /fpu_sqrt.c/1.8/Fri Nov 28 21:45:45 2014//
 /fpu_subr.c/1.12/Fri Nov 28 21:45:45 2014//
 /fpu_trig.c/1.15/Fri Nov 28 21:45:45 2014//
+/fpu_explode.c/1.15/Thu Feb  5 21:03:24 2015//
+/fpu_rem.c/1.17/Thu Feb  5 21:03:24 2015//
 D

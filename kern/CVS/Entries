@@ -112,7 +112,6 @@
 /subr_percpu.c/1.17/Sat Nov 29 00:19:55 2014//
 /subr_physmap.c/1.2/Fri Nov 28 21:45:47 2014//
 /subr_pool.c/1.203/Fri Nov 28 21:45:47 2014//
-/subr_prf.c/1.156/Fri Nov 28 21:45:47 2014//
 /subr_prof.c/1.47/Fri Nov 28 21:45:47 2014//
 /subr_pserialize.c/1.7/Fri Nov 28 21:45:47 2014//
 /subr_specificdata.c/1.13/Fri Nov 28 21:45:47 2014//
@@ -160,7 +159,6 @@
 /uipc_socket.c/1.235/Fri Nov 28 21:45:47 2014//
 /uipc_socket2.c/1.121/Fri Nov 28 21:45:47 2014//
 /uipc_syscalls.c/1.173/Fri Nov 28 21:45:47 2014//
-/uipc_usrreq.c/1.172/Fri Nov 28 21:45:47 2014//
 /vfs_bio.c/1.252/Fri Nov 28 21:45:47 2014//
 /vfs_cwd.c/1.4/Fri Nov 28 21:45:47 2014//
 /vfs_dirhash.c/1.12/Fri Nov 28 21:45:47 2014//
@@ -186,7 +184,6 @@
 /kern_timeout.c/1.48/Sat Dec 20 22:31:24 2014//
 /uipc_domain.c/1.96/Sat Dec 20 22:31:24 2014//
 /uipc_mbuf.c/1.160/Sat Dec 20 22:31:24 2014//
-/vfs_vnops.c/1.192/Sat Dec 20 22:31:24 2014//
 /subr_disk.c/1.111/Wed Jan  7 00:50:30 2015//
 /subr_disk_open.c/1.12/Wed Jan  7 00:50:30 2015//
 /kern_cpu.c/1.67/Sun Jan 11 12:42:16 2015//
@@ -196,4 +193,7 @@
 /kern_todr.c/1.38/Sun Jan 11 21:36:07 2015//
 /vfs_cache.c/1.105/Sat Jan 17 00:11:09 2015//
 /subr_ipi.c/1.3/Mon Jan 19 22:34:11 2015//
+/subr_prf.c/1.157/Thu Feb  5 21:03:35 2015//
+/uipc_usrreq.c/1.173/Thu Feb  5 21:03:35 2015//
+/vfs_vnops.c/1.193/Thu Feb  5 21:03:35 2015//
 D

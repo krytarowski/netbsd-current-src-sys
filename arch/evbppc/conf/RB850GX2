@@ -1,25 +1,25 @@
-#	$NetBSD: TWRP1025,v 1.20 2015/01/30 14:54:46 nonaka Exp $
+#	$NetBSD: RB850GX2,v 1.1 2015/01/30 15:04:35 nonaka Exp $
 #
-#	TWRP1025 -- everything that's currently supported
+#	RouterBOARD RB850Gx2
 #
 
 include		"arch/evbppc/conf/std.mpc85xx"
 
 options 	INCLUDE_CONFIG_FILE	# embed config file in kernel binary
 
-ident 		"TWRP1025-$Revision: 1.20 $"
+ident 		"RB850GX2-$Revision: 1.1 $"
 
 maxusers	32
-
-makeoptions	NEED_BINARY="yes"
-makeoptions	NEED_UBOOTIMAGE="yes"
 
 #options 	UVMHIST
 #options 	UVMHIST_PRINT
 
-options 	P1025
+options 	P1023
 options 	SYS_CLK=66666667
 #options 	HZ=1000
+no options 	GUR_BASE
+options 	GUR_BASE=0xff600000
+options 	ROUTERBOOT
 
 #options 	INSECURE	# disable kernel security levels
 #options 	NTP		# NTP phase/frequency locked loop
@@ -33,7 +33,7 @@ options 	SYSVSHM		# System V shared memory
 
 options 	USERCONF	# userconf(4) support
 #options 	PIPE_SOCKETPAIR	# smaller, but slower pipe(2)
-#options 	SYSCTL_INCLUDE_DESCR	# Include sysctl descriptions in kernel
+options 	SYSCTL_INCLUDE_DESCR	# Include sysctl descriptions in kernel
 
 # Diagnostic/debugging support options
 options 	DIAGNOSTIC	# cheap kernel consistency checks
@@ -78,15 +78,15 @@ file-system 	MFS		# memory file system
 file-system 	NFS		# Network File System client
 file-system 	CD9660		# ISO 9660 + Rock Ridge file system
 file-system 	MSDOSFS		# MS-DOS file system
-#file-system 	FDESC		# /dev/fd
+file-system 	FDESC		# /dev/fd
 file-system 	TMPFS		# efficient memory file system
 file-system 	KERNFS		# /kern
 file-system 	NULLFS		# loopback file system
 #file-system 	OVERLAY		# overlay file system
-#file-system	PUFFS		# Userspace file systems (e.g. ntfs-3g & sshfs)
+file-system	PUFFS		# Userspace file systems (e.g. ntfs-3g & sshfs)
 file-system 	PROCFS		# /proc
 #file-system 	UMAPFS		# NULLFS + uid and gid remapping
-#file-system 	UNION		# union file system
+file-system 	UNION		# union file system
 file-system	PTYFS		# /dev/pts/N support
 
 # File system options
@@ -111,8 +111,6 @@ options 	INET6		# IPV6
 #options 	IPSEC		# IP security
 #options 	IPSEC_DEBUG	# debug for IP security
 #options 	MROUTING	# IP multicast routing
-#options 	PIM		# Protocol Independent Multicast
-#options        DIRECTED_BROADCAST      # allow broadcasts through routers
 #options 	NETATALK	# AppleTalk networking protocols
 #options 	PPP_BSDCOMP	# BSD-Compress compression support for PPP
 #options 	PPP_DEFLATE	# Deflate compression support for PPP
@@ -123,23 +121,10 @@ options 	INET6		# IPV6
 
 # These options enable verbose messages for several subsystems.
 # Warning, these may compile large string tables into the kernel!
-options 	PCIVERBOSE	# verbose PCI device autoconfig messages
 options 	MIIVERBOSE	# verbose PHY autoconfig messages
-#options 	PCI_CONFIG_DUMP	# verbosely dump PCI config space
-options 	SCSIVERBOSE	# human readable SCSI error messages
-#options 	PCI_NETBSD_CONFIGURE	# Do not rely on BIOS/whatever to configure PCI devices
-#options 	PCI_CONFIGURE_VERBOSE	# Show PCI config information
-
-# wscons options
-#options 	WSEMUL_SUN		# sun terminal emulation
-#options 	WSEMUL_VT100		# VT100 / VT220 emulation
-#options 	WSDISPLAY_COMPAT_USL		# wsconscfg VT handling
 
 # Kernel root file system and dump configuration.
 config		netbsd		root on ? type ?
-config		netbsd-ld0a	root on ld0a type ffs
-config		netbsd-sd0a	root on sd0a type ffs
-config		nfsnetbsd	root on tsec0 type nfs
 
 #
 # Device configuration
@@ -150,36 +135,17 @@ mainbus0 at root			# Processor Local Bus
 cpunode*	at mainbus? node ?
 gpio*		at gpiobus?
 
+options 	MULTIPROCESSOR
 cpu*		at cpunode?
 
 obio0		at cpunode?		# On-chip Peripheral Bus
-#nandfcm*	at obio0 cs ?		# nand flash
-#nand*		at nandfcm?
-#flash*		at nand?
-
-# NOR Flash
-#options 	NOR_VERBOSE
-cfi0	 	at obio0 cs 0
-nor*		at cfi?
-flash*		at nor? offset 0 size 0x4000000
 
 e500wdog*	at cpunode?		# Watchdog timer
 
 ddrc*		at cpunode?
 duart*		at cpunode?
 com*		at duart? port ?
-options 	CONSADDR="DUART1_BASE"
-
-mdio0		at cpunode? instance 1
-tsec0		at cpunode? instance 1 mdio 0 phy 2 # Enhanced 3-Speed Ethernet Controller
-tsec1		at cpunode? instance 3 mdio 0 phy 1 # Enhanced 3-Speed Ethernet Controller
-atphy*		at mii?
-ukphy*		at mii?
-#options 	ETSEC_EVENT_COUNTERS
-
-diic*		at cpunode?		# i2c bus
-iic*		at diic?
-#dsrtc*		at iic1 addr 0x68 flags 1339	# RTC DS1339
+options 	CONSADDR="DUART2_BASE"
 
 pq3pcie*	at cpunode?		# PCI-Express controller
 pci*		at pq3pcie?
@@ -187,40 +153,8 @@ pci*		at pq3pcie?
 ppb*		at pci? dev ? function ?	# PCI-PCI bridges
 pci*		at ppb?
 
-ahcisata*	at pci? dev ? function ?
-atabus*		at ahcisata? channel ?
-wd*		at atabus? drive ?
-
-ehci*		at cpunode?		# usb
-usb*		at ehci?
-uhub*		at usb?
-uhub*		at uhub? port ?
-umass*		at uhub? port ?
-scsibus*	at umass? channel ?
-sd*		at scsibus? target ? lun ?
-
-#options 	SDHC_DEBUG
-#options 	SDMMC_DEBUG
-sdhc*		at cpunode?		# sdmmc
-sdmmc*		at sdhc?		# SD/MMC bus
-ld*		at sdmmc?
-
-#siisata*	at pci? dev ? function ?
-#atabus* 	at siisata? channel ?
-#jmide*		at pci? dev ? function ?	# JMicron PCI-e PATA/SATA controllers
-#ahcisata*	at jmide?
-#atabus* 	at ahcisata? channel ?
-
-#viaide* 	at pci? dev ? function ?
-#atabus* 	at viaide? channel ?
-#wd*		at atabus? drive ?
-#rtk*		at pci? dev ? function ?
-#wm*		at pci? dev ? function ?	# Intel Ethernet
-
-#inphy*		at mii? phy ?			# Intel 82555 PHYs
-#iophy*		at mii? phy ?			# Intel 82553 PHYs
-#makphy* 	at mii? phy ?			# Marvell PHYs
-#ukphy*		at mii? phy ?			# generic unknown PHYs
+diic*		at cpunode?		# i2c bus
+iic*		at diic?
 
 pseudo-device	loop			# network loopback
 pseudo-device	bpfilter		# packet filter
@@ -228,6 +162,6 @@ pseudo-device	clockctl		# user control of clock subsystem
 pseudo-device	drvctl			# user control of drive subsystem
 pseudo-device	ksyms			# /dev/ksyms
 pseudo-device	pty			# pseudo-terminals
-pseudo-device	kttcp			# kernel ttcp
-pseudo-device	vlan			# 802.1Q VLANs
+pseudo-device	vnd			# disk-like interface to files
+pseudo-device	putter			# for puffs and pud
 pseudo-device	lockstat		# lock profiling
