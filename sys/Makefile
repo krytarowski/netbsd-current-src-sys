@@ -28,6 +28,7 @@ INCS=	acct.h agpio.h aio.h ansi.h aout_mids.h ataio.h atomic.h audioio.h \
 	malloc.h mallocvar.h mbuf.h md4.h md5.h midiio.h \
 	mman.h module.h mount.h mqueue.h msg.h msgbuf.h mtio.h mutex.h \
 	namei.h null.h \
+	overflow.h \
 	param.h pcu.h pipe.h pmc.h poll.h pool.h power.h proc.h \
 	protosw.h pset.h ptrace.h ptree.h \
 	queue.h quota.h quotactl.h \
@@ -50,6 +51,7 @@ INCSYMLINKS=\
 	sys/cdbr.h /usr/include/cdbr.h \
 	sys/exec_elf.h /usr/include/elf.h \
 	sys/fcntl.h /usr/include/fcntl.h \
+	sys/overfow.h /usr/include/overflow.h \
 	sys/poll.h /usr/include/poll.h \
 	sys/stdarg.h /usr/include/stdarg.h \
 	sys/stdint.h /usr/include/stdint.h \

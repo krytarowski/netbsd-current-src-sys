@@ -54,6 +54,7 @@ SRCS+=	cpuset.c inet_addr.c intoa.c
 SRCS+=	bswap64.c
 .endif
 SRCS+=	md4c.c md5c.c rmd160.c sha1.c sha2.c murmurhash.c
+SRCS+=	overflow.c
 SRCS+=	pmatch.c mcount.c mertwist.c crc32.c
 
 SRCS+=	ppath_kmem_alloc.c
