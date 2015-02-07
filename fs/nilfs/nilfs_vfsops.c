@@ -1,4 +1,4 @@
-/* $NetBSD: nilfs_vfsops.c,v 1.18 2014/10/15 09:05:46 hannken Exp $ */
+/* $NetBSD: nilfs_vfsops.c,v 1.20 2015/02/07 10:40:57 maxv Exp $ */
 
 /*
  * Copyright (c) 2008, 2009 Reinoud Zandijk
@@ -28,7 +28,7 @@
 
 #include <sys/cdefs.h>
 #ifndef lint
-__KERNEL_RCSID(0, "$NetBSD: nilfs_vfsops.c,v 1.18 2014/10/15 09:05:46 hannken Exp $");
+__KERNEL_RCSID(0, "$NetBSD: nilfs_vfsops.c,v 1.20 2015/02/07 10:40:57 maxv Exp $");
 #endif /* not lint */
 
 

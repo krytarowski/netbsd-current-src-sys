@@ -4,7 +4,6 @@
 /drm_mode.h/1.3/Fri Nov 28 21:45:47 2014//
 /drm_sarea.h/1.1.1.1/Fri Nov 28 21:45:47 2014//
 /i810_drm.h/1.1.1.1/Fri Nov 28 21:45:47 2014//
-/i915_drm.h/1.1.1.2/Fri Nov 28 21:45:47 2014//
 /nouveau_drm.h/1.1.1.1/Fri Nov 28 21:45:47 2014//
 /qxl_drm.h/1.1.1.1/Fri Nov 28 21:45:47 2014//
 /r128_drm.h/1.1.1.1/Fri Nov 28 21:45:47 2014//
@@ -14,4 +13,5 @@
 /tegra_drm.h/1.1.1.1/Fri Nov 28 21:45:47 2014//
 /via_drm.h/1.1.1.1/Fri Nov 28 21:45:47 2014//
 /vmwgfx_drm.h/1.1.1.2/Fri Nov 28 21:45:47 2014//
+/i915_drm.h/1.2/Sat Feb  7 11:45:05 2015//
 D

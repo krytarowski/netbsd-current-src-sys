@@ -44,7 +44,6 @@
 /kern_ktrace_vfs.c/1.2/Fri Nov 28 21:45:47 2014//
 /kern_lock.c/1.155/Fri Nov 28 21:45:47 2014//
 /kern_lwp.c/1.179/Fri Nov 28 21:45:47 2014//
-/kern_malloc.c/1.143/Fri Nov 28 21:45:47 2014//
 /kern_mutex.c/1.61/Sat Nov 29 00:19:55 2014//
 /kern_mutex_obj.c/1.5/Fri Nov 28 21:45:47 2014//
 /kern_ntptime.c/1.55/Fri Nov 28 21:45:47 2014//
@@ -196,4 +195,5 @@
 /subr_prf.c/1.157/Thu Feb  5 21:03:35 2015//
 /uipc_usrreq.c/1.173/Thu Feb  5 21:03:35 2015//
 /vfs_vnops.c/1.193/Thu Feb  5 21:03:35 2015//
+/kern_malloc.c/1.145/Sat Feb  7 11:45:07 2015//
 D

@@ -14,9 +14,9 @@
 /pl310_reg.h/1.4/Fri Nov 28 21:45:45 2014//
 /pl310_var.h/1.1/Fri Nov 28 21:45:45 2014//
 /scu_reg.h/1.1/Fri Nov 28 21:45:45 2014//
-/a9_mpsubr.S/1.26/Sat Dec 20 22:31:13 2014//
 /armperiph.c/1.5/Sat Dec 20 22:31:13 2014//
 /pl310.c/1.16/Sat Dec 20 22:31:13 2014//
 /a9tmr_var.h/1.4/Wed Jan  7 00:49:39 2015//
 /a9tmr.c/1.10/Sun Jan 11 12:41:57 2015//
+/a9_mpsubr.S/1.27/Sat Feb  7 11:44:52 2015//
 D

@@ -1,6 +1,5 @@
 /bootp_subr.c/1.1.1.1/Fri Nov 28 21:45:47 2014//
 /krpc.h/1.1.1.1/Fri Nov 28 21:45:47 2014//
-/krpc_subr.c/1.1.1.1/Fri Nov 28 21:45:47 2014//
 /nfs.h/1.1.1.1/Fri Nov 28 21:45:47 2014//
 /nfs_common.h/1.1.1.1/Fri Nov 28 21:45:47 2014//
 /nfs_commonacl.c/1.1.1.1/Fri Nov 28 21:45:47 2014//
@@ -32,4 +31,5 @@
 /oldnfsproto.h/1.1.1.1/Fri Nov 28 21:45:47 2014//
 /rpcv2.h/1.1.1.1/Fri Nov 28 21:45:47 2014//
 /xdr_subs.h/1.1.1.1/Fri Nov 28 21:45:47 2014//
+/krpc_subr.c/1.2/Sat Feb  7 11:45:07 2015//
 D

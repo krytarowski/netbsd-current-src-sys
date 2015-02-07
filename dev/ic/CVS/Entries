@@ -44,7 +44,6 @@
 /aic79xx_osm.c/1.32/Fri Nov 28 21:45:46 2014//
 /aic79xx_osm.h/1.23/Fri Nov 28 21:45:46 2014//
 /aic79xxvar.h/1.27/Fri Nov 28 21:45:46 2014//
-/aic7xxx.c/1.131/Fri Nov 28 21:45:46 2014//
 /aic7xxx_cam.h/1.4/Fri Nov 28 21:45:46 2014//
 /aic7xxx_inline.h/1.14/Fri Nov 28 21:45:46 2014//
 /aic7xxx_osm.c/1.37/Fri Nov 28 21:45:46 2014//
@@ -64,7 +63,6 @@
 /am79c930reg.h/1.7/Fri Nov 28 21:45:46 2014//
 /am79c930var.h/1.6/Fri Nov 28 21:45:46 2014//
 /am9513reg.h/1.4/Fri Nov 28 21:45:46 2014//
-/an.c/1.61/Fri Nov 28 21:45:46 2014//
 /anreg.h/1.15/Fri Nov 28 21:45:46 2014//
 /anvar.h/1.20/Fri Nov 28 21:45:46 2014//
 /apcdmareg.h/1.6/Fri Nov 28 21:45:46 2014//
@@ -610,4 +608,6 @@
 /pl181.c/1.1/Tue Jan 27 16:33:26 2015//
 /pl181reg.h/1.1/Tue Jan 27 16:33:26 2015//
 /pl181var.h/1.1/Tue Jan 27 16:33:26 2015//
+/aic7xxx.c/1.132/Sat Feb  7 11:45:01 2015//
+/an.c/1.62/Sat Feb  7 11:45:01 2015//
 D
