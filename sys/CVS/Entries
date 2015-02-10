@@ -14,7 +14,6 @@
 /bus.h/1.11/Fri Nov 28 21:45:47 2014//
 /bus_proto.h/1.7/Fri Nov 28 21:45:47 2014//
 /callback.h/1.3/Fri Nov 28 21:45:47 2014//
-/callout.h/1.31/Fri Nov 28 21:45:47 2014//
 /cctr.h/1.3/Fri Nov 28 21:45:47 2014//
 /cdbr.h/1.1/Fri Nov 28 21:45:47 2014//
 /cdefs_aout.h/1.20/Fri Nov 28 21:45:47 2014//
@@ -177,7 +176,6 @@
 /signal.h/1.67/Fri Nov 28 21:45:47 2014//
 /signalvar.h/1.86/Fri Nov 28 21:45:47 2014//
 /sigtypes.h/1.10/Fri Nov 28 21:45:47 2014//
-/sleepq.h/1.23/Fri Nov 28 21:45:47 2014//
 /socketvar.h/1.135/Fri Nov 28 21:45:47 2014//
 /sockio.h/1.32/Fri Nov 28 21:45:47 2014//
 /spawn.h/1.5/Fri Nov 28 21:45:47 2014//
@@ -267,5 +265,7 @@
 /ipi.h/1.3/Mon Jan 19 22:34:12 2015//
 /socket.h/1.115/Fri Jan 30 01:43:18 2015//
 /cdefs.h/1.124/Thu Feb  5 20:55:22 2015//
-/Makefile/1.152/Sat Feb  7 11:39:07 2015//
+/Makefile/1.152/Tue Feb 10 11:06:02 2015//
+/callout.h/1.32/Tue Feb 10 11:12:30 2015//
+/sleepq.h/1.24/Tue Feb 10 11:12:30 2015//
 D

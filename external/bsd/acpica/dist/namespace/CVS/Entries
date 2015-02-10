@@ -5,7 +5,6 @@
 /nsdump.c/1.5/Fri Nov 28 21:45:46 2014//
 /nsdumpdv.c/1.1.1.4/Fri Nov 28 21:45:46 2014//
 /nseval.c/1.5/Fri Nov 28 21:45:46 2014//
-/nsinit.c/1.6/Fri Nov 28 21:45:46 2014//
 /nsload.c/1.1.1.4/Fri Nov 28 21:45:46 2014//
 /nsnames.c/1.1.1.4/Fri Nov 28 21:45:46 2014//
 /nsobject.c/1.1.1.4/Fri Nov 28 21:45:46 2014//
@@ -20,4 +19,5 @@
 /nsxfeval.c/1.5/Fri Nov 28 21:45:46 2014//
 /nsxfname.c/1.5/Fri Nov 28 21:45:46 2014//
 /nsxfobj.c/1.1.1.4/Fri Nov 28 21:45:46 2014//
+/nsinit.c/1.7/Tue Feb 10 11:12:20 2015//
 D

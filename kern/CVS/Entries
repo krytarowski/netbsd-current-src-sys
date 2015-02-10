@@ -180,9 +180,7 @@
 /kern_ksyms.c/1.75/Sat Dec 20 22:31:24 2014//
 /kern_module.c/1.102/Sat Dec 20 22:31:24 2014//
 /kern_module_vfs.c/1.13/Sat Dec 20 22:31:24 2014//
-/kern_timeout.c/1.48/Sat Dec 20 22:31:24 2014//
 /uipc_domain.c/1.96/Sat Dec 20 22:31:24 2014//
-/uipc_mbuf.c/1.160/Sat Dec 20 22:31:24 2014//
 /subr_disk.c/1.111/Wed Jan  7 00:50:30 2015//
 /subr_disk_open.c/1.12/Wed Jan  7 00:50:30 2015//
 /kern_cpu.c/1.67/Sun Jan 11 12:42:16 2015//
@@ -195,5 +193,7 @@
 /subr_prf.c/1.157/Thu Feb  5 21:03:35 2015//
 /uipc_usrreq.c/1.173/Thu Feb  5 21:03:35 2015//
 /vfs_vnops.c/1.193/Thu Feb  5 21:03:35 2015//
-/kern_malloc.c/1.145/Sat Feb  7 11:45:07 2015//
+/kern_malloc.c/1.145/Sat Feb  7 12:34:24 2015//
+/kern_timeout.c/1.50/Tue Feb 10 11:12:25 2015//
+/uipc_mbuf.c/1.161/Tue Feb 10 11:12:25 2015//
 D

@@ -36,3 +36,24 @@ D/sys////
 D/ufs////
 D/uvm////
 /Makefile/1.79/Fri Nov 28 21:45:44 2014//
+D/adosfs////
+D/boot////
+D/cfs////
+D/codeset////
+D/common////
+D/contrib////
+D/filecorefs////
+D/isofs////
+D/kgdb////
+D/kpi////
+D/libkern////
+D/lkm////
+D/msdosfs////
+D/netccitt////
+D/netiso////
+D/netns////
+D/ntfs////
+D/pcfs////
+D/scsi////
+D/smbfs////
+D/vm////

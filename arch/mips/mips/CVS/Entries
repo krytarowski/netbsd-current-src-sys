@@ -1,6 +1,5 @@
 /bds_emul.S/1.6/Fri Nov 28 21:45:45 2014//
 /bus_dma.c/1.31/Fri Nov 28 21:45:45 2014//
-/bus_space_alignstride_chipdep.c/1.19/Fri Nov 28 21:45:45 2014//
 /cache.c/1.48/Fri Nov 28 21:45:45 2014//
 /cache_ls2.c/1.4/Fri Nov 28 21:45:45 2014//
 /cache_mipsNN.c/1.14/Fri Nov 28 21:45:45 2014//
@@ -68,4 +67,5 @@
 /trap.c/1.236/Fri Nov 28 21:45:45 2014//
 /vm_machdep.c/1.143/Fri Nov 28 21:45:45 2014//
 /wired_map.c/1.5/Fri Nov 28 21:45:45 2014//
+/bus_space_alignstride_chipdep.c/1.20/Tue Feb 10 11:11:54 2015//
 D

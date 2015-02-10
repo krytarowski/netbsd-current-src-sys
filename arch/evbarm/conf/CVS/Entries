@@ -36,7 +36,6 @@
 /HAWK/1.5/Fri Nov 28 21:45:45 2014//
 /HDL_G/1.43/Fri Nov 28 21:45:45 2014//
 /HPT5325/1.24/Fri Nov 28 21:45:45 2014//
-/HUMMINGBIRD_A31/1.20/Fri Nov 28 22:37:38 2014//
 /HUMMINGBIRD_A31_INSTALL/1.3/Fri Nov 28 21:45:45 2014//
 /IGEPV2/1.26/Fri Nov 28 21:45:45 2014//
 /IMX23_OLINUXINO_INSTALL/1.2/Fri Nov 28 21:45:45 2014//
@@ -257,4 +256,13 @@
 /files.zynq/1.1/Fri Jan 23 12:34:09 2015//
 /mk.zynq/1.1/Fri Jan 23 12:34:09 2015//
 /std.zynq/1.1/Fri Jan 23 12:34:09 2015//
+/HUMMINGBIRD_A31/1.21/Tue Feb 10 11:11:38 2015//
+/ODROID-C1/1.1/Sat Feb  7 17:20:16 2015//
+/VEXPRESS_A15/1.1/Mon Feb  9 07:50:24 2015//
+/files.amlogic/1.1/Sat Feb  7 17:20:16 2015//
+/files.vexpress/1.1/Mon Feb  9 07:47:15 2015//
+/mk.amlogic/1.1/Sat Feb  7 17:20:16 2015//
+/mk.vexpress/1.1/Mon Feb  9 07:47:15 2015//
+/std.amlogic/1.1/Sat Feb  7 17:20:16 2015//
+/std.vexpress/1.1/Mon Feb  9 07:47:15 2015//
 D

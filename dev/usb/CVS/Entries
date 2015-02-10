@@ -25,7 +25,6 @@
 /ezload.c/1.15/Fri Nov 28 21:45:46 2014//
 /ezload.h/1.5/Fri Nov 28 21:45:46 2014//
 /files.usb/1.135/Fri Nov 28 21:45:46 2014//
-/hid.c/1.35/Fri Nov 28 21:45:46 2014//
 /hid.h/1.13/Fri Nov 28 21:45:46 2014//
 /if_athn_usb.h/1.2/Fri Nov 28 21:45:46 2014//
 /if_atu.c/1.50/Fri Nov 28 21:45:46 2014//
@@ -108,8 +107,6 @@
 /uhcireg.h/1.19/Fri Nov 28 21:45:46 2014//
 /uhcivar.h/1.52/Fri Nov 28 21:45:46 2014//
 /uhid.c/1.92/Fri Nov 28 21:45:46 2014//
-/uhidev.c/1.61/Fri Nov 28 21:45:46 2014//
-/uhidev.h/1.15/Fri Nov 28 21:45:46 2014//
 /uhmodem.c/1.13/Fri Nov 28 21:45:46 2014//
 /uhso.c/1.17/Fri Nov 28 22:37:39 2014//
 /uhub.c/1.126/Fri Nov 28 21:45:46 2014//
@@ -154,7 +151,6 @@
 /usb_verbose.h/1.4/Fri Nov 28 21:45:46 2014//
 /usbcdc.h/1.11/Fri Nov 28 21:45:46 2014//
 /usbdevices.config/1.24/Fri Nov 28 21:45:46 2014//
-/usbdi.c/1.162/Fri Nov 28 21:45:46 2014//
 /usbdi.h/1.90/Fri Nov 28 21:45:46 2014//
 /usbdi_util.c/1.63/Fri Nov 28 21:45:46 2014//
 /usbdi_util.h/1.45/Fri Nov 28 21:45:46 2014//
@@ -198,4 +194,9 @@
 /usbdevs/1.689/Thu Feb  5 21:03:32 2015//
 /usbdevs.h/1.681/Thu Feb  5 21:03:32 2015//
 /usbdevs_data.h/1.682/Thu Feb  5 21:03:33 2015//
+/hid.c/1.36/Tue Feb 10 11:12:20 2015//
+/uhidev.c/1.62/Tue Feb 10 11:12:20 2015//
+/uhidev.h/1.16/Tue Feb 10 11:12:20 2015//
+/usbdi.c/1.163/Tue Feb 10 11:12:20 2015//
+/x1input_rdesc.h/1.1/Sun Feb  8 19:22:45 2015//
 D

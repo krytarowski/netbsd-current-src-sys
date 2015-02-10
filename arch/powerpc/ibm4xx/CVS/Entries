@@ -16,3 +16,5 @@ D/pci////
 /pmap.c/1.72/Fri Nov 28 21:45:45 2014//
 /trap.c/1.67/Fri Nov 28 21:45:45 2014//
 /trap_subr.S/1.24/Fri Nov 28 21:45:45 2014//
+D/opb////
+D/uic////
